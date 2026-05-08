@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>7단계 자료구조와 알고리즘 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#f0fdf4,#eff6ff,#fff7ed);color:#1f2937}
+header{padding:30px 38px;background:linear-gradient(135deg,#15803d,#2563eb,#7c2d12);color:white;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.96}
+.wrap{display:grid;grid-template-columns:275px 1fr;min-height:calc(100vh - 125px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#bbf7d0}
+nav button{width:100%;text-align:left;border:0;border-radius:14px;padding:12px 14px;margin:6px 0;color:white;background:#374151;cursor:pointer;font-size:15px}
+nav button:hover,nav button.active{background:#15803d}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:white;border-radius:22px;padding:24px;margin-bottom:22px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb}
+h2{color:#15803d;margin-top:0;font-size:28px}
+h3{color:#1d4ed8;margin-bottom:10px}
+.badge{display:inline-block;background:#dcfce7;color:#166534;padding:6px 12px;border-radius:999px;font-weight:700;margin:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{background:#0f172a;color:#e5e7eb;padding:16px;border-radius:16px;overflow:auto;font-size:15px;line-height:1.55}
+code{font-family:Consolas,monospace}
+.explain{background:#f8fafc;border-left:6px solid #22c55e;padding:14px 16px;border-radius:12px;line-height:1.75}
+.question{border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin:16px 0;background:#ffffff}
+textarea,input[type=text]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-top:8px}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{border:0;border-radius:14px;padding:13px 18px;background:#15803d;color:white;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}
+.action.secondary{background:#2563eb}
+.result{padding:16px;border-radius:16px;background:#f0fdf4;border:1px solid #86efac;margin-top:16px;white-space:pre-wrap;line-height:1.7}
+.answer{display:none;margin-top:10px;padding:12px;background:#eff6ff;border-left:5px solid #3b82f6;border-radius:12px;line-height:1.7}
+.table{width:100%;border-collapse:collapse;background:white;overflow:hidden;border-radius:16px}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#dcfce7}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}}
+</style>
+</head>
+<body>
+<header>
+<h1>🐍 7단계. 자료구조와 알고리즘</h1>
+<p>개념기반 목표지향 수업지도안 · 문제 해결 능력 강화 · 스택 / 큐 / 해시 / 정렬 / 탐색 / 재귀 / 시간복잡도</p>
+</header>
+
+<div class="wrap">
+<nav>
+<h2>📚 학습 메뉴</h2>
+<button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+<button onclick="showSec('goals',this)">2. 학습목표</button>
+<button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+<button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+<button onclick="showSec('algos',this)">5. 대표 알고리즘</button>
+<button onclick="showSec('finish',this)">6. 수업마무리</button>
+<button onclick="showSec('essay',this)">7. 출력 서술형 10문항</button>
+<button onclick="showSec('ox',this)">8. OX 진단평가</button>
+<button onclick="showSec('mcq',this)">9. 심화 5지선다</button>
+<button onclick="showSec('submit',this)">10. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>자료구조와 알고리즘은 단순히 코드를 외우는 단원이 아니라, <b>문제를 어떤 방식으로 저장하고 어떤 절차로 해결할 것인가</b>를 설계하는 단원입니다.</p>
+<div class="grid">
+<div class="card"><h3>📚 스택</h3><p>책을 쌓듯이 마지막에 들어온 데이터가 먼저 나가는 구조입니다.</p></div>
+<div class="card"><h3>🚶 큐</h3><p>줄 서기처럼 먼저 들어온 데이터가 먼저 나가는 구조입니다.</p></div>
+<div class="card"><h3>🔍 탐색</h3><p>많은 데이터 속에서 원하는 값을 빠르게 찾는 방법입니다.</p></div>
+<div class="card"><h3>⚡ 시간복잡도</h3><p>데이터가 커질 때 알고리즘이 얼마나 빨리 동작하는지 판단합니다.</p></div>
+</div>
+<p><span class="badge">스택</span><span class="badge">큐</span><span class="badge">트리</span><span class="badge">힙</span><span class="badge">해시</span><span class="badge">정렬</span><span class="badge">탐색</span><span class="badge">재귀</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>스택, 큐, 연결리스트, 트리, 힙, 해시, 정렬, 탐색, 재귀, 시간복잡도의 의미를 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>버블 정렬, 선택 정렬, 병합 정렬, 이진 탐색, DFS, BFS, 유클리드 알고리즘을 파이썬으로 구현할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>문제의 조건과 데이터 규모에 맞는 효율적인 해결 전략을 선택하려는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 자료구조</h3>
+<p class="explain">자료구조는 데이터를 저장하고 관리하는 방식입니다. 같은 데이터라도 저장 방식에 따라 문제 해결 속도와 코드 구조가 달라집니다.</p>
+<h3>2. 알고리즘</h3>
+<p class="explain">알고리즘은 문제를 해결하기 위한 명확한 절차입니다. 정렬, 탐색, 최단 경로, 최대공약수 계산 등이 대표적입니다.</p>
+<h3>3. 시간복잡도</h3>
+<p class="explain">시간복잡도는 입력 크기 n이 커질 때 실행 시간이 어떻게 증가하는지 나타냅니다. 예: O(1), O(log n), O(n), O(n²).</p>
+<h3>4. 재귀</h3>
+<p class="explain">재귀는 함수가 자기 자신을 다시 호출하는 구조입니다. 문제를 작은 문제로 나누어 해결할 때 사용합니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. 스택</h3>
+<pre><code>stack = []
+stack.append(10)
+stack.append(20)
+print(stack.pop())</code></pre>
+<p class="explain">스택은 마지막에 들어온 값이 먼저 나갑니다. 20이 마지막에 들어왔으므로 pop() 결과는 20입니다.</p>
+
+<h3>코드 2. 큐</h3>
+<pre><code>from collections import deque
+q = deque()
+q.append("A")
+q.append("B")
+print(q.popleft())</code></pre>
+<p class="explain">큐는 먼저 들어온 값이 먼저 나갑니다. A가 먼저 들어왔으므로 popleft() 결과는 A입니다.</p>
+
+<h3>코드 3. 해시</h3>
+<pre><code>score = {"Kim": 90, "Lee": 85}
+print(score["Kim"])</code></pre>
+<p class="explain">딕셔너리는 해시 구조를 활용하여 키로 값을 빠르게 찾습니다.</p>
+
+<h3>코드 4. 버블 정렬</h3>
+<pre><code>a = [3, 1, 2]
+for i in range(len(a)):
+    for j in range(len(a)-1):
+        if a[j] > a[j+1]:
+            a[j], a[j+1] = a[j+1], a[j]
+print(a)</code></pre>
+<p class="explain">인접한 두 값을 비교하여 큰 값을 뒤로 보내는 정렬입니다.</p>
+
+<h3>코드 5. 선택 정렬</h3>
+<pre><code>a = [3, 1, 2]
+for i in range(len(a)):
+    m = i
+    for j in range(i+1, len(a)):
+        if a[j] < a[m]:
+            m = j
+    a[i], a[m] = a[m], a[i]
+print(a)</code></pre>
+<p class="explain">가장 작은 값을 찾아 앞쪽에 배치하는 방식입니다.</p>
+
+<h3>코드 6. 이진 탐색</h3>
+<pre><code>a = [1, 3, 5, 7, 9]
+target = 7
+left, right = 0, len(a)-1
+while left <= right:
+    mid = (left + right) // 2
+    if a[mid] == target:
+        print(mid)
+        break
+    elif a[mid] < target:
+        left = mid + 1
+    else:
+        right = mid - 1</code></pre>
+<p class="explain">정렬된 데이터에서 중간값을 기준으로 탐색 범위를 절반씩 줄입니다.</p>
+
+<h3>코드 7. 재귀 팩토리얼</h3>
+<pre><code>def fact(n):
+    if n == 1:
+        return 1
+    return n * fact(n-1)
+
+print(fact(5))</code></pre>
+<p class="explain">5! = 5×4×3×2×1 = 120입니다. 재귀에는 종료 조건이 반드시 필요합니다.</p>
+
+<h3>코드 8. DFS</h3>
+<pre><code>graph = {1:[2,3], 2:[4], 3:[], 4:[]}
+visited = []
+
+def dfs(v):
+    visited.append(v)
+    for nxt in graph[v]:
+        if nxt not in visited:
+            dfs(nxt)
+
+dfs(1)
+print(visited)</code></pre>
+<p class="explain">DFS는 깊이 우선 탐색입니다. 한 방향으로 깊게 들어간 뒤 되돌아옵니다.</p>
+
+<h3>코드 9. BFS</h3>
+<pre><code>from collections import deque
+graph = {1:[2,3], 2:[4], 3:[], 4:[]}
+visited = []
+q = deque([1])
+
+while q:
+    v = q.popleft()
+    if v not in visited:
+        visited.append(v)
+        q.extend(graph[v])
+print(visited)</code></pre>
+<p class="explain">BFS는 너비 우선 탐색입니다. 가까운 정점부터 차례로 방문합니다.</p>
+
+<h3>코드 10. 유클리드 알고리즘</h3>
+<pre><code>def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+print(gcd(48, 18))</code></pre>
+<p class="explain">두 수의 최대공약수를 빠르게 구하는 대표 알고리즘입니다. 결과는 6입니다.</p>
+</div>
+</section>
+
+<section id="algos" class="section">
+<div class="card">
+<h2>🧩 대표 알고리즘 정리</h2>
+<table class="table">
+<tr><th>알고리즘</th><th>핵심 아이디어</th><th>대표 활용</th></tr>
+<tr><td>버블 정렬</td><td>인접 원소 비교와 교환</td><td>정렬 원리 학습</td></tr>
+<tr><td>선택 정렬</td><td>최솟값을 찾아 앞에 배치</td><td>단순 정렬 구현</td></tr>
+<tr><td>병합 정렬</td><td>나누고 정렬한 뒤 합치기</td><td>효율적 정렬</td></tr>
+<tr><td>이진 탐색</td><td>정렬된 데이터에서 범위를 절반씩 줄이기</td><td>빠른 검색</td></tr>
+<tr><td>DFS</td><td>깊게 먼저 탐색</td><td>경로 탐색, 백트래킹</td></tr>
+<tr><td>BFS</td><td>가까운 곳부터 탐색</td><td>최단 거리 탐색</td></tr>
+<tr><td>유클리드 알고리즘</td><td>나머지를 반복해 최대공약수 계산</td><td>수학·암호·분수 약분</td></tr>
+</table>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>자료구조와 알고리즘은 컴퓨터가 문제를 더 빠르고 정확하게 해결하도록 돕는 핵심 도구입니다.</p>
+<ul>
+<li>스택은 마지막 값이 먼저 나간다.</li>
+<li>큐는 먼저 들어온 값이 먼저 나간다.</li>
+<li>해시는 키로 값을 빠르게 찾는다.</li>
+<li>정렬은 데이터를 일정한 순서로 재배치한다.</li>
+<li>탐색은 원하는 값을 찾는 과정이다.</li>
+<li>재귀는 문제를 작은 문제로 나눈다.</li>
+<li>시간복잡도는 알고리즘의 효율성을 비교한다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 좋은 알고리즘은 정확할 뿐만 아니라 입력이 커져도 효율적으로 동작해야 합니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section"><div class="card"><h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2><div id="essayBox"></div></div></section>
+<section id="ox" class="section"><div class="card"><h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2><div id="oxBox"></div></div></section>
+<section id="mcq" class="section"><div class="card"><h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2><div id="mcqBox"></div></div></section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+
+const essay=[
+{q:`stack=[]\nstack.append(1)\nstack.append(2)\nprint(stack.pop())`,a:"2",e:"스택은 마지막에 들어온 2가 먼저 나갑니다."},
+{q:`from collections import deque\nq=deque(["A","B"])\nprint(q.popleft())`,a:"A",e:"큐는 먼저 들어온 A가 먼저 나갑니다."},
+{q:`d={"a":10,"b":20}\nprint(d["b"])`,a:"20",e:"딕셔너리에서 키 b의 값은 20입니다."},
+{q:`a=[3,1,2]\nprint(sorted(a))`,a:"[1, 2, 3]",e:"sorted는 오름차순 정렬 결과를 새 리스트로 반환합니다."},
+{q:`a=[1,3,5,7]\nprint(a[2])`,a:"5",e:"인덱스 2의 값은 세 번째 원소 5입니다."},
+{q:`def f(n):\n    if n==1:\n        return 1\n    return n+f(n-1)\nprint(f(4))`,a:"10",e:"4+3+2+1=10입니다."},
+{q:`def gcd(a,b):\n    while b:\n        a,b=b,a%b\n    return a\nprint(gcd(12,8))`,a:"4",e:"12와 8의 최대공약수는 4입니다."},
+{q:`visited=[]\nfor x in [1,2,3]:\n    visited.append(x)\nprint(visited)`,a:"[1, 2, 3]",e:"1,2,3이 차례로 리스트에 추가됩니다."},
+{q:`a=[5,2,9]\nprint(min(a), max(a))`,a:"2 9",e:"최솟값은 2, 최댓값은 9입니다."},
+{q:`print(2**3)`,a:"8",e:"2의 3제곱은 8입니다."}
+];
+
+const ox=[
+{q:"스택은 마지막에 들어온 데이터가 먼저 나가는 구조이다.",a:"O",e:"LIFO 구조입니다."},
+{q:"큐는 마지막에 들어온 데이터가 먼저 나가는 구조이다.",a:"X",e:"큐는 FIFO, 즉 먼저 들어온 데이터가 먼저 나갑니다."},
+{q:"딕셔너리는 해시 구조를 활용해 키로 값을 빠르게 찾을 수 있다.",a:"O",e:"파이썬 dict는 해시 테이블 기반입니다."},
+{q:"이진 탐색은 정렬되지 않은 데이터에서도 항상 올바르게 동작한다.",a:"X",e:"이진 탐색은 정렬된 데이터가 필요합니다."},
+{q:"재귀 함수에는 종료 조건이 필요하다.",a:"O",e:"종료 조건이 없으면 무한 호출이 발생할 수 있습니다."},
+{q:"DFS는 깊이 우선 탐색이다.",a:"O",e:"DFS는 한 방향으로 깊게 탐색합니다."},
+{q:"BFS는 보통 큐를 이용해 구현할 수 있다.",a:"O",e:"BFS는 가까운 노드부터 방문하므로 큐가 적합합니다."},
+{q:"버블 정렬은 인접한 원소를 비교하며 정렬한다.",a:"O",e:"인접 원소 비교와 교환이 핵심입니다."},
+{q:"시간복잡도는 알고리즘의 효율성을 비교하는 기준이 될 수 있다.",a:"O",e:"입력 크기에 따른 실행 시간 증가를 설명합니다."},
+{q:"유클리드 알고리즘은 두 수의 최소공배수만 직접 구하는 알고리즘이다.",a:"X",e:"기본적으로 최대공약수를 구하는 알고리즘입니다."}
+];
+
+const mcq=[
+{q:"스택의 대표 동작 방식은?",choices:["FIFO","LIFO","무작위","정렬","해시"],a:"2",e:"스택은 LIFO입니다."},
+{q:"큐의 대표 동작 방식은?",choices:["LIFO","FIFO","재귀","분할정복","캡슐화"],a:"2",e:"큐는 FIFO입니다."},
+{q:"정렬된 리스트에서 탐색 범위를 절반씩 줄이는 알고리즘은?",choices:["이진 탐색","버블 정렬","DFS","BFS","스택"],a:"1",e:"이진 탐색은 중간값 기준으로 범위를 절반씩 줄입니다."},
+{q:"깊이 우선 탐색은?",choices:["DFS","BFS","CSV","JSON","OOP"],a:"1",e:"DFS는 Depth First Search입니다."},
+{q:"너비 우선 탐색은?",choices:["DFS","BFS","GCD","LIFO","dict"],a:"2",e:"BFS는 Breadth First Search입니다."},
+{q:"재귀 함수에서 반드시 필요한 것은?",choices:["종료 조건","무한 반복","파일 쓰기","CSV","전역변수만"],a:"1",e:"종료 조건이 있어야 재귀가 끝납니다."},
+{q:"인접한 두 원소를 비교해 정렬하는 알고리즘은?",choices:["버블 정렬","이진 탐색","해시","큐","트리"],a:"1",e:"버블 정렬은 인접 원소 비교가 핵심입니다."},
+{q:"가장 작은 값을 찾아 앞에 배치하는 정렬은?",choices:["선택 정렬","BFS","DFS","스택","해시"],a:"1",e:"선택 정렬은 최솟값 선택 후 앞에 배치합니다."},
+{q:"두 수의 최대공약수를 빠르게 구하는 알고리즘은?",choices:["유클리드 알고리즘","버블 정렬","BFS","zip","filter"],a:"1",e:"유클리드 알고리즘은 gcd를 구합니다."},
+{q:"입력 크기가 커질 때 실행 시간 증가를 표현하는 개념은?",choices:["시간복잡도","문자열","주석","자료형 변환","객체"],a:"1",e:"시간복잡도는 알고리즘 효율 분석에 사용됩니다."}
+];
+
+function render(){
+ document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+ <div class="question"><h3>서술형 ${i+1}</h3><pre><code>${it.q}</code></pre>
+ <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+ <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div></div>`).join('');
+ document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+ <div class="question"><h3>OX ${i+1}</h3><p>${it.q}</p>
+ <label><input type="radio" name="ox${i}" value="O"> O</label>
+ <label><input type="radio" name="ox${i}" value="X"> X</label>
+ <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+ document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+ <div class="question"><h3>5지선다 ${i+1}</h3><p>${it.q}</p>
+ ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+ <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+}
+function toggleAns(id){const el=document.getElementById(id);el.style.display=el.style.display==="block"?"none":"block"}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"")}
+let lastReport="";
+function gradeAll(){
+ let score=0,total=30,lines=[];
+ lines.push("7단계 자료구조와 알고리즘 평가 결과");
+ lines.push("================================");
+ for(let i=0;i<essay.length;i++){
+   const user=norm(document.getElementById('essay'+i).value), ans=norm(essay[i].a), ok=user===ans;
+   if(ok)score++; lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+ }
+ for(let i=0;i<ox.length;i++){
+   const checked=document.querySelector(`input[name="ox${i}"]:checked`), val=checked?checked.value:"", ok=val===ox[i].a;
+   if(ok)score++; lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+ }
+ for(let i=0;i<mcq.length;i++){
+   const checked=document.querySelector(`input[name="mcq${i}"]:checked`), val=checked?checked.value:"", ok=val===mcq[i].a;
+   if(ok)score++; lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+ }
+ const percent=Math.round(score/total*100);
+ lines.push("================================");
+ lines.push(`총점: ${score}/${total} (${percent}점)`);
+ lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+ lastReport=lines.join("\n");
+ document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_")}
+function downloadTxt(){
+ if(!lastReport)gradeAll();
+ const sid=safeName(document.getElementById('studentId').value);
+ const name=safeName(document.getElementById('studentName').value);
+ const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1]||"0";
+ const now=new Date();
+ const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+ const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+ const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

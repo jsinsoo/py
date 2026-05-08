@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>5단계 파일 처리와 예외 처리 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+    background:linear-gradient(135deg,#fff7ed,#f0fdf4,#eff6ff);
+    color:#1f2937;
+}
+header{
+    padding:30px 38px;
+    background:linear-gradient(135deg,#ea580c,#16a34a,#2563eb);
+    color:white;
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.96}
+.wrap{
+    display:grid;
+    grid-template-columns:275px 1fr;
+    min-height:calc(100vh - 125px);
+}
+nav{
+    background:#111827;
+    color:white;
+    padding:18px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#fed7aa}
+nav button{
+    width:100%;
+    text-align:left;
+    border:0;
+    border-radius:14px;
+    padding:12px 14px;
+    margin:6px 0;
+    color:white;
+    background:#374151;
+    cursor:pointer;
+    font-size:15px;
+}
+nav button:hover,nav button.active{background:#ea580c}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{
+    background:white;
+    border-radius:22px;
+    padding:24px;
+    margin-bottom:22px;
+    box-shadow:0 10px 28px rgba(15,23,42,.12);
+    border:1px solid #e5e7eb;
+}
+h2{color:#c2410c;margin-top:0;font-size:28px}
+h3{color:#15803d;margin-bottom:10px}
+.badge{
+    display:inline-block;
+    background:#ffedd5;
+    color:#9a3412;
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:700;
+    margin:4px;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{
+    background:#0f172a;
+    color:#e5e7eb;
+    padding:16px;
+    border-radius:16px;
+    overflow:auto;
+    font-size:15px;
+    line-height:1.55;
+}
+code{font-family:Consolas,monospace}
+.explain{
+    background:#f8fafc;
+    border-left:6px solid #fb923c;
+    padding:14px 16px;
+    border-radius:12px;
+    line-height:1.75;
+}
+.question{
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:18px;
+    margin:16px 0;
+    background:#ffffff;
+}
+textarea,input[type=text]{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    font-size:16px;
+    margin-top:8px;
+}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{
+    border:0;
+    border-radius:14px;
+    padding:13px 18px;
+    background:#ea580c;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    margin:8px 6px 8px 0;
+}
+.action.secondary{background:#16a34a}
+.result{
+    padding:16px;
+    border-radius:16px;
+    background:#fff7ed;
+    border:1px solid #fdba74;
+    margin-top:16px;
+    white-space:pre-wrap;
+    line-height:1.7;
+}
+.answer{
+    display:none;
+    margin-top:10px;
+    padding:12px;
+    background:#f0fdf4;
+    border-left:5px solid #22c55e;
+    border-radius:12px;
+    line-height:1.7;
+}
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    overflow:hidden;
+    border-radius:16px;
+}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#ffedd5}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){
+    .wrap{grid-template-columns:1fr}
+    nav{height:auto;position:relative}
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>🐍 5단계. 파일 처리와 예외 처리</h1>
+    <p>개념기반 목표지향 수업지도안 · 실전 프로그램의 기본 · 파일 읽기/쓰기 · CSV · JSON · try/except/finally</p>
+</header>
+
+<div class="wrap">
+<nav>
+    <h2>📚 학습 메뉴</h2>
+    <button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+    <button onclick="showSec('goals',this)">2. 학습목표</button>
+    <button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+    <button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+    <button onclick="showSec('finish',this)">5. 수업마무리</button>
+    <button onclick="showSec('essay',this)">6. 출력 서술형 10문항</button>
+    <button onclick="showSec('ox',this)">7. OX 진단평가</button>
+    <button onclick="showSec('mcq',this)">8. 심화 5지선다</button>
+    <button onclick="showSec('submit',this)">9. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>실전 프로그램은 실행이 끝나도 데이터를 보관해야 합니다. 메모장, 성적 저장 프로그램, 로그 기록 시스템은 모두 <b>파일 처리</b>가 필요합니다. 또한 사용자가 잘못 입력하거나 파일이 없을 때 프로그램이 멈추지 않도록 <b>예외 처리</b>가 필요합니다.</p>
+<div class="grid">
+<div class="card"><h3>📝 메모장 프로그램</h3><p>사용자가 입력한 내용을 텍스트 파일로 저장하고 다시 불러옵니다.</p></div>
+<div class="card"><h3>📊 성적 저장 프로그램</h3><p>학생 이름과 점수를 CSV 파일로 저장하여 표 형태 데이터로 관리합니다.</p></div>
+<div class="card"><h3>🛡 오류에 강한 프로그램</h3><p>숫자가 아닌 값을 입력해도 try-except로 안전하게 처리합니다.</p></div>
+</div>
+<p><span class="badge">파일 읽기</span><span class="badge">파일 쓰기</span><span class="badge">with 문</span><span class="badge">CSV</span><span class="badge">JSON</span><span class="badge">try</span><span class="badge">except</span><span class="badge">finally</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>파일 읽기, 파일 쓰기, with 문, CSV, JSON, 예외 처리 구조를 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>텍스트 파일, CSV 파일, JSON 파일을 다루고 try-except-finally로 오류를 처리할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>오류가 발생해도 안정적으로 동작하는 실전형 프로그램을 설계하려는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 파일 처리</h3>
+<p class="explain">파일 처리는 프로그램 실행 결과를 저장하거나, 저장된 데이터를 다시 읽어오는 과정입니다.</p>
+<h3>2. with 문</h3>
+<p class="explain">with 문은 파일을 열고 작업이 끝나면 자동으로 닫아 주므로 안전하고 깔끔한 파일 처리 방식입니다.</p>
+<h3>3. CSV</h3>
+<p class="explain">CSV는 쉼표로 구분된 표 형식 데이터입니다. 성적표, 매출표, 출석부 등에 자주 사용됩니다.</p>
+<h3>4. JSON</h3>
+<p class="explain">JSON은 키와 값 형태로 데이터를 저장하는 형식입니다. 웹 API와 설정 파일에서 많이 사용됩니다.</p>
+<h3>5. 예외 처리</h3>
+<p class="explain">try-except-finally는 오류가 발생해도 프로그램이 갑자기 멈추지 않도록 제어하는 구조입니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. 파일 쓰기</h3>
+<pre><code>f = open("memo.txt", "w", encoding="utf-8")
+f.write("안녕하세요")
+f.close()</code></pre>
+<p class="explain">open()으로 파일을 쓰기 모드로 열고 write()로 내용을 저장합니다. close()로 파일을 닫습니다.</p>
+
+<h3>코드 2. with 문으로 파일 쓰기</h3>
+<pre><code>with open("memo.txt", "w", encoding="utf-8") as f:
+    f.write("파이썬 파일 처리")</code></pre>
+<p class="explain">with 문을 사용하면 파일을 자동으로 닫아 주므로 close()를 직접 쓰지 않아도 됩니다.</p>
+
+<h3>코드 3. 파일 읽기</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as f:
+    text = f.read()
+print(text)</code></pre>
+<p class="explain">read()는 파일 전체 내용을 문자열로 읽어옵니다.</p>
+
+<h3>코드 4. 여러 줄 쓰기</h3>
+<pre><code>lines = ["국어 90\n", "수학 95\n"]
+with open("score.txt", "w", encoding="utf-8") as f:
+    f.writelines(lines)</code></pre>
+<p class="explain">writelines()는 문자열 리스트를 파일에 연속으로 기록합니다.</p>
+
+<h3>코드 5. 한 줄씩 읽기</h3>
+<pre><code>with open("score.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        print(line.strip())</code></pre>
+<p class="explain">파일 객체를 반복하면 한 줄씩 읽을 수 있습니다. strip()은 줄바꿈과 양쪽 공백을 제거합니다.</p>
+
+<h3>코드 6. CSV 쓰기</h3>
+<pre><code>import csv
+
+with open("students.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerow(["이름", "점수"])
+    writer.writerow(["민수", 90])</code></pre>
+<p class="explain">csv.writer를 사용하면 표 형태 데이터를 CSV 파일로 저장할 수 있습니다.</p>
+
+<h3>코드 7. CSV 읽기</h3>
+<pre><code>import csv
+
+with open("students.csv", "r", encoding="utf-8") as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)</code></pre>
+<p class="explain">csv.reader는 CSV 파일의 각 행을 리스트 형태로 읽어옵니다.</p>
+
+<h3>코드 8. JSON 저장</h3>
+<pre><code>import json
+
+data = {"name": "Kim", "score": 95}
+with open("data.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False)</code></pre>
+<p class="explain">json.dump()는 딕셔너리 데이터를 JSON 파일로 저장합니다. ensure_ascii=False는 한글을 깨지지 않게 저장합니다.</p>
+
+<h3>코드 9. try-except</h3>
+<pre><code>try:
+    n = int("abc")
+except ValueError:
+    print("숫자로 변환할 수 없습니다.")</code></pre>
+<p class="explain">int("abc")는 오류가 발생하지만 except가 이를 처리하여 프로그램이 멈추지 않습니다.</p>
+
+<h3>코드 10. finally</h3>
+<pre><code>try:
+    print(10 / 2)
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")
+finally:
+    print("처리 완료")</code></pre>
+<p class="explain">finally는 오류 발생 여부와 관계없이 마지막에 반드시 실행됩니다.</p>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>파일 처리와 예외 처리는 실전 프로그램의 기본입니다. 데이터를 저장하지 못하면 프로그램은 일회성 계산기에 머물고, 오류를 처리하지 못하면 실제 사용자가 쓰기 어렵습니다.</p>
+<ul>
+<li>파일 쓰기: 데이터를 저장한다.</li>
+<li>파일 읽기: 저장된 데이터를 불러온다.</li>
+<li>with 문: 파일을 안전하게 다룬다.</li>
+<li>CSV: 표 데이터를 저장한다.</li>
+<li>JSON: 구조화된 데이터를 저장한다.</li>
+<li>try-except-finally: 오류에 강한 프로그램을 만든다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 실전 프로그램은 데이터를 보존하고, 예외 상황에서도 안정적으로 동작해야 합니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section">
+<div class="card">
+<h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2>
+<div id="essayBox"></div>
+</div>
+</section>
+
+<section id="ox" class="section">
+<div class="card">
+<h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2>
+<div id="oxBox"></div>
+</div>
+</section>
+
+<section id="mcq" class="section">
+<div class="card">
+<h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2>
+<div id="mcqBox"></div>
+</div>
+</section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+const essay = [
+{q:`try:\n    print(int("10") + 5)\nexcept ValueError:\n    print("오류")`, a:"15", e:"문자열 '10'은 정수 10으로 변환 가능하므로 10+5=15가 출력됩니다."},
+{q:`try:\n    print(int("abc"))\nexcept ValueError:\n    print("변환 오류")`, a:"변환 오류", e:"abc는 정수로 바꿀 수 없어 ValueError가 발생하고 except 블록이 실행됩니다."},
+{q:`try:\n    print(10 / 0)\nexcept ZeroDivisionError:\n    print("0으로 나눌 수 없음")`, a:"0으로 나눌 수 없음", e:"0으로 나누면 ZeroDivisionError가 발생하여 except가 실행됩니다."},
+{q:`try:\n    print("start")\nfinally:\n    print("end")`, a:"start\nend", e:"finally는 오류 여부와 상관없이 마지막에 실행됩니다."},
+{q:`data = ["국어", "수학"]\nprint(",".join(data))`, a:"국어,수학", e:"join은 리스트의 문자열들을 쉼표로 연결합니다. CSV 구조 이해에 도움이 됩니다."},
+{q:`line = "  score  \\n"\nprint(line.strip())`, a:"score", e:"strip()은 양쪽 공백과 줄바꿈을 제거합니다."},
+{q:`row = ["Kim", "90"]\nprint(row[0], row[1])`, a:"Kim 90", e:"CSV 한 행은 리스트처럼 다룰 수 있습니다."},
+{q:`data = {"name": "Kim", "score": 95}\nprint(data["score"])`, a:"95", e:"JSON과 유사한 딕셔너리에서 score 키의 값은 95입니다."},
+{q:`try:\n    x = int("7")\n    print(x * 2)\nexcept:\n    print("error")`, a:"14", e:"'7'은 정수 변환이 가능하므로 7*2=14가 출력됩니다."},
+{q:`try:\n    print("파일 처리 시작")\nexcept:\n    print("오류")\nfinally:\n    print("파일 처리 종료")`, a:"파일 처리 시작\n파일 처리 종료", e:"try가 정상 실행되고 finally가 마지막에 실행됩니다."}
+];
+
+const ox = [
+{q:"파일 처리는 데이터를 저장하거나 불러오는 작업이다.", a:"O", e:"파일 처리는 프로그램 결과를 보존하고 다시 활용하는 데 필요합니다."},
+{q:"with 문을 사용하면 파일을 자동으로 닫을 수 있다.", a:"O", e:"with 문은 작업 후 파일을 자동으로 닫아 줍니다."},
+{q:"파일 쓰기 모드 'w'는 기존 내용을 유지하면서 항상 뒤에 추가한다.", a:"X", e:"w 모드는 기존 내용을 덮어씁니다. 뒤에 추가하려면 a 모드를 사용합니다."},
+{q:"read()는 파일 내용을 읽는 데 사용할 수 있다.", a:"O", e:"read()는 파일 전체 내용을 문자열로 읽습니다."},
+{q:"CSV는 표 형태 데이터를 저장하는 데 자주 사용된다.", a:"O", e:"CSV는 행과 열 구조의 데이터를 저장하기 좋습니다."},
+{q:"JSON은 웹 API와 설정 파일에서 자주 사용된다.", a:"O", e:"JSON은 구조화된 데이터 교환 형식으로 널리 사용됩니다."},
+{q:"try 블록 안에서 오류가 발생하면 적절한 except 블록이 실행될 수 있다.", a:"O", e:"except는 try에서 발생한 오류를 처리합니다."},
+{q:"finally 블록은 오류가 없을 때만 실행된다.", a:"X", e:"finally는 오류 발생 여부와 관계없이 실행됩니다."},
+{q:"ValueError는 잘못된 값 변환 등에서 발생할 수 있다.", a:"O", e:"예를 들어 int('abc')는 ValueError를 발생시킵니다."},
+{q:"예외 처리는 프로그램을 더 불안정하게 만들기 때문에 사용하지 않는 것이 좋다.", a:"X", e:"예외 처리는 프로그램을 더 안정적으로 만들기 위해 사용합니다."}
+];
+
+const mcq = [
+{q:"파일을 열고 작업 후 자동으로 닫아 주는 문법은?", choices:["with","while","lambda","elif","zip"], a:"1", e:"with 문은 파일을 안전하게 열고 자동으로 닫아 줍니다."},
+{q:"파일 쓰기 모드를 나타내는 것은?", choices:["r","w","x만 가능","read","csv"], a:"2", e:"w는 write의 의미로 쓰기 모드입니다."},
+{q:"파일 읽기 모드를 나타내는 것은?", choices:["r","w","a만 가능","json","try"], a:"1", e:"r은 read의 의미로 읽기 모드입니다."},
+{q:"표 형태 데이터를 저장하는 데 적합한 형식은?", choices:["CSV","try","except","finally","input"], a:"1", e:"CSV는 쉼표로 구분된 표 형식 데이터입니다."},
+{q:"딕셔너리 형태 데이터를 파일로 저장하거나 웹 API에서 자주 쓰이는 형식은?", choices:["JSON","TXT만","PNG","MP3","EXE"], a:"1", e:"JSON은 키와 값 구조의 데이터 저장 및 교환에 자주 쓰입니다."},
+{q:"오류가 발생할 가능성이 있는 코드를 넣는 블록은?", choices:["try","except","finally만","import","return"], a:"1", e:"try 블록에 오류 가능 코드가 들어갑니다."},
+{q:"try에서 발생한 오류를 처리하는 블록은?", choices:["except","for","def","class","zip"], a:"1", e:"except 블록은 오류를 처리합니다."},
+{q:"오류 발생 여부와 관계없이 실행되는 블록은?", choices:["finally","except만","try만","while","filter"], a:"1", e:"finally는 마지막에 반드시 실행됩니다."},
+{q:"int('abc')에서 주로 발생하는 예외는?", choices:["ValueError","ZeroDivisionError","NameError만","FileGood","NoError"], a:"1", e:"숫자로 변환할 수 없는 문자열이므로 ValueError입니다."},
+{q:"성적 저장 프로그램에서 이름과 점수를 표 형태로 저장할 때 가장 적절한 방식은?", choices:["CSV 파일","무조건 print만","while만","주석만","bool만"], a:"1", e:"학생 이름과 점수는 행과 열로 표현하기 좋으므로 CSV가 적합합니다."}
+];
+
+function render(){
+    document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+    <div class="question">
+        <h3>서술형 ${i+1}</h3>
+        <pre><code>${it.q}</code></pre>
+        <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+        <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div>
+    </div>`).join('');
+
+    document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+    <div class="question">
+        <h3>OX ${i+1}</h3>
+        <p>${it.q}</p>
+        <label><input type="radio" name="ox${i}" value="O"> O</label>
+        <label><input type="radio" name="ox${i}" value="X"> X</label>
+        <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+
+    document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+    <div class="question">
+        <h3>5지선다 ${i+1}</h3>
+        <p>${it.q}</p>
+        ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+        <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+}
+function toggleAns(id){
+    const el=document.getElementById(id);
+    el.style.display=el.style.display==="block"?"none":"block";
+}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"");}
+let lastReport="";
+function gradeAll(){
+    let score=0, total=30;
+    let lines=[];
+    lines.push("5단계 파일 처리와 예외 처리 평가 결과");
+    lines.push("================================");
+    for(let i=0;i<essay.length;i++){
+        const user=norm(document.getElementById('essay'+i).value);
+        const ans=norm(essay[i].a);
+        const ok=user===ans;
+        if(ok) score++;
+        lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+    }
+    for(let i=0;i<ox.length;i++){
+        const checked=document.querySelector(`input[name="ox${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===ox[i].a;
+        if(ok) score++;
+        lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+    }
+    for(let i=0;i<mcq.length;i++){
+        const checked=document.querySelector(`input[name="mcq${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===mcq[i].a;
+        if(ok) score++;
+        lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+    }
+    const percent=Math.round(score/total*100);
+    lines.push("================================");
+    lines.push(`총점: ${score}/${total} (${percent}점)`);
+    lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+    lastReport=lines.join("\n");
+    document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_");}
+function downloadTxt(){
+    if(!lastReport) gradeAll();
+    const sid=safeName(document.getElementById('studentId').value);
+    const name=safeName(document.getElementById('studentName').value);
+    const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1] || "0";
+    const now=new Date();
+    const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+    const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+    const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

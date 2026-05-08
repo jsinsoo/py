@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>2단계 조건문과 반복문 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+    background:linear-gradient(135deg,#eef5ff,#fff7e8);
+    color:#1f2937;
+}
+header{
+    padding:28px 36px;
+    background:linear-gradient(135deg,#1d4ed8,#7c3aed);
+    color:white;
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+header h1{margin:0;font-size:32px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    min-height:calc(100vh - 120px);
+}
+nav{
+    background:#111827;
+    color:white;
+    padding:18px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#facc15}
+nav button{
+    width:100%;
+    text-align:left;
+    border:0;
+    border-radius:14px;
+    padding:12px 14px;
+    margin:6px 0;
+    color:white;
+    background:#374151;
+    cursor:pointer;
+    font-size:15px;
+}
+nav button:hover,nav button.active{background:#2563eb}
+main{padding:28px;overflow:auto}
+.section{
+    display:none;
+    animation:fade .25s ease-in-out;
+}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{
+    background:white;
+    border-radius:22px;
+    padding:24px;
+    margin-bottom:22px;
+    box-shadow:0 10px 28px rgba(15,23,42,.12);
+    border:1px solid #e5e7eb;
+}
+h2{color:#1d4ed8;margin-top:0;font-size:28px}
+h3{color:#7c3aed;margin-bottom:10px}
+.badge{
+    display:inline-block;
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:700;
+    margin:4px;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{
+    background:#0f172a;
+    color:#e5e7eb;
+    padding:16px;
+    border-radius:16px;
+    overflow:auto;
+    font-size:15px;
+    line-height:1.55;
+}
+code{font-family:Consolas,monospace}
+.explain{
+    background:#f8fafc;
+    border-left:6px solid #38bdf8;
+    padding:14px 16px;
+    border-radius:12px;
+    line-height:1.75;
+}
+.question{
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:18px;
+    margin:16px 0;
+    background:#ffffff;
+}
+textarea,input[type=text]{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    font-size:16px;
+    margin-top:8px;
+}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{
+    border:0;
+    border-radius:14px;
+    padding:13px 18px;
+    background:#2563eb;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    margin:8px 6px 8px 0;
+}
+.action.secondary{background:#059669}
+.action.warn{background:#dc2626}
+.result{
+    padding:16px;
+    border-radius:16px;
+    background:#ecfeff;
+    border:1px solid #67e8f9;
+    margin-top:16px;
+    white-space:pre-wrap;
+    line-height:1.7;
+}
+.answer{
+    display:none;
+    margin-top:10px;
+    padding:12px;
+    background:#fff7ed;
+    border-left:5px solid #fb923c;
+    border-radius:12px;
+    line-height:1.7;
+}
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    overflow:hidden;
+    border-radius:16px;
+}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#eff6ff}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){
+    .wrap{grid-template-columns:1fr}
+    nav{height:auto;position:relative}
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>🐍 2단계. 조건문과 반복문</h1>
+    <p>개념기반 목표지향 수업지도안 · 프로그램 흐름 제어 · if / for / while / break / continue / range()</p>
+</header>
+
+<div class="wrap">
+<nav>
+    <h2>📚 학습 메뉴</h2>
+    <button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+    <button onclick="showSec('goals',this)">2. 학습목표</button>
+    <button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+    <button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+    <button onclick="showSec('finish',this)">5. 수업마무리</button>
+    <button onclick="showSec('essay',this)">6. 출력 서술형 10문항</button>
+    <button onclick="showSec('ox',this)">7. OX 진단평가</button>
+    <button onclick="showSec('mcq',this)">8. 심화 5지선다</button>
+    <button onclick="showSec('submit',this)">9. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>프로그래밍은 단순히 코드를 한 줄씩 실행하는 것에서 끝나지 않습니다. 실제 문제를 해결하려면 <b>상황에 따라 선택</b>하고, <b>필요한 만큼 반복</b>할 수 있어야 합니다.</p>
+<div class="grid">
+<div class="card"><h3>💡 실생활 질문</h3><p>성적이 90점 이상이면 A등급, 아니면 B등급을 주는 프로그램은 어떻게 만들까요?</p></div>
+<div class="card"><h3>🔁 반복의 필요성</h3><p>구구단을 1줄씩 직접 쓰지 않고 컴퓨터가 자동으로 출력하게 할 수 있을까요?</p></div>
+<div class="card"><h3>🎮 게임과 조건</h3><p>숫자 맞추기 게임에서 정답보다 큰지 작은지 판단하는 기능은 어떤 문법으로 만들까요?</p></div>
+</div>
+<p><span class="badge">조건문</span><span class="badge">반복문</span><span class="badge">흐름 제어</span><span class="badge">문제 해결</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>if, elif, else, for, while, break, continue, range()의 의미를 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>조건과 반복을 이용하여 홀짝 판별, 구구단, 팩토리얼, 별 찍기, 숫자 맞추기 프로그램을 작성할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>반복되는 일을 자동화하고 조건에 따라 다르게 처리하는 컴퓨팅 사고를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 조건문</h3>
+<p class="explain">조건문은 어떤 조건이 참인지 거짓인지에 따라 실행할 코드를 선택하는 구조입니다. 예: 점수가 60점 이상이면 합격, 아니면 불합격.</p>
+<h3>2. 반복문</h3>
+<p class="explain">반복문은 같은 작업을 여러 번 자동으로 실행하는 구조입니다. for문은 정해진 횟수 반복에, while문은 조건이 참인 동안 반복에 자주 사용됩니다.</p>
+<h3>3. 흐름 제어</h3>
+<p class="explain">break는 반복을 즉시 종료하고, continue는 이번 반복의 남은 부분을 건너뛰고 다음 반복으로 넘어갑니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. if 기본 구조</h3>
+<pre><code>score = 85
+if score >= 60:
+    print("합격")</code></pre>
+<p class="explain">score가 60 이상이면 조건이 참이므로 "합격"이 출력됩니다.</p>
+
+<h3>코드 2. if else 구조</h3>
+<pre><code>age = 15
+if age >= 18:
+    print("성인")
+else:
+    print("청소년")</code></pre>
+<p class="explain">조건이 참이면 if 블록, 거짓이면 else 블록이 실행됩니다.</p>
+
+<h3>코드 3. elif 여러 조건</h3>
+<pre><code>score = 92
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+else:
+    print("C")</code></pre>
+<p class="explain">여러 조건을 위에서부터 검사합니다. 처음 참이 되는 조건의 코드만 실행됩니다.</p>
+
+<h3>코드 4. 중첩 조건문</h3>
+<pre><code>score = 95
+attend = True
+if score >= 90:
+    if attend:
+        print("우수상")</code></pre>
+<p class="explain">조건문 안에 조건문을 넣어 더 세밀한 판단을 할 수 있습니다.</p>
+
+<h3>코드 5. for문과 range()</h3>
+<pre><code>for i in range(1, 6):
+    print(i)</code></pre>
+<p class="explain">range(1, 6)은 1부터 5까지의 숫자를 만듭니다. 끝값 6은 포함되지 않습니다.</p>
+
+<h3>코드 6. 구구단</h3>
+<pre><code>dan = 3
+for i in range(1, 10):
+    print(dan, "x", i, "=", dan*i)</code></pre>
+<p class="explain">반복문을 이용하면 3단의 1부터 9까지 곱셈 결과를 자동 출력할 수 있습니다.</p>
+
+<h3>코드 7. while문</h3>
+<pre><code>n = 1
+while n <= 5:
+    print(n)
+    n += 1</code></pre>
+<p class="explain">조건 n <= 5가 참인 동안 반복합니다. n을 증가시키지 않으면 무한 반복될 수 있습니다.</p>
+
+<h3>코드 8. break</h3>
+<pre><code>for i in range(1, 10):
+    if i == 5:
+        break
+    print(i)</code></pre>
+<p class="explain">i가 5가 되면 break로 반복문이 종료됩니다. 따라서 1,2,3,4만 출력됩니다.</p>
+
+<h3>코드 9. continue</h3>
+<pre><code>for i in range(1, 6):
+    if i == 3:
+        continue
+    print(i)</code></pre>
+<p class="explain">i가 3일 때 print를 건너뛰므로 1,2,4,5가 출력됩니다.</p>
+
+<h3>코드 10. 팩토리얼</h3>
+<pre><code>result = 1
+for i in range(1, 6):
+    result *= i
+print(result)</code></pre>
+<p class="explain">1×2×3×4×5를 계산하여 5! = 120을 출력합니다.</p>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>오늘 배운 조건문과 반복문은 프로그래밍에서 가장 중요한 흐름 제어 도구입니다.</p>
+<ul>
+<li>조건문은 선택을 만든다.</li>
+<li>반복문은 자동화를 만든다.</li>
+<li>break와 continue는 반복의 흐름을 세밀하게 조절한다.</li>
+<li>조건과 반복을 결합하면 게임, 계산기, 데이터 처리 프로그램을 만들 수 있다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 프로그램은 입력된 데이터를 조건에 따라 판단하고, 필요한 작업을 반복하면서 문제를 해결한다.</p>
+</div>
+</section>
+
+<section id="essay" class="section">
+<div class="card">
+<h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2>
+<div id="essayBox"></div>
+</div>
+</section>
+
+<section id="ox" class="section">
+<div class="card">
+<h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2>
+<div id="oxBox"></div>
+</div>
+</section>
+
+<section id="mcq" class="section">
+<div class="card">
+<h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2>
+<div id="mcqBox"></div>
+</div>
+</section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+const essay = [
+{q:`print(3 > 1)`, a:"True", e:"3은 1보다 크므로 비교식 3 > 1은 참(True)입니다."},
+{q:`score = 70\nif score >= 60:\n    print("pass")`, a:"pass", e:"70은 60 이상이므로 if 조건이 참이 되어 pass가 출력됩니다."},
+{q:`age = 12\nif age >= 18:\n    print("adult")\nelse:\n    print("student")`, a:"student", e:"12는 18보다 작으므로 else 블록이 실행됩니다."},
+{q:`for i in range(3):\n    print(i)`, a:"0\n1\n2", e:"range(3)은 0, 1, 2를 만듭니다."},
+{q:`for i in range(1, 4):\n    print(i * 2)`, a:"2\n4\n6", e:"i가 1,2,3으로 변하며 각각 2배가 출력됩니다."},
+{q:`n = 1\nwhile n <= 3:\n    print(n)\n    n += 1`, a:"1\n2\n3", e:"n이 1부터 3까지 증가하며 출력됩니다."},
+{q:`for i in range(1, 6):\n    if i == 4:\n        break\n    print(i)`, a:"1\n2\n3", e:"i가 4가 되면 break로 반복이 종료되어 1,2,3만 출력됩니다."},
+{q:`for i in range(1, 5):\n    if i == 2:\n        continue\n    print(i)`, a:"1\n3\n4", e:"i가 2일 때 continue로 출력이 건너뛰어집니다."},
+{q:`total = 0\nfor i in range(1, 4):\n    total += i\nprint(total)`, a:"6", e:"1+2+3의 합은 6입니다."},
+{q:`x = 5\nif x % 2 == 0:\n    print("even")\nelse:\n    print("odd")`, a:"odd", e:"5를 2로 나눈 나머지는 1이므로 홀수입니다."}
+];
+
+const ox = [
+{q:"if문은 조건이 참일 때 특정 코드를 실행하는 구조이다.", a:"O", e:"조건문은 조건의 참/거짓에 따라 실행 흐름을 바꿉니다."},
+{q:"else는 if 조건이 참일 때 실행된다.", a:"X", e:"else는 if 조건이 거짓일 때 실행됩니다."},
+{q:"elif는 여러 조건을 순서대로 검사할 때 사용할 수 있다.", a:"O", e:"elif를 사용하면 여러 조건 분기를 만들 수 있습니다."},
+{q:"range(1, 5)는 1,2,3,4,5를 만든다.", a:"X", e:"끝값 5는 포함되지 않으므로 1,2,3,4입니다."},
+{q:"for문은 정해진 범위나 자료를 반복할 때 자주 사용된다.", a:"O", e:"for문은 리스트, 문자열, range 등을 순회할 때 많이 사용합니다."},
+{q:"while문은 조건이 참인 동안 반복한다.", a:"O", e:"while은 조건 기반 반복문입니다."},
+{q:"break는 반복문을 처음부터 다시 시작하게 한다.", a:"X", e:"break는 반복문을 즉시 종료합니다."},
+{q:"continue는 현재 반복의 나머지 코드를 건너뛰고 다음 반복으로 이동한다.", a:"O", e:"continue는 반복을 완전히 끝내지는 않고 다음 반복으로 넘어갑니다."},
+{q:"중첩 조건문은 조건문 안에 또 다른 조건문이 있는 구조이다.", a:"O", e:"if 안에 if를 넣어 세밀한 판단을 할 수 있습니다."},
+{q:"반복문에서 값이 변하지 않으면 무한 반복이 발생할 수 있다.", a:"O", e:"while문에서 조건을 바꾸는 코드가 없으면 무한 반복 위험이 있습니다."}
+];
+
+const mcq = [
+{q:"다음 중 조건문을 시작할 때 사용하는 키워드는?", choices:["for","if","while","break","range"], a:"2", e:"if는 조건문을 시작하는 키워드입니다."},
+{q:"if 조건이 거짓일 때 실행할 코드를 작성하는 키워드는?", choices:["else","for","input","print","continue"], a:"1", e:"else는 앞 조건이 거짓일 때 실행됩니다."},
+{q:"여러 조건을 차례대로 검사할 때 적절한 키워드는?", choices:["elif","range","break","True","int"], a:"1", e:"elif는 else if의 의미로 여러 조건 분기에 사용됩니다."},
+{q:"range(2, 6)이 만드는 값으로 옳은 것은?", choices:["2,3,4,5","2,3,4,5,6","1,2,3,4,5","0,1,2,3,4,5","6만"], a:"1", e:"range의 끝값은 포함되지 않으므로 2,3,4,5입니다."},
+{q:"반복문을 즉시 종료하는 명령은?", choices:["continue","break","elif","else","input"], a:"2", e:"break는 반복문을 즉시 빠져나갑니다."},
+{q:"현재 반복만 건너뛰고 다음 반복으로 넘어가는 명령은?", choices:["continue","break","while","print","float"], a:"1", e:"continue는 현재 반복의 남은 코드를 건너뜁니다."},
+{q:"구구단 출력에 가장 적합한 기본 구조는?", choices:["반복문","주석","자료형 변환만","문자열만","입력문만"], a:"1", e:"같은 곱셈 형태를 반복하므로 반복문이 적합합니다."},
+{q:"while문에서 무한 반복을 피하기 위해 중요한 것은?", choices:["조건을 변화시키는 코드","항상 break만 사용","print 삭제","변수 사용 금지","문자열만 사용"], a:"1", e:"조건이 언젠가 거짓이 되도록 값을 변화시켜야 합니다."},
+{q:"홀짝 판별에 필요한 연산자는?", choices:["%","+","//","**","and"], a:"1", e:"나머지 연산자 %로 2로 나눈 나머지를 확인합니다."},
+{q:"5!을 계산하는 코드에서 필요한 반복 범위로 가장 적절한 것은?", choices:["range(1,6)","range(1,5)","range(5,1)","range(0,5)만 가능","range(6,1)"], a:"1", e:"1부터 5까지 곱해야 하므로 range(1,6)이 적절합니다."}
+];
+
+function render(){
+    const essayBox=document.getElementById('essayBox');
+    essayBox.innerHTML=essay.map((it,i)=>`
+    <div class="question">
+        <h3>서술형 ${i+1}</h3>
+        <pre><code>${it.q}</code></pre>
+        <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+        <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div>
+    </div>`).join('');
+
+    const oxBox=document.getElementById('oxBox');
+    oxBox.innerHTML=ox.map((it,i)=>`
+    <div class="question">
+        <h3>OX ${i+1}</h3>
+        <p>${it.q}</p>
+        <label><input type="radio" name="ox${i}" value="O"> O</label>
+        <label><input type="radio" name="ox${i}" value="X"> X</label>
+        <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+
+    const mcqBox=document.getElementById('mcqBox');
+    mcqBox.innerHTML=mcq.map((it,i)=>`
+    <div class="question">
+        <h3>5지선다 ${i+1}</h3>
+        <p>${it.q}</p>
+        ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+        <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+}
+function toggleAns(id){
+    const el=document.getElementById(id);
+    el.style.display=el.style.display==="block"?"none":"block";
+}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"");}
+let lastReport="";
+function gradeAll(){
+    let score=0, total=30;
+    let lines=[];
+    lines.push("2단계 조건문과 반복문 평가 결과");
+    lines.push("================================");
+    for(let i=0;i<essay.length;i++){
+        const user=norm(document.getElementById('essay'+i).value);
+        const ans=norm(essay[i].a);
+        const ok=user===ans;
+        if(ok) score++;
+        lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+    }
+    for(let i=0;i<ox.length;i++){
+        const checked=document.querySelector(`input[name="ox${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===ox[i].a;
+        if(ok) score++;
+        lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+    }
+    for(let i=0;i<mcq.length;i++){
+        const checked=document.querySelector(`input[name="mcq${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===mcq[i].a;
+        if(ok) score++;
+        lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+    }
+    const percent=Math.round(score/total*100);
+    lines.push("================================");
+    lines.push(`총점: ${score}/${total} (${percent}점)`);
+    lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+    lastReport=lines.join("\n");
+    document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_");}
+function downloadTxt(){
+    if(!lastReport) gradeAll();
+    const sid=safeName(document.getElementById('studentId').value);
+    const name=safeName(document.getElementById('studentName').value);
+    const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1] || "0";
+    const now=new Date();
+    const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+    const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+    const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

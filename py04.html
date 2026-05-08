@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>4단계 함수와 모듈 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+    background:linear-gradient(135deg,#f0f9ff,#f5f3ff,#fff7ed);
+    color:#1f2937;
+}
+header{
+    padding:30px 38px;
+    background:linear-gradient(135deg,#4338ca,#2563eb,#0891b2);
+    color:white;
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.96}
+.wrap{
+    display:grid;
+    grid-template-columns:275px 1fr;
+    min-height:calc(100vh - 125px);
+}
+nav{
+    background:#111827;
+    color:white;
+    padding:18px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#bae6fd}
+nav button{
+    width:100%;
+    text-align:left;
+    border:0;
+    border-radius:14px;
+    padding:12px 14px;
+    margin:6px 0;
+    color:white;
+    background:#374151;
+    cursor:pointer;
+    font-size:15px;
+}
+nav button:hover,nav button.active{background:#4338ca}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{
+    background:white;
+    border-radius:22px;
+    padding:24px;
+    margin-bottom:22px;
+    box-shadow:0 10px 28px rgba(15,23,42,.12);
+    border:1px solid #e5e7eb;
+}
+h2{color:#4338ca;margin-top:0;font-size:28px}
+h3{color:#0e7490;margin-bottom:10px}
+.badge{
+    display:inline-block;
+    background:#e0e7ff;
+    color:#3730a3;
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:700;
+    margin:4px;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{
+    background:#0f172a;
+    color:#e5e7eb;
+    padding:16px;
+    border-radius:16px;
+    overflow:auto;
+    font-size:15px;
+    line-height:1.55;
+}
+code{font-family:Consolas,monospace}
+.explain{
+    background:#f8fafc;
+    border-left:6px solid #6366f1;
+    padding:14px 16px;
+    border-radius:12px;
+    line-height:1.75;
+}
+.question{
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:18px;
+    margin:16px 0;
+    background:#ffffff;
+}
+textarea,input[type=text]{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    font-size:16px;
+    margin-top:8px;
+}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{
+    border:0;
+    border-radius:14px;
+    padding:13px 18px;
+    background:#4338ca;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    margin:8px 6px 8px 0;
+}
+.action.secondary{background:#0891b2}
+.result{
+    padding:16px;
+    border-radius:16px;
+    background:#eef2ff;
+    border:1px solid #a5b4fc;
+    margin-top:16px;
+    white-space:pre-wrap;
+    line-height:1.7;
+}
+.answer{
+    display:none;
+    margin-top:10px;
+    padding:12px;
+    background:#fff7ed;
+    border-left:5px solid #fb923c;
+    border-radius:12px;
+    line-height:1.7;
+}
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    overflow:hidden;
+    border-radius:16px;
+}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#e0e7ff}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){
+    .wrap{grid-template-columns:1fr}
+    nav{height:auto;position:relative}
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>🐍 4단계. 함수와 모듈</h1>
+    <p>개념기반 목표지향 수업지도안 · 코드 재사용 능력 · 함수 정의 / 매개변수 / 반환값 / lambda / map / filter / zip / 모듈</p>
+</header>
+
+<div class="wrap">
+<nav>
+    <h2>📚 학습 메뉴</h2>
+    <button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+    <button onclick="showSec('goals',this)">2. 학습목표</button>
+    <button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+    <button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+    <button onclick="showSec('finish',this)">5. 수업마무리</button>
+    <button onclick="showSec('essay',this)">6. 출력 서술형 10문항</button>
+    <button onclick="showSec('ox',this)">7. OX 진단평가</button>
+    <button onclick="showSec('mcq',this)">8. 심화 5지선다</button>
+    <button onclick="showSec('submit',this)">9. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>프로그래밍을 하다 보면 같은 계산이나 같은 처리 과정을 여러 번 사용하게 됩니다. 이때 같은 코드를 반복해서 쓰면 길고 복잡해집니다. <b>함수</b>는 자주 사용하는 코드를 이름 붙여 저장하고 다시 사용할 수 있게 해 줍니다.</p>
+<div class="grid">
+<div class="card"><h3>🧮 계산 함수 모음</h3><p>덧셈, 뺄셈, 곱셈, 나눗셈을 함수로 만들면 계산기를 쉽게 확장할 수 있습니다.</p></div>
+<div class="card"><h3>🔐 암호 생성기</h3><p>문자열을 바꾸는 규칙을 함수로 만들면 여러 문장에 반복 적용할 수 있습니다.</p></div>
+<div class="card"><h3>🧰 모듈 사용</h3><p>math, random 같은 모듈을 import하면 이미 만들어진 기능을 활용할 수 있습니다.</p></div>
+</div>
+<p><span class="badge">함수 정의</span><span class="badge">매개변수</span><span class="badge">반환값</span><span class="badge">lambda</span><span class="badge">map</span><span class="badge">filter</span><span class="badge">zip</span><span class="badge">import</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>함수 정의, 매개변수, 반환값, 지역변수와 전역변수, 모듈의 의미를 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>def, return, lambda, map, filter, zip, import를 활용한 코드를 작성할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>반복되는 코드를 함수로 정리하여 읽기 쉽고 재사용 가능한 프로그램을 만들려는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 함수</h3>
+<p class="explain">함수는 특정 작업을 수행하는 코드 묶음입니다. 함수에 이름을 붙이면 필요할 때마다 다시 호출할 수 있습니다.</p>
+<h3>2. 매개변수와 인수</h3>
+<p class="explain">매개변수는 함수가 값을 받을 자리이고, 인수는 함수를 호출할 때 실제로 전달하는 값입니다.</p>
+<h3>3. 반환값</h3>
+<p class="explain">return은 함수의 처리 결과를 함수 밖으로 돌려보냅니다. 반환값이 있으면 다른 계산에 다시 활용할 수 있습니다.</p>
+<h3>4. 지역변수와 전역변수</h3>
+<p class="explain">함수 안에서 만든 변수는 보통 지역변수이고, 함수 밖에서 만든 변수는 전역변수입니다.</p>
+<h3>5. 모듈</h3>
+<p class="explain">모듈은 함수와 변수 등을 모아 놓은 파일입니다. import를 사용해 다른 사람이 만든 기능도 가져와 쓸 수 있습니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. 함수 정의와 호출</h3>
+<pre><code>def hello():
+    print("Hello Python")
+
+hello()</code></pre>
+<p class="explain">def로 함수를 정의하고, hello()처럼 함수 이름 뒤에 괄호를 붙여 호출합니다.</p>
+
+<h3>코드 2. 매개변수</h3>
+<pre><code>def greet(name):
+    print("안녕하세요", name)
+
+greet("민수")</code></pre>
+<p class="explain">name은 매개변수입니다. "민수"라는 인수가 name 자리에 들어갑니다.</p>
+
+<h3>코드 3. 반환값</h3>
+<pre><code>def add(a, b):
+    return a + b
+
+print(add(3, 5))</code></pre>
+<p class="explain">return은 계산 결과를 함수 밖으로 돌려줍니다. add(3,5)는 8이 됩니다.</p>
+
+<h3>코드 4. 기본값 매개변수</h3>
+<pre><code>def power(x, n=2):
+    return x ** n
+
+print(power(3))
+print(power(3, 3))</code></pre>
+<p class="explain">n=2처럼 기본값을 정하면 두 번째 값을 생략했을 때 자동으로 2가 사용됩니다.</p>
+
+<h3>코드 5. 지역변수</h3>
+<pre><code>def test():
+    x = 10
+    print(x)
+
+test()</code></pre>
+<p class="explain">x는 함수 안에서 만들어진 지역변수입니다. 함수 안에서만 안전하게 사용됩니다.</p>
+
+<h3>코드 6. 전역변수 참조</h3>
+<pre><code>x = 100
+
+def show():
+    print(x)
+
+show()</code></pre>
+<p class="explain">함수 밖에서 만든 x를 함수 안에서 읽을 수 있습니다. 이런 변수는 전역변수입니다.</p>
+
+<h3>코드 7. lambda</h3>
+<pre><code>square = lambda x: x * x
+print(square(5))</code></pre>
+<p class="explain">lambda는 짧은 익명 함수를 만들 때 사용합니다. 여기서는 제곱 함수를 만듭니다.</p>
+
+<h3>코드 8. map</h3>
+<pre><code>nums = [1, 2, 3]
+result = list(map(lambda x: x * 2, nums))
+print(result)</code></pre>
+<p class="explain">map은 리스트의 각 원소에 같은 함수를 적용합니다. 각 숫자가 2배가 됩니다.</p>
+
+<h3>코드 9. filter</h3>
+<pre><code>nums = [1, 2, 3, 4, 5]
+even = list(filter(lambda x: x % 2 == 0, nums))
+print(even)</code></pre>
+<p class="explain">filter는 조건을 만족하는 원소만 남깁니다. 짝수만 추출됩니다.</p>
+
+<h3>코드 10. zip과 import</h3>
+<pre><code>import math
+
+names = ["A", "B", "C"]
+scores = [90, 80, 70]
+
+print(list(zip(names, scores)))
+print(math.sqrt(16))</code></pre>
+<p class="explain">zip은 여러 자료를 짝지어 줍니다. import math로 수학 모듈을 가져와 sqrt()를 사용할 수 있습니다.</p>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>함수와 모듈은 코드를 짧게 만드는 기술이 아니라, <b>생각을 구조화하고 재사용 가능한 프로그램을 만드는 핵심 도구</b>입니다.</p>
+<ul>
+<li>def는 함수를 만든다.</li>
+<li>매개변수는 함수가 외부 값을 받는 통로이다.</li>
+<li>return은 결과를 돌려준다.</li>
+<li>lambda, map, filter, zip은 데이터를 간결하게 처리하는 도구이다.</li>
+<li>import는 외부 모듈의 기능을 가져온다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 좋은 함수는 한 가지 일을 명확하게 수행하고, 필요할 때 다시 사용할 수 있어야 합니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section">
+<div class="card">
+<h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2>
+<div id="essayBox"></div>
+</div>
+</section>
+
+<section id="ox" class="section">
+<div class="card">
+<h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2>
+<div id="oxBox"></div>
+</div>
+</section>
+
+<section id="mcq" class="section">
+<div class="card">
+<h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2>
+<div id="mcqBox"></div>
+</div>
+</section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+const essay = [
+{q:`def hello():\n    print("Hi")\n\nhello()`, a:"Hi", e:"hello()를 호출하면 함수 안의 print가 실행되어 Hi가 출력됩니다."},
+{q:`def add(a, b):\n    return a + b\n\nprint(add(2, 3))`, a:"5", e:"a=2, b=3이므로 return a+b는 5입니다."},
+{q:`def greet(name):\n    print("Hello", name)\n\ngreet("Kim")`, a:"Hello Kim", e:"name에 Kim이 전달되어 Hello Kim이 출력됩니다."},
+{q:`def mul(x):\n    return x * 2\n\nprint(mul(7))`, a:"14", e:"7에 2를 곱한 값 14가 반환되어 출력됩니다."},
+{q:`def power(x, n=2):\n    return x ** n\n\nprint(power(4))`, a:"16", e:"n을 생략했으므로 기본값 2가 사용되어 4**2=16입니다."},
+{q:`x = 10\n\ndef show():\n    print(x)\n\nshow()`, a:"10", e:"함수 밖의 전역변수 x를 함수 안에서 읽어 출력합니다."},
+{q:`square = lambda x: x * x\nprint(square(6))`, a:"36", e:"lambda 함수가 6을 제곱해 36을 반환합니다."},
+{q:`nums = [1, 2, 3]\nprint(list(map(lambda x: x + 1, nums)))`, a:"[2, 3, 4]", e:"각 원소에 1을 더해 새로운 리스트를 만듭니다."},
+{q:`nums = [1, 2, 3, 4]\nprint(list(filter(lambda x: x > 2, nums)))`, a:"[3, 4]", e:"2보다 큰 값만 남기므로 [3, 4]입니다."},
+{q:`names = ["A", "B"]\nscores = [90, 80]\nprint(list(zip(names, scores)))`, a:"[('A', 90), ('B', 80)]", e:"zip은 같은 위치의 원소들을 튜플로 묶습니다."}
+];
+
+const ox = [
+{q:"def는 함수를 정의할 때 사용하는 키워드이다.", a:"O", e:"파이썬에서 함수는 def 키워드로 정의합니다."},
+{q:"함수는 반드시 매개변수가 있어야만 한다.", a:"X", e:"매개변수가 없는 함수도 만들 수 있습니다."},
+{q:"return은 함수의 결과를 함수 밖으로 돌려주는 역할을 한다.", a:"O", e:"return 값은 다른 계산이나 출력에 다시 사용할 수 있습니다."},
+{q:"print와 return은 완전히 같은 기능이다.", a:"X", e:"print는 화면 출력, return은 값 반환입니다."},
+{q:"함수 안에서 만든 변수는 일반적으로 지역변수이다.", a:"O", e:"함수 안에서 생성된 변수는 함수 내부에서 주로 사용됩니다."},
+{q:"lambda는 짧은 함수를 만들 때 사용할 수 있다.", a:"O", e:"lambda는 익명 함수를 간단히 표현할 때 사용합니다."},
+{q:"map은 여러 원소에 같은 함수를 적용할 때 사용할 수 있다.", a:"O", e:"map(function, iterable) 형태로 각 원소에 함수를 적용합니다."},
+{q:"filter는 조건을 만족하지 않는 원소만 남긴다.", a:"X", e:"filter는 조건이 참인 원소만 남깁니다."},
+{q:"zip은 여러 자료의 원소를 같은 위치끼리 묶는다.", a:"O", e:"zip은 대응되는 원소를 튜플 형태로 묶습니다."},
+{q:"import는 모듈을 가져올 때 사용하는 키워드이다.", a:"O", e:"예: import math, import random처럼 사용합니다."}
+];
+
+const mcq = [
+{q:"함수를 정의할 때 사용하는 키워드는?", choices:["if","for","def","return","import"], a:"3", e:"def는 함수를 정의하는 키워드입니다."},
+{q:"함수의 결과를 밖으로 돌려주는 키워드는?", choices:["print","return","input","while","break"], a:"2", e:"return은 값을 반환합니다."},
+{q:"함수에 전달되는 값을 받을 자리를 무엇이라고 하는가?", choices:["매개변수","주석","문자열","반복문","모듈"], a:"1", e:"매개변수는 함수가 값을 받는 자리입니다."},
+{q:"def add(a,b): return a+b 에서 add(3,4)의 결과는?", choices:["3","4","7","12","오류"], a:"3", e:"3+4=7입니다."},
+{q:"짧은 익명 함수를 만들 때 사용하는 것은?", choices:["lambda","zip","break","else","global만"], a:"1", e:"lambda는 간단한 익명 함수입니다."},
+{q:"리스트의 각 원소에 같은 함수를 적용하는 데 알맞은 함수는?", choices:["filter","map","zip","input","type"], a:"2", e:"map은 각 원소에 함수를 적용합니다."},
+{q:"조건을 만족하는 원소만 골라낼 때 적절한 함수는?", choices:["filter","zip","print","range","len만"], a:"1", e:"filter는 조건이 참인 원소만 남깁니다."},
+{q:"두 리스트의 같은 위치 원소를 묶을 때 사용하는 함수는?", choices:["zip","map","filter","lambda","int"], a:"1", e:"zip은 같은 위치의 원소들을 묶습니다."},
+{q:"수학 모듈 math를 가져오는 올바른 코드는?", choices:["get math","use math","import math","math import","open math"], a:"3", e:"모듈은 import 키워드로 가져옵니다."},
+{q:"print()와 return의 차이로 가장 적절한 것은?", choices:["둘 다 항상 파일 저장","print는 출력, return은 값 반환","return은 반복문","print는 함수 정의","차이가 없다"], a:"2", e:"print는 화면에 보이게 하고, return은 값을 돌려줍니다."}
+];
+
+function render(){
+    document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+    <div class="question">
+        <h3>서술형 ${i+1}</h3>
+        <pre><code>${it.q}</code></pre>
+        <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+        <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div>
+    </div>`).join('');
+
+    document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+    <div class="question">
+        <h3>OX ${i+1}</h3>
+        <p>${it.q}</p>
+        <label><input type="radio" name="ox${i}" value="O"> O</label>
+        <label><input type="radio" name="ox${i}" value="X"> X</label>
+        <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+
+    document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+    <div class="question">
+        <h3>5지선다 ${i+1}</h3>
+        <p>${it.q}</p>
+        ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+        <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+}
+function toggleAns(id){
+    const el=document.getElementById(id);
+    el.style.display=el.style.display==="block"?"none":"block";
+}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"");}
+let lastReport="";
+function gradeAll(){
+    let score=0, total=30;
+    let lines=[];
+    lines.push("4단계 함수와 모듈 평가 결과");
+    lines.push("================================");
+    for(let i=0;i<essay.length;i++){
+        const user=norm(document.getElementById('essay'+i).value);
+        const ans=norm(essay[i].a);
+        const ok=user===ans;
+        if(ok) score++;
+        lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+    }
+    for(let i=0;i<ox.length;i++){
+        const checked=document.querySelector(`input[name="ox${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===ox[i].a;
+        if(ok) score++;
+        lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+    }
+    for(let i=0;i<mcq.length;i++){
+        const checked=document.querySelector(`input[name="mcq${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===mcq[i].a;
+        if(ok) score++;
+        lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+    }
+    const percent=Math.round(score/total*100);
+    lines.push("================================");
+    lines.push(`총점: ${score}/${total} (${percent}점)`);
+    lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+    lastReport=lines.join("\n");
+    document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_");}
+function downloadTxt(){
+    if(!lastReport) gradeAll();
+    const sid=safeName(document.getElementById('studentId').value);
+    const name=safeName(document.getElementById('studentName').value);
+    const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1] || "0";
+    const now=new Date();
+    const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+    const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+    const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

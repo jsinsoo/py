@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>8단계 고급 파이썬 문법 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#fdf2f8,#eef2ff,#ecfeff);color:#1f2937}
+header{padding:30px 38px;background:linear-gradient(135deg,#be185d,#4f46e5,#0891b2);color:white;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.96}
+.wrap{display:grid;grid-template-columns:275px 1fr;min-height:calc(100vh - 125px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#fbcfe8}
+nav button{width:100%;text-align:left;border:0;border-radius:14px;padding:12px 14px;margin:6px 0;color:white;background:#374151;cursor:pointer;font-size:15px}
+nav button:hover,nav button.active{background:#be185d}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:white;border-radius:22px;padding:24px;margin-bottom:22px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb}
+h2{color:#be185d;margin-top:0;font-size:28px}
+h3{color:#4338ca;margin-bottom:10px}
+.badge{display:inline-block;background:#fce7f3;color:#9d174d;padding:6px 12px;border-radius:999px;font-weight:700;margin:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{background:#0f172a;color:#e5e7eb;padding:16px;border-radius:16px;overflow:auto;font-size:15px;line-height:1.55}
+code{font-family:Consolas,monospace}
+.explain{background:#f8fafc;border-left:6px solid #ec4899;padding:14px 16px;border-radius:12px;line-height:1.75}
+.question{border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin:16px 0;background:#ffffff}
+textarea,input[type=text]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-top:8px}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{border:0;border-radius:14px;padding:13px 18px;background:#be185d;color:white;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}
+.action.secondary{background:#4f46e5}
+.result{padding:16px;border-radius:16px;background:#fdf2f8;border:1px solid #f9a8d4;margin-top:16px;white-space:pre-wrap;line-height:1.7}
+.answer{display:none;margin-top:10px;padding:12px;background:#eef2ff;border-left:5px solid #6366f1;border-radius:12px;line-height:1.7}
+.table{width:100%;border-collapse:collapse;background:white;overflow:hidden;border-radius:16px}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#fce7f3}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}}
+</style>
+</head>
+<body>
+<header>
+<h1>🐍 8단계. 고급 파이썬 문법</h1>
+<p>개념기반 목표지향 수업지도안 · 파이썬다운 코드 작성 · comprehension / generator / yield / decorator / closure / unpacking / args / kwargs</p>
+</header>
+
+<div class="wrap">
+<nav>
+<h2>📚 학습 메뉴</h2>
+<button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+<button onclick="showSec('goals',this)">2. 학습목표</button>
+<button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+<button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+<button onclick="showSec('projects',this)">5. 실습 예제</button>
+<button onclick="showSec('finish',this)">6. 수업마무리</button>
+<button onclick="showSec('essay',this)">7. 출력 서술형 10문항</button>
+<button onclick="showSec('ox',this)">8. OX 진단평가</button>
+<button onclick="showSec('mcq',this)">9. 심화 5지선다</button>
+<button onclick="showSec('submit',this)">10. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>고급 파이썬 문법은 단순히 어려운 문법이 아니라, <b>짧고 읽기 쉽고 재사용 가능한 파이썬다운 코드</b>를 작성하기 위한 도구입니다.</p>
+<div class="grid">
+<div class="card"><h3>✨ 컴프리헨션</h3><p>반복문과 조건문을 한 줄로 간결하게 표현합니다.</p></div>
+<div class="card"><h3>🔁 제너레이터</h3><p>값을 한꺼번에 만들지 않고 필요할 때 하나씩 생성합니다.</p></div>
+<div class="card"><h3>🎁 데코레이터</h3><p>기존 함수의 앞뒤에 기능을 덧붙입니다.</p></div>
+<div class="card"><h3>📦 언패킹</h3><p>리스트, 튜플, 딕셔너리 값을 깔끔하게 풀어 사용할 수 있습니다.</p></div>
+</div>
+<p><span class="badge">list comprehension</span><span class="badge">dict comprehension</span><span class="badge">yield</span><span class="badge">iterator</span><span class="badge">decorator</span><span class="badge">closure</span><span class="badge">*args</span><span class="badge">**kwargs</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>컴프리헨션, generator, yield, iterator, decorator, closure, unpacking, *args, **kwargs의 개념을 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>고급 문법을 활용하여 제너레이터, 로그 데코레이터, 가변 인수 함수, 코드 최적화 예제를 작성할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>파이썬다운 표현을 사용하되, 가독성과 명확성을 함께 고려하는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 컴프리헨션</h3>
+<p class="explain">컴프리헨션은 리스트나 딕셔너리를 짧고 직관적으로 생성하는 문법입니다.</p>
+<h3>2. generator와 yield</h3>
+<p class="explain">제너레이터는 값을 한 번에 모두 만들지 않고 필요할 때 하나씩 생성합니다. yield는 값을 잠시 반환하고 함수 실행 상태를 기억합니다.</p>
+<h3>3. iterator</h3>
+<p class="explain">이터레이터는 next()로 값을 하나씩 꺼낼 수 있는 객체입니다.</p>
+<h3>4. decorator</h3>
+<p class="explain">데코레이터는 함수를 감싸서 실행 전후에 새로운 기능을 추가합니다.</p>
+<h3>5. closure</h3>
+<p class="explain">클로저는 내부 함수가 외부 함수의 변수를 기억하는 구조입니다.</p>
+<h3>6. unpacking, *args, **kwargs</h3>
+<p class="explain">언패킹은 묶인 값을 풀어내는 문법이고, *args는 여러 위치 인수, **kwargs는 여러 키워드 인수를 받을 때 사용합니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. 리스트 컴프리헨션</h3>
+<pre><code>nums = [x*x for x in range(1, 6)]
+print(nums)</code></pre>
+<p class="explain">1부터 5까지의 제곱을 한 줄로 리스트에 저장합니다.</p>
+
+<h3>코드 2. 조건이 있는 리스트 컴프리헨션</h3>
+<pre><code>even = [x for x in range(1, 11) if x % 2 == 0]
+print(even)</code></pre>
+<p class="explain">1부터 10까지 중 짝수만 골라 리스트로 만듭니다.</p>
+
+<h3>코드 3. 딕셔너리 컴프리헨션</h3>
+<pre><code>square = {x: x*x for x in range(1, 4)}
+print(square)</code></pre>
+<p class="explain">숫자를 키로, 제곱을 값으로 갖는 딕셔너리를 만듭니다.</p>
+
+<h3>코드 4. generator와 yield</h3>
+<pre><code>def gen():
+    yield 1
+    yield 2
+
+g = gen()
+print(next(g))
+print(next(g))</code></pre>
+<p class="explain">yield는 값을 하나씩 생성합니다. next()를 호출할 때마다 다음 yield 값이 나옵니다.</p>
+
+<h3>코드 5. iterator</h3>
+<pre><code>nums = iter([10, 20, 30])
+print(next(nums))
+print(next(nums))</code></pre>
+<p class="explain">iter()로 이터레이터를 만들고 next()로 값을 하나씩 꺼냅니다.</p>
+
+<h3>코드 6. decorator</h3>
+<pre><code>def deco(func):
+    def wrapper():
+        print("시작")
+        func()
+        print("끝")
+    return wrapper
+
+@deco
+def hello():
+    print("Hello")
+
+hello()</code></pre>
+<p class="explain">데코레이터는 hello 함수 실행 전후에 시작과 끝을 출력하도록 기능을 추가합니다.</p>
+
+<h3>코드 7. closure</h3>
+<pre><code>def outer(x):
+    def inner(y):
+        return x + y
+    return inner
+
+add5 = outer(5)
+print(add5(3))</code></pre>
+<p class="explain">inner 함수가 outer의 x=5를 기억합니다. 그래서 add5(3)은 8입니다.</p>
+
+<h3>코드 8. unpacking</h3>
+<pre><code>a, b, c = [1, 2, 3]
+print(a + b + c)</code></pre>
+<p class="explain">리스트의 값을 변수 a, b, c에 각각 풀어 저장합니다.</p>
+
+<h3>코드 9. *args</h3>
+<pre><code>def total(*args):
+    return sum(args)
+
+print(total(1, 2, 3, 4))</code></pre>
+<p class="explain">*args는 개수가 정해지지 않은 여러 위치 인수를 튜플처럼 받습니다.</p>
+
+<h3>코드 10. **kwargs</h3>
+<pre><code>def info(**kwargs):
+    print(kwargs["name"], kwargs["score"])
+
+info(name="Kim", score=95)</code></pre>
+<p class="explain">**kwargs는 여러 키워드 인수를 딕셔너리처럼 받습니다.</p>
+</div>
+</section>
+
+<section id="projects" class="section">
+<div class="card">
+<h2>🧪 실습 예제</h2>
+<h3>1. 제너레이터 만들기</h3>
+<pre><code>def count_up(n):
+    for i in range(1, n+1):
+        yield i
+
+for num in count_up(5):
+    print(num)</code></pre>
+
+<h3>2. 데코레이터 로그 시스템</h3>
+<pre><code>def logger(func):
+    def wrapper(*args, **kwargs):
+        print("함수 실행:", func.__name__)
+        result = func(*args, **kwargs)
+        print("함수 종료:", func.__name__)
+        return result
+    return wrapper
+
+@logger
+def add(a, b):
+    return a + b
+
+print(add(3, 4))</code></pre>
+
+<h3>3. 코드 최적화 예제</h3>
+<pre><code>scores = [70, 85, 90, 40, 100]
+passed = [s for s in scores if s >= 60]
+average = sum(passed) / len(passed)
+print(passed)
+print(average)</code></pre>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>고급 파이썬 문법은 코드를 무조건 짧게 쓰는 기술이 아니라, <b>의도를 명확하게 드러내고 반복을 줄이며 메모리를 효율적으로 사용하는 표현 방식</b>입니다.</p>
+<ul>
+<li>컴프리헨션은 간결한 데이터 생성을 돕는다.</li>
+<li>제너레이터는 메모리를 절약하며 값을 하나씩 만든다.</li>
+<li>데코레이터는 기존 함수에 기능을 추가한다.</li>
+<li>클로저는 외부 변수의 값을 기억한다.</li>
+<li>언패킹은 묶인 데이터를 깔끔하게 풀어낸다.</li>
+<li>*args와 **kwargs는 유연한 함수 설계를 가능하게 한다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 파이썬다운 코드는 짧기만 한 코드가 아니라, 읽기 쉽고 의도가 분명한 코드입니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section"><div class="card"><h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2><div id="essayBox"></div></div></section>
+<section id="ox" class="section"><div class="card"><h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2><div id="oxBox"></div></div></section>
+<section id="mcq" class="section"><div class="card"><h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2><div id="mcqBox"></div></div></section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+
+const essay=[
+{q:`nums=[x*x for x in range(1,4)]\nprint(nums)`,a:"[1, 4, 9]",e:"1,2,3의 제곱을 리스트로 만듭니다."},
+{q:`even=[x for x in range(1,7) if x%2==0]\nprint(even)`,a:"[2, 4, 6]",e:"1부터 6까지 중 짝수만 남깁니다."},
+{q:`d={x:x+1 for x in range(3)}\nprint(d)`,a:"{0: 1, 1: 2, 2: 3}",e:"각 x를 키로, x+1을 값으로 저장합니다."},
+{q:`def gen():\n    yield 10\n    yield 20\n\ng=gen()\nprint(next(g))`,a:"10",e:"첫 번째 next 호출은 첫 번째 yield 값 10을 반환합니다."},
+{q:`it=iter([3,4,5])\nprint(next(it))\nprint(next(it))`,a:"3\n4",e:"이터레이터에서 값을 순서대로 하나씩 꺼냅니다."},
+{q:`def outer(x):\n    def inner(y):\n        return x*y\n    return inner\n\nf=outer(3)\nprint(f(4))`,a:"12",e:"inner가 x=3을 기억하므로 3*4=12입니다."},
+{q:`a,b=[7,8]\nprint(a+b)`,a:"15",e:"언패킹으로 a=7, b=8이 되어 합은 15입니다."},
+{q:`def total(*args):\n    return sum(args)\nprint(total(2,4,6))`,a:"12",e:"*args가 2,4,6을 받아 합계를 구합니다."},
+{q:`def info(**kwargs):\n    print(kwargs["name"])\ninfo(name="Lee", age=17)`,a:"Lee",e:"**kwargs는 키워드 인수를 딕셔너리처럼 저장합니다."},
+{q:`def deco(func):\n    def wrapper():\n        print("A")\n        func()\n        print("B")\n    return wrapper\n@deco\ndef hi():\n    print("Hi")\nhi()`,a:"A\nHi\nB",e:"데코레이터가 함수 실행 전후에 A와 B를 추가 출력합니다."}
+];
+
+const ox=[
+{q:"리스트 컴프리헨션은 리스트를 간결하게 만드는 문법이다.",a:"O",e:"반복문과 조건을 한 줄로 표현할 수 있습니다."},
+{q:"딕셔너리 컴프리헨션은 딕셔너리를 만들 수 없다.",a:"X",e:"{키:값 for ...} 형태로 딕셔너리를 만들 수 있습니다."},
+{q:"yield는 제너레이터 함수에서 값을 하나씩 생성할 때 사용된다.",a:"O",e:"yield는 함수 상태를 유지하며 값을 반환합니다."},
+{q:"제너레이터는 모든 값을 반드시 한 번에 리스트로 만든다.",a:"X",e:"제너레이터는 필요할 때 값을 하나씩 생성합니다."},
+{q:"iterator는 next()로 값을 하나씩 꺼낼 수 있다.",a:"O",e:"이터레이터는 순차 접근 객체입니다."},
+{q:"데코레이터는 기존 함수의 기능을 감싸서 확장할 수 있다.",a:"O",e:"함수 실행 전후에 기능을 추가할 수 있습니다."},
+{q:"클로저는 내부 함수가 외부 함수의 변수를 기억하는 구조이다.",a:"O",e:"외부 함수 실행이 끝난 뒤에도 값을 기억할 수 있습니다."},
+{q:"언패킹은 묶인 값을 여러 변수에 나누어 담는 문법이다.",a:"O",e:"예: a,b=[1,2]."},
+{q:"*args는 키워드 인수만 딕셔너리로 받는다.",a:"X",e:"*args는 위치 인수를 튜플처럼 받습니다."},
+{q:"**kwargs는 키워드 인수를 딕셔너리처럼 받는다.",a:"O",e:"예: name='Kim', score=90 형태를 받습니다."}
+];
+
+const mcq=[
+{q:"리스트를 간결하게 생성하는 문법은?",choices:["리스트 컴프리헨션","try-except","파일 쓰기","클래스 변수","CSV"],a:"1",e:"리스트 컴프리헨션은 리스트 생성 문법입니다."},
+{q:"제너레이터 함수에서 값을 생성할 때 사용하는 키워드는?",choices:["yield","return만","break","class","import"],a:"1",e:"yield는 제너레이터의 핵심 키워드입니다."},
+{q:"next()로 값을 하나씩 꺼낼 수 있는 객체는?",choices:["iterator","주석","문자열만","정수","예외"],a:"1",e:"이터레이터는 next로 순차 접근합니다."},
+{q:"기존 함수를 감싸 기능을 추가하는 문법은?",choices:["decorator","list","tuple","input","range"],a:"1",e:"데코레이터는 함수를 감싸 기능을 확장합니다."},
+{q:"내부 함수가 외부 함수의 변수를 기억하는 구조는?",choices:["closure","queue","stack","json","csv"],a:"1",e:"클로저는 외부 변수를 기억합니다."},
+{q:"a,b=[1,2]와 같은 문법을 무엇이라 하는가?",choices:["unpacking","packing only","sorting","hashing","filtering"],a:"1",e:"묶인 값을 풀어 변수에 담는 언패킹입니다."},
+{q:"여러 위치 인수를 받을 때 사용하는 문법은?",choices:["*args","**kwargs","yield만","@staticmethod","except"],a:"1",e:"*args는 여러 위치 인수를 받습니다."},
+{q:"여러 키워드 인수를 받을 때 사용하는 문법은?",choices:["**kwargs","*args","range","next","zip만"],a:"1",e:"**kwargs는 키워드 인수를 딕셔너리처럼 받습니다."},
+{q:"메모리 절약 측면에서 큰 데이터를 순차 생성할 때 유리한 것은?",choices:["generator","모든 값을 리스트로 미리 생성","print만 사용","문자열 고정","전역변수만"],a:"1",e:"제너레이터는 필요할 때 하나씩 값을 생성합니다."},
+{q:"@deco 형태로 함수 위에 붙여 사용하는 것은?",choices:["decorator","iterator","closure","unpacking","dict"],a:"1",e:"@문법은 데코레이터 적용 문법입니다."}
+];
+
+function render(){
+ document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+ <div class="question"><h3>서술형 ${i+1}</h3><pre><code>${it.q}</code></pre>
+ <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+ <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div></div>`).join('');
+ document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+ <div class="question"><h3>OX ${i+1}</h3><p>${it.q}</p>
+ <label><input type="radio" name="ox${i}" value="O"> O</label>
+ <label><input type="radio" name="ox${i}" value="X"> X</label>
+ <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+ document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+ <div class="question"><h3>5지선다 ${i+1}</h3><p>${it.q}</p>
+ ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+ <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+}
+function toggleAns(id){const el=document.getElementById(id);el.style.display=el.style.display==="block"?"none":"block"}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"")}
+let lastReport="";
+function gradeAll(){
+ let score=0,total=30,lines=[];
+ lines.push("8단계 고급 파이썬 문법 평가 결과");
+ lines.push("================================");
+ for(let i=0;i<essay.length;i++){
+   const user=norm(document.getElementById('essay'+i).value), ans=norm(essay[i].a), ok=user===ans;
+   if(ok)score++; lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+ }
+ for(let i=0;i<ox.length;i++){
+   const checked=document.querySelector(`input[name="ox${i}"]:checked`), val=checked?checked.value:"", ok=val===ox[i].a;
+   if(ok)score++; lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+ }
+ for(let i=0;i<mcq.length;i++){
+   const checked=document.querySelector(`input[name="mcq${i}"]:checked`), val=checked?checked.value:"", ok=val===mcq[i].a;
+   if(ok)score++; lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+ }
+ const percent=Math.round(score/total*100);
+ lines.push("================================");
+ lines.push(`총점: ${score}/${total} (${percent}점)`);
+ lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+ lastReport=lines.join("\n");
+ document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_")}
+function downloadTxt(){
+ if(!lastReport)gradeAll();
+ const sid=safeName(document.getElementById('studentId').value);
+ const name=safeName(document.getElementById('studentName').value);
+ const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1]||"0";
+ const now=new Date();
+ const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+ const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+ const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>10단계 고급 프로젝트/실전 개발 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#eff6ff,#f5f3ff,#fff7ed);color:#1f2937}
+header{padding:30px 38px;background:linear-gradient(135deg,#1d4ed8,#7c3aed,#ea580c);color:white;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.96}
+.wrap{display:grid;grid-template-columns:275px 1fr;min-height:calc(100vh - 125px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#bfdbfe}
+nav button{width:100%;text-align:left;border:0;border-radius:14px;padding:12px 14px;margin:6px 0;color:white;background:#374151;cursor:pointer;font-size:15px}
+nav button:hover,nav button.active{background:#1d4ed8}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:white;border-radius:22px;padding:24px;margin-bottom:22px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb}
+h2{color:#1d4ed8;margin-top:0;font-size:28px}
+h3{color:#7c2d12;margin-bottom:10px}
+.badge{display:inline-block;background:#dbeafe;color:#1e40af;padding:6px 12px;border-radius:999px;font-weight:700;margin:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{background:#0f172a;color:#e5e7eb;padding:16px;border-radius:16px;overflow:auto;font-size:15px;line-height:1.55}
+code{font-family:Consolas,monospace}
+.explain{background:#f8fafc;border-left:6px solid #3b82f6;padding:14px 16px;border-radius:12px;line-height:1.75}
+.question{border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin:16px 0;background:#ffffff}
+textarea,input[type=text]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-top:8px}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{border:0;border-radius:14px;padding:13px 18px;background:#1d4ed8;color:white;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}
+.action.secondary{background:#7c3aed}
+.result{padding:16px;border-radius:16px;background:#eff6ff;border:1px solid #93c5fd;margin-top:16px;white-space:pre-wrap;line-height:1.7}
+.answer{display:none;margin-top:10px;padding:12px;background:#fff7ed;border-left:5px solid #f97316;border-radius:12px;line-height:1.7}
+.table{width:100%;border-collapse:collapse;background:white;overflow:hidden;border-radius:16px}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#dbeafe}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}}
+</style>
+</head>
+<body>
+<header>
+<h1>🐍 10단계. 고급 프로젝트/실전 개발</h1>
+<p>개념기반 목표지향 수업지도안 · 실무형 개발자 단계 · 웹 개발 / API / 크롤링 / 자동화 / GUI / 데이터·AI 프로젝트</p>
+</header>
+
+<div class="wrap">
+<nav>
+<h2>📚 학습 메뉴</h2>
+<button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+<button onclick="showSec('goals',this)">2. 학습목표</button>
+<button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+<button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+<button onclick="showSec('projects',this)">5. 최종 프로젝트</button>
+<button onclick="showSec('finish',this)">6. 수업마무리</button>
+<button onclick="showSec('essay',this)">7. 출력 서술형 10문항</button>
+<button onclick="showSec('ox',this)">8. OX 진단평가</button>
+<button onclick="showSec('mcq',this)">9. 심화 5지선다</button>
+<button onclick="showSec('submit',this)">10. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>10단계는 지금까지 배운 파이썬 문법, 자료구조, 알고리즘, 데이터 분석, AI 기초를 실제 서비스와 프로젝트로 연결하는 단계입니다. 개발자는 코드를 작성하는 사람을 넘어 <b>문제를 발견하고, 데이터를 연결하고, 사용자에게 쓸 수 있는 결과물을 제공하는 사람</b>입니다.</p>
+<div class="grid">
+<div class="card"><h3>🌐 웹 개발</h3><p>Flask와 Django로 웹 페이지와 서버 기능을 만듭니다.</p></div>
+<div class="card"><h3>🔌 API 활용</h3><p>공공데이터포털 API를 연결해 실시간 데이터를 가져옵니다.</p></div>
+<div class="card"><h3>🕷 웹 크롤링</h3><p>Beautiful Soup과 Selenium으로 웹 정보를 수집하고 자동화합니다.</p></div>
+<div class="card"><h3>🤖 AI 프로젝트</h3><p>데이터 분석과 머신러닝을 결합해 예측·분류 서비스를 만듭니다.</p></div>
+</div>
+<p><span class="badge">Flask</span><span class="badge">Django</span><span class="badge">API</span><span class="badge">공공데이터포털</span><span class="badge">Beautiful Soup</span><span class="badge">Selenium</span><span class="badge">Tkinter</span><span class="badge">AI 프로젝트</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>웹 개발, API, 크롤링, 자동화, GUI, 데이터 프로젝트, AI 프로젝트의 기본 구조를 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>Flask 서버, API 요청, Beautiful Soup 파싱, Selenium 자동화, Tkinter GUI, 간단한 데이터·AI 프로젝트 코드를 작성할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>사용자 문제를 해결하는 실전 프로젝트를 계획하고, 보안·윤리·유지보수를 고려하는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 웹 개발</h3>
+<p class="explain">웹 개발은 사용자가 브라우저에서 접근할 수 있는 서비스를 만드는 과정입니다. Flask는 가볍고 빠른 웹앱에, Django는 큰 규모의 웹 서비스에 자주 사용됩니다.</p>
+<h3>2. API 활용</h3>
+<p class="explain">API는 프로그램끼리 데이터를 주고받는 약속입니다. 공공데이터포털 API를 활용하면 날씨, 미세먼지, 버스 도착 정보 등을 가져올 수 있습니다.</p>
+<h3>3. 웹 크롤링</h3>
+<p class="explain">크롤링은 웹 페이지에서 필요한 정보를 수집하는 과정입니다. robots.txt, 이용약관, 저작권을 지켜야 합니다.</p>
+<h3>4. 자동화와 GUI</h3>
+<p class="explain">자동화는 반복 작업을 프로그램이 대신하게 하는 기술이고, GUI는 사용자가 버튼과 입력창으로 프로그램을 쉽게 조작하도록 만드는 화면입니다.</p>
+<h3>5. 데이터·AI 프로젝트</h3>
+<p class="explain">데이터 프로젝트는 수집·전처리·분석·시각화로 구성되고, AI 프로젝트는 여기에 모델 학습과 예측 기능이 추가됩니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. Flask 기본 서버</h3>
+<pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello Flask"
+
+app.run(debug=True)</code></pre>
+<p class="explain">Flask는 간단한 웹 서버를 빠르게 만들 수 있습니다. "/" 주소로 접속하면 Hello Flask가 보입니다.</p>
+
+<h3>코드 2. Flask HTML 반환</h3>
+<pre><code>@app.route("/hello")
+def hello():
+    return "&lt;h1&gt;안녕하세요&lt;/h1&gt;"</code></pre>
+<p class="explain">Flask는 문자열뿐 아니라 HTML 코드도 응답으로 보낼 수 있습니다.</p>
+
+<h3>코드 3. Django 개념 구조</h3>
+<pre><code># Django 기본 흐름
+# URL 요청 → view 함수 → template 렌더링 → HTML 응답</code></pre>
+<p class="explain">Django는 URL, view, template, model 구조로 웹 서비스를 체계적으로 구성합니다.</p>
+
+<h3>코드 4. API 요청</h3>
+<pre><code>import requests
+
+url = "https://api.example.com/data"
+response = requests.get(url)
+print(response.status_code)</code></pre>
+<p class="explain">requests.get()은 API 서버에 데이터를 요청합니다. status_code 200은 일반적으로 성공을 의미합니다.</p>
+
+<h3>코드 5. JSON 응답 처리</h3>
+<pre><code>data = response.json()
+print(data)</code></pre>
+<p class="explain">API 응답이 JSON 형식이면 response.json()으로 파이썬 딕셔너리처럼 다룰 수 있습니다.</p>
+
+<h3>코드 6. 공공데이터포털 API 기본 형태</h3>
+<pre><code>params = {
+    "serviceKey": "인증키",
+    "pageNo": 1,
+    "numOfRows": 10,
+    "dataType": "JSON"
+}</code></pre>
+<p class="explain">공공데이터포털 API는 보통 인증키와 요청 파라미터를 함께 전달합니다. 실제 수업에서는 인증키를 공개하지 않도록 주의합니다.</p>
+
+<h3>코드 7. Beautiful Soup 파싱</h3>
+<pre><code>from bs4 import BeautifulSoup
+
+html = "&lt;h1&gt;Python&lt;/h1&gt;"
+soup = BeautifulSoup(html, "html.parser")
+print(soup.h1.text)</code></pre>
+<p class="explain">Beautiful Soup은 HTML 문서에서 원하는 태그와 텍스트를 추출할 때 사용합니다.</p>
+
+<h3>코드 8. Selenium 자동화 개념</h3>
+<pre><code>from selenium import webdriver
+
+driver = webdriver.Chrome()
+driver.get("https://example.com")
+print(driver.title)
+driver.quit()</code></pre>
+<p class="explain">Selenium은 실제 브라우저를 조작해 클릭, 입력, 페이지 이동 같은 작업을 자동화할 수 있습니다.</p>
+
+<h3>코드 9. Tkinter GUI</h3>
+<pre><code>import tkinter as tk
+
+root = tk.Tk()
+root.title("파이썬 GUI")
+label = tk.Label(root, text="Hello Tkinter")
+label.pack()
+root.mainloop()</code></pre>
+<p class="explain">Tkinter는 파이썬 기본 GUI 라이브러리입니다. 창, 라벨, 버튼, 입력창 등을 만들 수 있습니다.</p>
+
+<h3>코드 10. 챗봇 기본 구조</h3>
+<pre><code>def chatbot(msg):
+    if "안녕" in msg:
+        return "안녕하세요!"
+    return "무슨 뜻인지 더 알려주세요."
+
+print(chatbot("안녕"))</code></pre>
+<p class="explain">간단한 규칙 기반 챗봇입니다. 이후 AI 모델과 연결하면 더 지능적인 챗봇으로 확장할 수 있습니다.</p>
+</div>
+</section>
+
+<section id="projects" class="section">
+<div class="card">
+<h2>🧪 최종 프로젝트 예시</h2>
+<table class="table">
+<tr><th>프로젝트</th><th>핵심 기능</th><th>활용 기술</th></tr>
+<tr><td>실시간 날씨 앱</td><td>지역별 날씨 조회, 옷차림 추천</td><td>Flask, 공공데이터포털 API, JSON</td></tr>
+<tr><td>미세먼지 지도 앱</td><td>지역별 미세먼지 표시, 건강 주의 알림</td><td>API, 지도 시각화, Pandas</td></tr>
+<tr><td>버스 도착 앱</td><td>정류장 검색, 도착 예정 시간 표시</td><td>국토교통부 API, Flask</td></tr>
+<tr><td>챗봇 만들기</td><td>질문 응답, 규칙 기반 응답, AI 확장</td><td>Python, NLP, Flask</td></tr>
+<tr><td>게임 개발</td><td>캐릭터, 점수, 충돌 처리</td><td>OOP, pygame 또는 tkinter</td></tr>
+</table>
+
+<h3>프로젝트 설계 흐름</h3>
+<pre><code>1. 문제 정의
+2. 사용자 요구 분석
+3. 데이터/API 조사
+4. 화면 설계
+5. 핵심 기능 구현
+6. 오류 처리
+7. 테스트
+8. 발표 및 개선</code></pre>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>고급 프로젝트 단계에서는 문법보다 중요한 것이 있습니다. 바로 <b>문제를 실제로 해결하는 완성형 결과물</b>을 만드는 것입니다.</p>
+<ul>
+<li>웹 개발은 사용자에게 서비스를 제공한다.</li>
+<li>API는 외부 데이터를 연결한다.</li>
+<li>크롤링은 웹 정보를 수집하지만 윤리와 규칙을 지켜야 한다.</li>
+<li>자동화는 반복 작업을 줄인다.</li>
+<li>GUI는 사용 편의성을 높인다.</li>
+<li>데이터·AI 프로젝트는 분석과 예측으로 의사결정을 돕는다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 실무형 개발자는 코드를 작성하는 사람을 넘어, 문제를 발견하고 해결 가능한 서비스로 구현하는 사람입니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section"><div class="card"><h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2><div id="essayBox"></div></div></section>
+<section id="ox" class="section"><div class="card"><h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2><div id="oxBox"></div></div></section>
+<section id="mcq" class="section"><div class="card"><h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2><div id="mcqBox"></div></div></section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+
+const essay=[
+{q:`def chatbot(msg):\n    if "안녕" in msg:\n        return "안녕하세요!"\n    return "모르겠습니다."\nprint(chatbot("안녕"))`,a:"안녕하세요!",e:"문자열 안에 안녕이 있으므로 첫 번째 return이 실행됩니다."},
+{q:`html="<h1>Python</h1>"\nprint("Python" in html)`,a:"True",e:"html 문자열 안에 Python이 포함되어 있으므로 True입니다."},
+{q:`params={"pageNo":1,"numOfRows":10}\nprint(params["pageNo"])`,a:"1",e:"딕셔너리 params에서 pageNo 키의 값은 1입니다."},
+{q:`status_code=200\nif status_code==200:\n    print("성공")\nelse:\n    print("실패")`,a:"성공",e:"status_code가 200이므로 성공이 출력됩니다."},
+{q:`data={"weather":"맑음","temp":25}\nprint(data["weather"])`,a:"맑음",e:"JSON과 비슷한 딕셔너리에서 weather 키의 값은 맑음입니다."},
+{q:`items=["날씨앱","미세먼지앱","버스앱"]\nprint(len(items))`,a:"3",e:"리스트 items의 원소 개수는 3개입니다."},
+{q:`title="Python GUI"\nprint(title.split()[1])`,a:"GUI",e:"split() 결과는 ['Python','GUI']이고 인덱스 1은 GUI입니다."},
+{q:`def route(path):\n    return "home" if path=="/" else "other"\nprint(route("/"))`,a:"home",e:"path가 '/'이므로 조건 표현식 결과는 home입니다."},
+{q:`apps=["weather","dust","bus"]\nfor app in apps[:2]:\n    print(app)`,a:"weather\ndust",e:"apps[:2]는 앞의 두 원소 weather, dust입니다."},
+{q:`def add(a,b):\n    return a+b\nprint(add(3,4))`,a:"7",e:"API나 웹 개발에서도 기본 함수 설계가 중요합니다. 3+4는 7입니다."}
+];
+
+const ox=[
+{q:"Flask는 파이썬 웹 개발에 사용할 수 있는 프레임워크이다.",a:"O",e:"Flask는 가벼운 웹 프레임워크입니다."},
+{q:"Django는 웹 서비스 구조를 체계적으로 만들 수 있는 프레임워크이다.",a:"O",e:"Django는 URL, view, template, model 등을 제공합니다."},
+{q:"API는 프로그램끼리 데이터를 주고받는 약속이라고 볼 수 있다.",a:"O",e:"API는 데이터와 기능을 연결하는 인터페이스입니다."},
+{q:"공공데이터포털 API 인증키는 공개된 웹페이지에 그대로 노출해도 안전하다.",a:"X",e:"인증키는 공개하지 않도록 관리해야 합니다."},
+{q:"Beautiful Soup은 HTML 파싱에 사용할 수 있다.",a:"O",e:"HTML에서 태그와 텍스트를 추출하는 데 사용합니다."},
+{q:"Selenium은 브라우저 자동화에 사용할 수 있다.",a:"O",e:"클릭, 입력, 페이지 이동 등을 자동화할 수 있습니다."},
+{q:"Tkinter는 파이썬 GUI 개발에 사용할 수 있다.",a:"O",e:"Tkinter는 파이썬 기본 GUI 라이브러리입니다."},
+{q:"웹 크롤링은 항상 아무 사이트에서나 무제한으로 해도 된다.",a:"X",e:"이용약관, robots.txt, 저작권, 서버 부하를 고려해야 합니다."},
+{q:"실시간 날씨 앱은 API와 웹 개발을 연결한 프로젝트가 될 수 있다.",a:"O",e:"날씨 API를 Flask 웹앱에서 보여줄 수 있습니다."},
+{q:"AI 프로젝트는 데이터 수집, 전처리, 모델 학습, 평가 과정을 포함할 수 있다.",a:"O",e:"AI 프로젝트의 일반적인 흐름입니다."}
+];
+
+const mcq=[
+{q:"파이썬 경량 웹 프레임워크로 적절한 것은?",choices:["Flask","NumPy","Tkinter만","Beautiful Soup","Selenium"],a:"1",e:"Flask는 웹 서버와 라우팅을 쉽게 만들 수 있습니다."},
+{q:"대규모 웹 서비스 구조화에 자주 쓰이는 파이썬 프레임워크는?",choices:["Django","CSV","math","random","print"],a:"1",e:"Django는 웹앱 구조를 체계적으로 지원합니다."},
+{q:"외부 서버에서 데이터를 받아오는 약속 또는 인터페이스는?",choices:["API","주석","반복문","클래스 변수","슬라이싱"],a:"1",e:"API는 프로그램 간 데이터 교환 규칙입니다."},
+{q:"공공데이터포털 API 요청 시 보통 필요한 것은?",choices:["인증키","반드시 Selenium만","이미지 파일","게임 캐릭터","마우스 좌표"],a:"1",e:"공공데이터 API는 serviceKey 같은 인증키를 요구하는 경우가 많습니다."},
+{q:"HTML 문서를 파싱할 때 많이 사용하는 라이브러리는?",choices:["Beautiful Soup","Flask만","Django만","Tkinter만","os"],a:"1",e:"Beautiful Soup은 HTML 파싱에 적합합니다."},
+{q:"실제 브라우저를 자동 조작하는 도구는?",choices:["Selenium","Pandas","NumPy","json","csv"],a:"1",e:"Selenium은 브라우저 자동화 도구입니다."},
+{q:"파이썬 GUI 개발에 사용할 수 있는 기본 라이브러리는?",choices:["Tkinter","requests","Beautiful Soup","Django만","Flask만"],a:"1",e:"Tkinter로 창, 버튼, 라벨 등을 만들 수 있습니다."},
+{q:"날씨 앱, 미세먼지 앱, 버스 도착 앱의 공통 핵심 기술은?",choices:["API 활용","무조건 게임 엔진","문자열만 출력","주석만 작성","이미지 편집"],a:"1",e:"실시간 데이터 앱은 API 연결이 중요합니다."},
+{q:"챗봇 프로젝트의 기본 기능으로 적절한 것은?",choices:["질문에 대한 응답 생성","파일 무조건 삭제","브라우저 종료만","데이터 무시","모델 평가 금지"],a:"1",e:"챗봇은 사용자 입력에 응답하는 프로그램입니다."},
+{q:"최종 프로젝트 설계의 올바른 흐름에 가까운 것은?",choices:["문제 정의 → 구현 → 테스트 → 개선","테스트 없이 배포","인증키 공개 후 시작","오류 처리 생략","사용자 요구 무시"],a:"1",e:"문제 정의, 구현, 테스트, 개선이 실전 개발의 기본 흐름입니다."}
+];
+
+function render(){
+ document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+ <div class="question"><h3>서술형 ${i+1}</h3><pre><code>${it.q}</code></pre>
+ <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+ <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div></div>`).join('');
+ document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+ <div class="question"><h3>OX ${i+1}</h3><p>${it.q}</p>
+ <label><input type="radio" name="ox${i}" value="O"> O</label>
+ <label><input type="radio" name="ox${i}" value="X"> X</label>
+ <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+ document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+ <div class="question"><h3>5지선다 ${i+1}</h3><p>${it.q}</p>
+ ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+ <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+}
+function toggleAns(id){const el=document.getElementById(id);el.style.display=el.style.display==="block"?"none":"block"}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"")}
+let lastReport="";
+function gradeAll(){
+ let score=0,total=30,lines=[];
+ lines.push("10단계 고급 프로젝트/실전 개발 평가 결과");
+ lines.push("================================");
+ for(let i=0;i<essay.length;i++){
+   const user=norm(document.getElementById('essay'+i).value), ans=norm(essay[i].a), ok=user===ans;
+   if(ok)score++; lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+ }
+ for(let i=0;i<ox.length;i++){
+   const checked=document.querySelector(`input[name="ox${i}"]:checked`), val=checked?checked.value:"", ok=val===ox[i].a;
+   if(ok)score++; lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+ }
+ for(let i=0;i<mcq.length;i++){
+   const checked=document.querySelector(`input[name="mcq${i}"]:checked`), val=checked?checked.value:"", ok=val===mcq[i].a;
+   if(ok)score++; lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+ }
+ const percent=Math.round(score/total*100);
+ lines.push("================================");
+ lines.push(`총점: ${score}/${total} (${percent}점)`);
+ lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+ lastReport=lines.join("\n");
+ document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_")}
+function downloadTxt(){
+ if(!lastReport)gradeAll();
+ const sid=safeName(document.getElementById('studentId').value);
+ const name=safeName(document.getElementById('studentName').value);
+ const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1]||"0";
+ const now=new Date();
+ const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+ const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+ const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>6단계 객체지향 프로그래밍(OOP)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:'Malgun Gothic',Arial,sans-serif;background:linear-gradient(135deg,#f5f3ff,#ecfeff,#fff7ed);color:#1f2937}header{padding:30px 38px;background:linear-gradient(135deg,#6d28d9,#2563eb,#0f766e);color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.18)}header h1{margin:0;font-size:33px}header p{margin:10px 0 0;font-size:18px}.wrap{display:grid;grid-template-columns:275px 1fr;min-height:calc(100vh - 125px)}nav{background:#111827;color:#fff;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}nav h2{font-size:18px;margin:0 0 14px;color:#ddd6fe}nav button{width:100%;text-align:left;border:0;border-radius:14px;padding:12px 14px;margin:6px 0;color:#fff;background:#374151;cursor:pointer;font-size:15px}nav button:hover,nav button.active{background:#6d28d9}main{padding:28px;overflow:auto}.section{display:none}.section.active{display:block}.card{background:#fff;border-radius:22px;padding:24px;margin-bottom:22px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb}h2{color:#6d28d9;margin-top:0;font-size:28px}h3{color:#0f766e}.badge{display:inline-block;background:#ede9fe;color:#5b21b6;padding:6px 12px;border-radius:999px;font-weight:700;margin:4px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}pre{background:#0f172a;color:#e5e7eb;padding:16px;border-radius:16px;overflow:auto;font-size:15px;line-height:1.55}code{font-family:Consolas,monospace}.explain{background:#f8fafc;border-left:6px solid #8b5cf6;padding:14px 16px;border-radius:12px;line-height:1.75}.question{border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin:16px 0;background:#fff}textarea,input[type=text]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-top:8px}label{display:block;margin:8px 0;line-height:1.5}.action{border:0;border-radius:14px;padding:13px 18px;background:#6d28d9;color:#fff;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}.action.secondary{background:#0f766e}.result{padding:16px;border-radius:16px;background:#f5f3ff;border:1px solid #c4b5fd;margin-top:16px;white-space:pre-wrap;line-height:1.7}.answer{display:none;margin-top:10px;padding:12px;background:#ecfeff;border-left:5px solid #06b6d4;border-radius:12px;line-height:1.7}.table{width:100%;border-collapse:collapse;background:#fff}.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}.table th{background:#ede9fe}@media(max-width:800px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}}
+</style>
+</head>
+<body>
+<header><h1>🐍 6단계. 객체지향 프로그래밍(OOP)</h1><p>개념기반 목표지향 수업지도안 · 대규모 프로그램 설계 · 클래스 / 객체 / 생성자 / self / 메서드 / 상속 / 다형성 / 캡슐화</p></header>
+<div class="wrap"><nav><h2>📚 학습 메뉴</h2>
+<button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button><button onclick="showSec('goals',this)">2. 학습목표</button><button onclick="showSec('concepts',this)">3. 핵심 개념</button><button onclick="showSec('codes',this)">4. 학습코드 10개</button><button onclick="showSec('projects',this)">5. 실습 예제</button><button onclick="showSec('finish',this)">6. 수업마무리</button><button onclick="showSec('essay',this)">7. 출력 서술형 10문항</button><button onclick="showSec('ox',this)">8. OX 진단평가</button><button onclick="showSec('mcq',this)">9. 심화 5지선다</button><button onclick="showSec('submit',this)">10. 채점·TXT 산출</button></nav><main>
+<section id="intro" class="section active"><div class="card"><h2>🚀 수업 들어가기</h2><p>프로그램이 커질수록 변수와 함수만으로는 관리가 어려워집니다. 객체지향 프로그래밍은 현실 세계의 대상을 <b>객체</b>로 표현하고, 객체가 가진 <b>속성</b>과 <b>기능</b>을 하나로 묶어 대규모 프로그램을 설계하는 방법입니다.</p><div class="grid"><div class="card"><h3>🏦 은행 계좌 시스템</h3><p>계좌번호, 잔액, 입금, 출금 기능을 Account 객체로 묶을 수 있습니다.</p></div><div class="card"><h3>🎓 학생 관리 시스템</h3><p>학생 이름, 점수, 평균 계산 기능을 Student 객체로 설계할 수 있습니다.</p></div><div class="card"><h3>🎮 게임 캐릭터 클래스</h3><p>캐릭터의 이름, 체력, 공격 기능을 객체로 표현하면 여러 캐릭터를 쉽게 만들 수 있습니다.</p></div></div><p><span class="badge">클래스</span><span class="badge">객체</span><span class="badge">생성자</span><span class="badge">self</span><span class="badge">메서드</span><span class="badge">상속</span><span class="badge">다형성</span><span class="badge">캡슐화</span></p></div></section>
+<section id="goals" class="section"><div class="card"><h2>🎯 학습목표</h2><table class="table"><tr><th>영역</th><th>목표</th></tr><tr><td>지식 목표</td><td>클래스, 객체, 생성자, self, 메서드, 상속, 다형성, 캡슐화의 의미를 설명할 수 있다.</td></tr><tr><td>기능 목표</td><td>은행 계좌, 학생 관리, 게임 캐릭터 클래스를 설계하고 객체를 생성하여 메서드를 호출할 수 있다.</td></tr><tr><td>태도 목표</td><td>복잡한 프로그램을 객체 단위로 나누어 구조적으로 설계하려는 태도를 기른다.</td></tr></table></div></section>
+<section id="concepts" class="section"><div class="card"><h2>🧠 핵심 개념</h2><h3>1. 클래스와 객체</h3><p class="explain">클래스는 객체를 만들기 위한 설계도이고, 객체는 클래스로부터 실제로 만들어진 대상입니다.</p><h3>2. 생성자와 self</h3><p class="explain">__init__은 객체가 생성될 때 자동 실행되는 생성자입니다. self는 현재 객체 자신을 가리킵니다.</p><h3>3. 메서드</h3><p class="explain">메서드는 클래스 안에 정의된 함수입니다. 객체가 수행할 수 있는 행동을 표현합니다.</p><h3>4. 상속</h3><p class="explain">상속은 기존 클래스의 속성과 기능을 물려받아 새로운 클래스를 만드는 방법입니다.</p><h3>5. 다형성</h3><p class="explain">다형성은 같은 이름의 메서드가 객체에 따라 다르게 동작하는 성질입니다.</p><h3>6. 캡슐화</h3><p class="explain">캡슐화는 데이터를 직접 건드리지 못하게 보호하고, 정해진 메서드를 통해 접근하도록 하는 설계 방식입니다.</p></div></section>
+<section id="codes" class="section"><div class="card"><h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+<h3>코드 1. 클래스와 객체</h3><pre><code>class Student:
+    pass
+
+s1 = Student()
+print(type(s1).__name__)</code></pre><p class="explain">Student는 클래스이고, s1은 Student 클래스로 만든 객체입니다.</p>
+<h3>코드 2. 생성자 __init__</h3><pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+s = Student("민수")
+print(s.name)</code></pre><p class="explain">객체가 생성될 때 __init__이 자동 실행되고, name 값이 객체에 저장됩니다.</p>
+<h3>코드 3. 메서드</h3><pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+    def introduce(self):
+        print("저는", self.name, "입니다.")
+
+s = Student("지아")
+s.introduce()</code></pre><p class="explain">introduce()는 객체가 자기 이름을 출력하는 메서드입니다.</p>
+<h3>코드 4. 은행 계좌 입금</h3><pre><code>class Account:
+    def __init__(self, balance):
+        self.balance = balance
+    def deposit(self, money):
+        self.balance += money
+
+a = Account(1000)
+a.deposit(500)
+print(a.balance)</code></pre><p class="explain">객체의 balance 속성에 입금액을 더해 잔액을 변경합니다.</p>
+<h3>코드 5. 캡슐화</h3><pre><code>class Account:
+    def __init__(self):
+        self.__balance = 0
+    def deposit(self, money):
+        if money > 0:
+            self.__balance += money
+    def get_balance(self):
+        return self.__balance
+
+a = Account()
+a.deposit(1000)
+print(a.get_balance())</code></pre><p class="explain">__balance는 외부에서 직접 접근하기 어렵게 만든 속성입니다.</p>
+<h3>코드 6. 클래스 변수</h3><pre><code>class Student:
+    school = "Python High"
+    def __init__(self, name):
+        self.name = name
+
+s1 = Student("A")
+s2 = Student("B")
+print(s1.school, s2.school)</code></pre><p class="explain">school은 모든 객체가 공유하는 클래스 변수입니다.</p>
+<h3>코드 7. 상속</h3><pre><code>class Animal:
+    def speak(self):
+        print("소리를 냅니다.")
+class Dog(Animal):
+    pass
+
+d = Dog()
+d.speak()</code></pre><p class="explain">Dog 클래스는 Animal 클래스를 상속받아 speak() 메서드를 사용할 수 있습니다.</p>
+<h3>코드 8. 다형성</h3><pre><code>class Cat:
+    def speak(self):
+        print("야옹")
+class Dog:
+    def speak(self):
+        print("멍멍")
+
+for animal in [Cat(), Dog()]:
+    animal.speak()</code></pre><p class="explain">같은 speak() 호출이 객체 종류에 따라 다르게 실행됩니다.</p>
+<h3>코드 9. staticmethod</h3><pre><code>class MathTool:
+    @staticmethod
+    def add(a, b):
+        return a + b
+
+print(MathTool.add(3, 4))</code></pre><p class="explain">staticmethod는 객체 상태를 사용하지 않는 기능을 클래스 안에 묶을 때 사용합니다.</p>
+<h3>코드 10. classmethod</h3><pre><code>class Student:
+    count = 0
+    def __init__(self):
+        Student.count += 1
+    @classmethod
+    def show_count(cls):
+        print(cls.count)
+
+s1 = Student()
+s2 = Student()
+Student.show_count()</code></pre><p class="explain">classmethod는 cls를 통해 클래스 변수에 접근할 수 있습니다.</p></div></section>
+<section id="projects" class="section"><div class="card"><h2>🧪 실습 예제</h2><h3>1. 은행 계좌 시스템</h3><pre><code>class Account:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.__balance = balance
+    def deposit(self, money):
+        if money > 0:
+            self.__balance += money
+    def withdraw(self, money):
+        if 0 < money <= self.__balance:
+            self.__balance -= money
+    def info(self):
+        print(self.owner, self.__balance)
+
+a = Account("Kim", 10000)
+a.deposit(5000)
+a.withdraw(3000)
+a.info()</code></pre><h3>2. 학생 관리 시스템</h3><pre><code>class Student:
+    def __init__(self, name, scores):
+        self.name = name
+        self.scores = scores
+    def average(self):
+        return sum(self.scores) / len(self.scores)
+
+s = Student("Lee", [90, 80, 100])
+print(s.name, s.average())</code></pre><h3>3. 게임 캐릭터 클래스</h3><pre><code>class Character:
+    def __init__(self, name, hp, power):
+        self.name = name
+        self.hp = hp
+        self.power = power
+    def attack(self, target):
+        target.hp -= self.power
+        print(self.name, "공격!", target.name, "남은 HP:", target.hp)
+
+hero = Character("용사", 100, 20)
+monster = Character("슬라임", 50, 10)
+hero.attack(monster)</code></pre></div></section>
+<section id="finish" class="section"><div class="card"><h2>🌟 수업마무리하기</h2><p>객체지향 프로그래밍은 프로그램을 현실 세계의 대상처럼 구조화하는 사고방식입니다.</p><ul><li>클래스는 설계도이다.</li><li>객체는 설계도로 만든 실제 대상이다.</li><li>생성자는 객체 초기 상태를 만든다.</li><li>메서드는 객체의 행동이다.</li><li>상속은 코드 재사용을 돕는다.</li><li>다형성은 객체별 다른 실행을 가능하게 한다.</li><li>캡슐화는 데이터를 안전하게 보호한다.</li></ul><p class="explain"><b>핵심 정리:</b> OOP는 대규모 프로그램을 객체 단위로 나누어 관리하는 설계 방법입니다.</p></div></section>
+<section id="essay" class="section"><div class="card"><h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2><div id="essayBox"></div></div></section><section id="ox" class="section"><div class="card"><h2>⭕❌ 진단평가 OX 10문항</h2><div id="oxBox"></div></div></section><section id="mcq" class="section"><div class="card"><h2>🧩 형성평가 심화 5지선다형 10문항</h2><div id="mcqBox"></div></div></section><section id="submit" class="section"><div class="card"><h2>📥 채점 및 TXT 산출</h2><label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label><label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label><button class="action secondary" onclick="gradeAll()">채점하기</button><button class="action" onclick="downloadTxt()">TXT 다운로드</button><div id="gradeResult" class="result">아직 채점하지 않았습니다.</div><p>파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p></div></section>
+</main></div>
+<script>
+function showSec(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+const essay=[
+{q:`class Student:\n    pass\n\ns = Student()\nprint(type(s).__name__)`,a:'Student',e:'s는 Student 클래스로 만든 객체입니다.'},
+{q:`class Student:\n    def __init__(self, name):\n        self.name = name\n\ns = Student("Kim")\nprint(s.name)`,a:'Kim',e:'생성자에서 self.name에 Kim이 저장됩니다.'},
+{q:`class Person:\n    def hello(self):\n        print("안녕")\n\np = Person()\np.hello()`,a:'안녕',e:'객체 p의 hello 메서드를 호출합니다.'},
+{q:`class Account:\n    def __init__(self):\n        self.balance = 0\n    def deposit(self, money):\n        self.balance += money\n\na = Account()\na.deposit(300)\nprint(a.balance)`,a:'300',e:'초기 잔액 0에 300을 입금합니다.'},
+{q:`class Student:\n    school = "Python High"\n\ns = Student()\nprint(s.school)`,a:'Python High',e:'school은 클래스 변수입니다.'},
+{q:`class Animal:\n    def speak(self):\n        print("소리")\nclass Dog(Animal):\n    pass\n\nDog().speak()`,a:'소리',e:'Dog는 Animal을 상속받았습니다.'},
+{q:`class Cat:\n    def speak(self):\n        print("야옹")\nclass Dog:\n    def speak(self):\n        print("멍멍")\n\nfor x in [Cat(), Dog()]:\n    x.speak()`,a:'야옹\n멍멍',e:'객체에 따라 speak가 다르게 실행됩니다.'},
+{q:`class Tool:\n    @staticmethod\n    def double(x):\n        return x * 2\n\nprint(Tool.double(5))`,a:'10',e:'정적 메서드가 5를 두 배로 만듭니다.'},
+{q:`class Counter:\n    count = 0\n    def __init__(self):\n        Counter.count += 1\n\nCounter()\nCounter()\nprint(Counter.count)`,a:'2',e:'객체가 두 번 생성되어 count가 2입니다.'},
+{q:`class Box:\n    def __init__(self, value):\n        self.__value = value\n    def get_value(self):\n        return self.__value\n\nb = Box(7)\nprint(b.get_value())`,a:'7',e:'캡슐화된 값을 메서드로 확인합니다.'}
+];
+const ox=[['클래스는 객체를 만들기 위한 설계도이다.','O','클래스는 객체 생성의 틀입니다.'],['객체는 클래스로부터 만들어진 실제 대상이다.','O','객체는 클래스의 인스턴스입니다.'],['__init__은 객체 생성 시 자동으로 실행되는 생성자이다.','O','초기 속성 설정에 사용됩니다.'],['self는 항상 다른 객체 하나를 의미한다.','X','self는 현재 객체 자신입니다.'],['메서드는 클래스 안에 정의된 함수이다.','O','객체의 행동을 표현합니다.'],['상속은 기존 클래스의 기능을 물려받는 것이다.','O','코드 재사용에 유용합니다.'],['다형성은 같은 메서드 이름이 객체에 따라 다르게 동작하는 성질이다.','O','객체별 다른 동작이 가능합니다.'],['캡슐화는 데이터를 아무 곳에서나 직접 수정하게 만드는 것이다.','X','데이터를 보호하는 설계입니다.'],['staticmethod는 객체 상태를 반드시 수정해야만 사용할 수 있다.','X','객체 상태와 무관한 기능에 사용 가능합니다.'],['classmethod는 cls를 통해 클래스 자체에 접근할 수 있다.','O','클래스 변수 관리에 활용됩니다.']].map(x=>({q:x[0],a:x[1],e:x[2]}));
+const mcq=[
+['객체를 만들기 위한 설계도는?',['클래스','반복문','리스트','주석','문자열'],'1','클래스는 객체 생성을 위한 설계도입니다.'],['클래스로부터 실제로 만들어진 대상은?',['객체','조건문','모듈','파일','인덱스'],'1','객체는 클래스의 인스턴스입니다.'],['객체 생성 시 자동 실행되는 특별한 메서드는?',['__init__','append','print','range','filter'],'1','__init__은 생성자입니다.'],['현재 객체 자신을 가리키는 관례적 이름은?',['self','this만 가능','object만 가능','me만 가능','class'],'1','보통 self를 사용합니다.'],['클래스 안에 정의된 함수는?',['메서드','상수','자료형','예외','패키지'],'1','클래스 내부 함수는 메서드입니다.'],['기존 클래스의 속성과 기능을 물려받는 것은?',['상속','입력','출력','슬라이싱','형변환'],'1','상속은 기존 클래스를 확장합니다.'],['같은 메서드 이름이 객체에 따라 다르게 동작하는 성질은?',['다형성','문자열','정수형','파일쓰기','주석'],'1','다형성입니다.'],['데이터를 보호하고 정해진 메서드로 접근하게 하는 설계는?',['캡슐화','무한반복','전역삭제','출력','정렬'],'1','캡슐화는 안정성을 높입니다.'],['객체 상태를 사용하지 않는 기능에 적합한 것은?',['staticmethod','while','except','input','open'],'1','정적 메서드입니다.'],['클래스 자체를 다룰 때 적합한 메서드는?',['classmethod','staticmethod만','break','continue','read'],'1','classmethod는 cls를 받습니다.']
+].map(x=>({q:x[0],choices:x[1],a:x[2],e:x[3]}));
+function render(){essayBox.innerHTML=essay.map((it,i)=>`<div class="question"><h3>서술형 ${i+1}</h3><pre><code>${it.q}</code></pre><textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea><button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button><div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div></div>`).join('');oxBox.innerHTML=ox.map((it,i)=>`<div class="question"><h3>OX ${i+1}</h3><p>${it.q}</p><label><input type="radio" name="ox${i}" value="O"> O</label><label><input type="radio" name="ox${i}" value="X"> X</label><button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button><div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div></div>`).join('');mcqBox.innerHTML=mcq.map((it,i)=>`<div class="question"><h3>5지선다 ${i+1}</h3><p>${it.q}</p>${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}<button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button><div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div></div>`).join('')}
+function toggleAns(id){let el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block'}function norm(s){return(s||'').replace(/\r/g,'').trim().replace(/[ \t]+$/gm,'')}let lastReport='';
+function gradeAll(){let score=0,total=30,lines=['6단계 객체지향 프로그래밍(OOP) 평가 결과','================================'];for(let i=0;i<essay.length;i++){let user=norm(document.getElementById('essay'+i).value),ans=norm(essay[i].a),ok=user===ans;if(ok)score++;lines.push(`서술형 ${i+1}: ${ok?'정답':'오답'} / 정답: ${essay[i].a.replace(/\n/g,', ')}`)}for(let i=0;i<ox.length;i++){let c=document.querySelector(`input[name="ox${i}"]:checked`),v=c?c.value:'',ok=v===ox[i].a;if(ok)score++;lines.push(`OX ${i+1}: ${ok?'정답':'오답'} / 선택: ${v||'미응답'} / 정답: ${ox[i].a}`)}for(let i=0;i<mcq.length;i++){let c=document.querySelector(`input[name="mcq${i}"]:checked`),v=c?c.value:'',ok=v===mcq[i].a;if(ok)score++;lines.push(`5지선다 ${i+1}: ${ok?'정답':'오답'} / 선택: ${v||'미응답'} / 정답: ${mcq[i].a}`)}let percent=Math.round(score/total*100);lines.push('================================',`총점: ${score}/${total} (${percent}점)`,`응시시각: ${new Date().toLocaleString('ko-KR')}`);lastReport=lines.join('\n');gradeResult.textContent=lastReport}
+function safeName(s){return(s||'미입력').trim().replace(/[\\/:*?"<>| ]/g,'_')}function downloadTxt(){if(!lastReport)gradeAll();let sid=safeName(studentId.value),name=safeName(studentName.value),m=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1]||'0',now=new Date(),stamp=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+'-'+String(now.getMinutes()).padStart(2,'0'),filename=`${sid}_${name}_1단원_${m}점_${stamp}.txt`,blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();URL.revokeObjectURL(a.href)}
+render();
+</script>
+</body></html>

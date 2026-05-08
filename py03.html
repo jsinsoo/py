@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>3단계 자료구조 기초 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+    background:linear-gradient(135deg,#ecfeff,#fef3c7);
+    color:#1f2937;
+}
+header{
+    padding:28px 36px;
+    background:linear-gradient(135deg,#0f766e,#2563eb,#7c3aed);
+    color:white;
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+header h1{margin:0;font-size:32px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{
+    display:grid;
+    grid-template-columns:270px 1fr;
+    min-height:calc(100vh - 120px);
+}
+nav{
+    background:#111827;
+    color:white;
+    padding:18px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#fde68a}
+nav button{
+    width:100%;
+    text-align:left;
+    border:0;
+    border-radius:14px;
+    padding:12px 14px;
+    margin:6px 0;
+    color:white;
+    background:#374151;
+    cursor:pointer;
+    font-size:15px;
+}
+nav button:hover,nav button.active{background:#0d9488}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{
+    background:white;
+    border-radius:22px;
+    padding:24px;
+    margin-bottom:22px;
+    box-shadow:0 10px 28px rgba(15,23,42,.12);
+    border:1px solid #e5e7eb;
+}
+h2{color:#0f766e;margin-top:0;font-size:28px}
+h3{color:#6d28d9;margin-bottom:10px}
+.badge{
+    display:inline-block;
+    background:#ccfbf1;
+    color:#115e59;
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:700;
+    margin:4px;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{
+    background:#0f172a;
+    color:#e5e7eb;
+    padding:16px;
+    border-radius:16px;
+    overflow:auto;
+    font-size:15px;
+    line-height:1.55;
+}
+code{font-family:Consolas,monospace}
+.explain{
+    background:#f8fafc;
+    border-left:6px solid #14b8a6;
+    padding:14px 16px;
+    border-radius:12px;
+    line-height:1.75;
+}
+.question{
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:18px;
+    margin:16px 0;
+    background:#ffffff;
+}
+textarea,input[type=text]{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    font-size:16px;
+    margin-top:8px;
+}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{
+    border:0;
+    border-radius:14px;
+    padding:13px 18px;
+    background:#0d9488;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    margin:8px 6px 8px 0;
+}
+.action.secondary{background:#2563eb}
+.result{
+    padding:16px;
+    border-radius:16px;
+    background:#f0fdfa;
+    border:1px solid #5eead4;
+    margin-top:16px;
+    white-space:pre-wrap;
+    line-height:1.7;
+}
+.answer{
+    display:none;
+    margin-top:10px;
+    padding:12px;
+    background:#fff7ed;
+    border-left:5px solid #fb923c;
+    border-radius:12px;
+    line-height:1.7;
+}
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    overflow:hidden;
+    border-radius:16px;
+}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#ccfbf1}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){
+    .wrap{grid-template-columns:1fr}
+    nav{height:auto;position:relative}
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>🐍 3단계. 자료구조 기초</h1>
+    <p>개념기반 목표지향 수업지도안 · 데이터 저장 능력 향상 · 리스트 / 튜플 / 딕셔너리 / 집합 / 문자열 / 슬라이싱</p>
+</header>
+
+<div class="wrap">
+<nav>
+    <h2>📚 학습 메뉴</h2>
+    <button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+    <button onclick="showSec('goals',this)">2. 학습목표</button>
+    <button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+    <button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+    <button onclick="showSec('finish',this)">5. 수업마무리</button>
+    <button onclick="showSec('essay',this)">6. 출력 서술형 10문항</button>
+    <button onclick="showSec('ox',this)">7. OX 진단평가</button>
+    <button onclick="showSec('mcq',this)">8. 심화 5지선다</button>
+    <button onclick="showSec('submit',this)">9. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>프로그램은 단 하나의 값만 다루지 않습니다. 학생 여러 명의 점수, 단어 목록, 상품 가격표, 로또 번호처럼 <b>여러 데이터를 구조적으로 저장</b>해야 합니다.</p>
+<div class="grid">
+<div class="card"><h3>🎒 학생 성적 관리</h3><p>학생 30명의 점수를 하나씩 변수로 만들면 불편합니다. 리스트와 딕셔너리를 쓰면 효율적으로 관리할 수 있습니다.</p></div>
+<div class="card"><h3>📖 단어 빈도 분석</h3><p>문장 속 단어가 몇 번 나왔는지 세려면 딕셔너리가 강력합니다.</p></div>
+<div class="card"><h3>🎰 로또 번호 생성</h3><p>중복 없이 여러 숫자를 저장하려면 집합(set)의 개념을 활용할 수 있습니다.</p></div>
+</div>
+<p><span class="badge">리스트</span><span class="badge">튜플</span><span class="badge">딕셔너리</span><span class="badge">집합</span><span class="badge">문자열</span><span class="badge">슬라이싱</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>리스트, 튜플, 딕셔너리, 집합, 문자열의 특징과 차이를 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>자료구조를 활용하여 성적 관리, 단어 빈도 분석, 중복 제거, 슬라이싱 코드를 작성할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>문제 상황에 맞는 자료구조를 선택하여 효율적으로 데이터를 관리하려는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. 리스트(list)</h3>
+<p class="explain">여러 값을 순서대로 저장하며, 추가·수정·삭제가 가능합니다. 예: 점수 목록, 이름 목록.</p>
+<h3>2. 튜플(tuple)</h3>
+<p class="explain">순서가 있지만 한 번 만든 뒤 값을 바꿀 수 없습니다. 예: 좌표, 고정 설정값.</p>
+<h3>3. 딕셔너리(dict)</h3>
+<p class="explain">키와 값의 쌍으로 데이터를 저장합니다. 예: 학생 이름 → 점수, 단어 → 빈도.</p>
+<h3>4. 집합(set)</h3>
+<p class="explain">중복을 허용하지 않는 자료구조입니다. 예: 중복 제거, 공통 원소 찾기.</p>
+<h3>5. 문자열과 슬라이싱</h3>
+<p class="explain">문자열도 문자들의 순서 있는 자료로 볼 수 있으며, 인덱스와 슬라이싱으로 일부를 꺼낼 수 있습니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. 리스트 생성과 인덱싱</h3>
+<pre><code>scores = [90, 85, 70]
+print(scores[0])</code></pre>
+<p class="explain">리스트는 0번부터 인덱스를 셉니다. scores[0]은 첫 번째 값 90입니다.</p>
+
+<h3>코드 2. 리스트 값 추가</h3>
+<pre><code>names = ["민수", "지아"]
+names.append("하준")
+print(names)</code></pre>
+<p class="explain">append()는 리스트 맨 뒤에 새 값을 추가합니다.</p>
+
+<h3>코드 3. 리스트 합계와 평균</h3>
+<pre><code>scores = [80, 90, 100]
+avg = sum(scores) / len(scores)
+print(avg)</code></pre>
+<p class="explain">sum()은 합계, len()은 개수를 구합니다. 평균은 합계 ÷ 개수입니다.</p>
+
+<h3>코드 4. 튜플</h3>
+<pre><code>point = (3, 4)
+print(point[0] + point[1])</code></pre>
+<p class="explain">튜플은 순서가 있는 고정 데이터입니다. 좌표처럼 바뀌면 안 되는 값에 적합합니다.</p>
+
+<h3>코드 5. 딕셔너리 생성</h3>
+<pre><code>student = {"name": "Kim", "score": 95}
+print(student["score"])</code></pre>
+<p class="explain">딕셔너리는 키를 이용해 값을 꺼냅니다. "score" 키의 값은 95입니다.</p>
+
+<h3>코드 6. 딕셔너리 값 수정</h3>
+<pre><code>scores = {"국어": 80, "수학": 90}
+scores["수학"] = 100
+print(scores)</code></pre>
+<p class="explain">키를 이용해 특정 값을 수정할 수 있습니다.</p>
+
+<h3>코드 7. 집합으로 중복 제거</h3>
+<pre><code>nums = [1, 2, 2, 3, 3, 3]
+unique = set(nums)
+print(unique)</code></pre>
+<p class="explain">set은 중복을 제거합니다. 단, 출력 순서는 환경에 따라 달라질 수 있습니다.</p>
+
+<h3>코드 8. 문자열 인덱싱</h3>
+<pre><code>word = "Python"
+print(word[0])
+print(word[-1])</code></pre>
+<p class="explain">word[0]은 첫 글자 P, word[-1]은 마지막 글자 n입니다.</p>
+
+<h3>코드 9. 슬라이싱</h3>
+<pre><code>word = "Python"
+print(word[1:4])</code></pre>
+<p class="explain">[1:4]는 인덱스 1부터 3까지 가져옵니다. 결과는 yth입니다.</p>
+
+<h3>코드 10. 단어 빈도 분석</h3>
+<pre><code>words = ["AI", "Python", "AI", "Data"]
+count = {}
+for w in words:
+    count[w] = count.get(w, 0) + 1
+print(count)</code></pre>
+<p class="explain">get(w, 0)은 키가 없으면 0을 반환합니다. 단어가 나올 때마다 개수를 1씩 증가시킵니다.</p>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>자료구조는 데이터를 담는 그릇입니다. 문제 상황에 따라 적절한 그릇을 선택하면 코드가 훨씬 간단하고 강력해집니다.</p>
+<ul>
+<li>순서 있고 수정 가능한 데이터 → 리스트</li>
+<li>순서 있지만 수정 불가능한 데이터 → 튜플</li>
+<li>이름표가 붙은 데이터 → 딕셔너리</li>
+<li>중복 없는 데이터 → 집합</li>
+<li>문자의 순서 있는 모음 → 문자열</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 좋은 프로그래머는 데이터를 어떻게 저장할지 먼저 생각합니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section">
+<div class="card">
+<h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2>
+<div id="essayBox"></div>
+</div>
+</section>
+
+<section id="ox" class="section">
+<div class="card">
+<h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2>
+<div id="oxBox"></div>
+</div>
+</section>
+
+<section id="mcq" class="section">
+<div class="card">
+<h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2>
+<div id="mcqBox"></div>
+</div>
+</section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+const essay = [
+{q:`a = [10, 20, 30]\nprint(a[1])`, a:"20", e:"리스트 인덱스는 0부터 시작하므로 a[1]은 두 번째 값 20입니다."},
+{q:`names = ["Kim", "Lee"]\nnames.append("Park")\nprint(names)`, a:"['Kim', 'Lee', 'Park']", e:"append()는 리스트 맨 뒤에 값을 추가합니다."},
+{q:`scores = [80, 90, 100]\nprint(sum(scores))`, a:"270", e:"80+90+100의 합은 270입니다."},
+{q:`point = (2, 5)\nprint(point[0] * point[1])`, a:"10", e:"튜플의 첫 번째 값 2와 두 번째 값 5를 곱하면 10입니다."},
+{q:`student = {"name": "Kim", "score": 95}\nprint(student["name"])`, a:"Kim", e:"딕셔너리는 키를 이용해 값을 꺼냅니다. name 키의 값은 Kim입니다."},
+{q:`d = {"a": 1}\nd["b"] = 2\nprint(d)`, a:"{'a': 1, 'b': 2}", e:"새로운 키 b에 값 2를 넣어 딕셔너리에 항목을 추가합니다."},
+{q:`nums = [1, 1, 2, 3]\nprint(len(set(nums)))`, a:"3", e:"set(nums)는 중복을 제거해 {1,2,3}이 되고 길이는 3입니다."},
+{q:`word = "Python"\nprint(word[0])`, a:"P", e:"문자열도 인덱싱이 가능하며 0번 인덱스는 첫 글자 P입니다."},
+{q:`word = "Python"\nprint(word[1:4])`, a:"yth", e:"인덱스 1부터 3까지 가져오므로 yth입니다."},
+{q:`words = ["a", "b", "a"]\nc = {}\nfor w in words:\n    c[w] = c.get(w, 0) + 1\nprint(c)`, a:"{'a': 2, 'b': 1}", e:"a는 2번, b는 1번 등장하므로 해당 딕셔너리가 출력됩니다."}
+];
+
+const ox = [
+{q:"리스트는 여러 값을 순서대로 저장할 수 있다.", a:"O", e:"리스트는 순서가 있는 자료구조입니다."},
+{q:"리스트의 첫 번째 인덱스는 1이다.", a:"X", e:"파이썬 인덱스는 0부터 시작합니다."},
+{q:"append()는 리스트에 값을 추가하는 메서드이다.", a:"O", e:"append()는 리스트 끝에 값을 추가합니다."},
+{q:"튜플은 생성 후 값을 자유롭게 수정할 수 있다.", a:"X", e:"튜플은 불변 자료형이므로 값을 수정할 수 없습니다."},
+{q:"딕셔너리는 키와 값의 쌍으로 데이터를 저장한다.", a:"O", e:"딕셔너리는 key:value 구조입니다."},
+{q:"집합(set)은 중복 값을 허용한다.", a:"X", e:"집합은 중복을 허용하지 않습니다."},
+{q:"문자열도 인덱싱과 슬라이싱이 가능하다.", a:"O", e:"문자열은 순서가 있는 문자들의 모음입니다."},
+{q:"word[1:4]에서 끝 인덱스 4는 포함된다.", a:"X", e:"슬라이싱에서 끝 인덱스는 포함되지 않습니다."},
+{q:"len()은 자료의 길이나 개수를 구할 때 사용한다.", a:"O", e:"len()은 문자열 길이, 리스트 원소 수 등을 구합니다."},
+{q:"딕셔너리에서 값을 꺼낼 때 키를 사용할 수 있다.", a:"O", e:"예: student['score']처럼 키로 값을 가져옵니다."}
+];
+
+const mcq = [
+{q:"여러 값을 순서대로 저장하고 수정할 수 있는 자료구조는?", choices:["리스트","튜플","정수","불리언","주석"], a:"1", e:"리스트는 순서가 있고 수정 가능한 자료구조입니다."},
+{q:"다음 중 튜플을 나타내는 예는?", choices:["[1,2]","(1,2)","{'a':1}","{1,2}","'12'"], a:"2", e:"튜플은 보통 소괄호를 사용해 표현합니다."},
+{q:"키와 값의 쌍으로 저장하는 자료구조는?", choices:["list","tuple","dict","set","str"], a:"3", e:"dict는 딕셔너리 자료형입니다."},
+{q:"중복 제거에 가장 적합한 자료구조는?", choices:["set","str","float","bool","input"], a:"1", e:"set은 중복 값을 허용하지 않습니다."},
+{q:"리스트 a=[10,20,30]에서 30을 꺼내는 코드는?", choices:["a[0]","a[1]","a[2]","a[3]","a[-4]"], a:"3", e:"30은 세 번째 값이며 인덱스는 2입니다."},
+{q:"문자열 s='Python'에서 s[-1]의 결과는?", choices:["P","y","t","o","n"], a:"5", e:"-1은 마지막 원소를 의미합니다."},
+{q:"슬라이싱 s[1:3]의 의미로 가장 적절한 것은?", choices:["1부터 3까지 포함","인덱스 1부터 2까지","처음부터 끝까지","3번째만","뒤에서 1개"], a:"2", e:"끝 인덱스 3은 포함되지 않습니다."},
+{q:"딕셔너리 d={'국어':90}에서 90을 출력하는 코드는?", choices:["d[0]","d['국어']","d(국어)","d.90","d{90}"], a:"2", e:"딕셔너리는 키를 사용해 값을 꺼냅니다."},
+{q:"리스트에 값을 맨 뒤에 추가하는 메서드는?", choices:["append","remove","keys","items","split"], a:"1", e:"append()는 리스트 끝에 새 값을 추가합니다."},
+{q:"단어 빈도 분석에 가장 적합한 자료구조는?", choices:["딕셔너리","불리언","실수","주석","단일 정수"], a:"1", e:"단어를 키로, 등장 횟수를 값으로 저장하면 효율적입니다."}
+];
+
+function render(){
+    document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+    <div class="question">
+        <h3>서술형 ${i+1}</h3>
+        <pre><code>${it.q}</code></pre>
+        <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+        <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div>
+    </div>`).join('');
+
+    document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+    <div class="question">
+        <h3>OX ${i+1}</h3>
+        <p>${it.q}</p>
+        <label><input type="radio" name="ox${i}" value="O"> O</label>
+        <label><input type="radio" name="ox${i}" value="X"> X</label>
+        <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+
+    document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+    <div class="question">
+        <h3>5지선다 ${i+1}</h3>
+        <p>${it.q}</p>
+        ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+        <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+        <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div>
+    </div>`).join('');
+}
+function toggleAns(id){
+    const el=document.getElementById(id);
+    el.style.display=el.style.display==="block"?"none":"block";
+}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"");}
+let lastReport="";
+function gradeAll(){
+    let score=0, total=30;
+    let lines=[];
+    lines.push("3단계 자료구조 기초 평가 결과");
+    lines.push("================================");
+    for(let i=0;i<essay.length;i++){
+        const user=norm(document.getElementById('essay'+i).value);
+        const ans=norm(essay[i].a);
+        const ok=user===ans;
+        if(ok) score++;
+        lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+    }
+    for(let i=0;i<ox.length;i++){
+        const checked=document.querySelector(`input[name="ox${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===ox[i].a;
+        if(ok) score++;
+        lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+    }
+    for(let i=0;i<mcq.length;i++){
+        const checked=document.querySelector(`input[name="mcq${i}"]:checked`);
+        const val=checked?checked.value:"";
+        const ok=val===mcq[i].a;
+        if(ok) score++;
+        lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+    }
+    const percent=Math.round(score/total*100);
+    lines.push("================================");
+    lines.push(`총점: ${score}/${total} (${percent}점)`);
+    lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+    lastReport=lines.join("\n");
+    document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_");}
+function downloadTxt(){
+    if(!lastReport) gradeAll();
+    const sid=safeName(document.getElementById('studentId').value);
+    const name=safeName(document.getElementById('studentName').value);
+    const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1] || "0";
+    const now=new Date();
+    const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+    const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+    const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>9단계 데이터 분석/AI 활용 - 개념기반 목표지향 수업지도안</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#ecfeff,#f0fdf4,#fefce8);color:#1f2937}
+header{padding:30px 38px;background:linear-gradient(135deg,#0891b2,#16a34a,#ca8a04);color:white;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.96}
+.wrap{display:grid;grid-template-columns:275px 1fr;min-height:calc(100vh - 125px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#a5f3fc}
+nav button{width:100%;text-align:left;border:0;border-radius:14px;padding:12px 14px;margin:6px 0;color:white;background:#374151;cursor:pointer;font-size:15px}
+nav button:hover,nav button.active{background:#0891b2}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:white;border-radius:22px;padding:24px;margin-bottom:22px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb}
+h2{color:#0891b2;margin-top:0;font-size:28px}
+h3{color:#15803d;margin-bottom:10px}
+.badge{display:inline-block;background:#cffafe;color:#155e75;padding:6px 12px;border-radius:999px;font-weight:700;margin:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+pre{background:#0f172a;color:#e5e7eb;padding:16px;border-radius:16px;overflow:auto;font-size:15px;line-height:1.55}
+code{font-family:Consolas,monospace}
+.explain{background:#f8fafc;border-left:6px solid #06b6d4;padding:14px 16px;border-radius:12px;line-height:1.75}
+.question{border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin:16px 0;background:#ffffff}
+textarea,input[type=text]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-top:8px}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{border:0;border-radius:14px;padding:13px 18px;background:#0891b2;color:white;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}
+.action.secondary{background:#16a34a}
+.result{padding:16px;border-radius:16px;background:#ecfeff;border:1px solid #67e8f9;margin-top:16px;white-space:pre-wrap;line-height:1.7}
+.answer{display:none;margin-top:10px;padding:12px;background:#f0fdf4;border-left:5px solid #22c55e;border-radius:12px;line-height:1.7}
+.table{width:100%;border-collapse:collapse;background:white;overflow:hidden;border-radius:16px}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left}
+.table th{background:#cffafe}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}}
+</style>
+</head>
+<body>
+<header>
+<h1>🐍 9단계. 데이터 분석/AI 활용</h1>
+<p>개념기반 목표지향 수업지도안 · 실무 확장 · NumPy / Pandas / Matplotlib / Seaborn / 전처리 / 시각화 / 통계 / 머신러닝</p>
+</header>
+
+<div class="wrap">
+<nav>
+<h2>📚 학습 메뉴</h2>
+<button class="active" onclick="showSec('intro',this)">1. 수업 들어가기</button>
+<button onclick="showSec('goals',this)">2. 학습목표</button>
+<button onclick="showSec('concepts',this)">3. 핵심 개념</button>
+<button onclick="showSec('codes',this)">4. 학습코드 10개</button>
+<button onclick="showSec('projects',this)">5. 프로젝트</button>
+<button onclick="showSec('finish',this)">6. 수업마무리</button>
+<button onclick="showSec('essay',this)">7. 출력 서술형 10문항</button>
+<button onclick="showSec('ox',this)">8. OX 진단평가</button>
+<button onclick="showSec('mcq',this)">9. 심화 5지선다</button>
+<button onclick="showSec('submit',this)">10. 채점·TXT 산출</button>
+</nav>
+
+<main>
+<section id="intro" class="section active">
+<div class="card">
+<h2>🚀 수업 들어가기</h2>
+<p>데이터 분석과 AI는 데이터를 읽고, 정리하고, 시각화하고, 패턴을 찾아 예측하는 과정입니다. 파이썬은 <b>NumPy, Pandas, Matplotlib, Seaborn, scikit-learn</b> 같은 강력한 도구를 통해 실무형 분석과 머신러닝을 쉽게 구현할 수 있습니다.</p>
+<div class="grid">
+<div class="card"><h3>🎓 학생 성적 분석</h3><p>평균, 최고점, 과목별 통계를 계산하고 그래프로 확인합니다.</p></div>
+<div class="card"><h3>💰 매출 분석</h3><p>지역별·월별 매출을 집계하고 추세를 시각화합니다.</p></div>
+<div class="card"><h3>🌸 붓꽃 데이터 분류</h3><p>꽃받침·꽃잎 길이를 이용해 품종을 예측하는 머신러닝 모델을 만듭니다.</p></div>
+<div class="card"><h3>🧹 데이터 전처리</h3><p>결측값, 공백, 이상값을 정리해 분석 가능한 데이터로 만듭니다.</p></div>
+</div>
+<p><span class="badge">NumPy</span><span class="badge">Pandas</span><span class="badge">Matplotlib</span><span class="badge">Seaborn</span><span class="badge">전처리</span><span class="badge">시각화</span><span class="badge">기초 통계</span><span class="badge">scikit-learn</span></p>
+</div>
+</section>
+
+<section id="goals" class="section">
+<div class="card">
+<h2>🎯 학습목표</h2>
+<table class="table">
+<tr><th>영역</th><th>목표</th></tr>
+<tr><td>지식 목표</td><td>NumPy 배열, Pandas DataFrame, 시각화, 데이터 전처리, 기초 통계, 머신러닝의 기본 개념을 설명할 수 있다.</td></tr>
+<tr><td>기능 목표</td><td>데이터프레임 생성, 결측값 처리, 그룹 집계, 그래프 작성, train_test_split, 모델 학습과 정확도 계산을 수행할 수 있다.</td></tr>
+<tr><td>태도 목표</td><td>데이터를 근거로 문제를 해석하고, 분석 결과를 시각적으로 설명하려는 태도를 기른다.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="concepts" class="section">
+<div class="card">
+<h2>🧠 핵심 개념</h2>
+<h3>1. NumPy</h3>
+<p class="explain">NumPy는 수치 계산을 빠르게 처리하는 배열 기반 라이브러리입니다. 평균, 합계, 벡터 연산 등에 활용됩니다.</p>
+<h3>2. Pandas</h3>
+<p class="explain">Pandas는 표 형태 데이터를 다루는 라이브러리입니다. DataFrame을 사용해 행과 열 구조의 데이터를 쉽게 분석합니다.</p>
+<h3>3. 데이터 전처리</h3>
+<p class="explain">전처리는 결측값, 중복, 공백, 이상값 등을 정리하여 분석 가능한 데이터로 만드는 과정입니다.</p>
+<h3>4. 시각화</h3>
+<p class="explain">Matplotlib과 Seaborn은 데이터를 그래프로 표현하여 패턴과 차이를 쉽게 이해하도록 돕습니다.</p>
+<h3>5. 머신러닝</h3>
+<p class="explain">머신러닝은 데이터에서 규칙을 학습하여 새로운 데이터의 결과를 예측하는 기술입니다.</p>
+</div>
+</section>
+
+<section id="codes" class="section">
+<div class="card">
+<h2>💻 개념기반 학습코드 10개 + 상세 설명</h2>
+
+<h3>코드 1. NumPy 배열과 평균</h3>
+<pre><code>import numpy as np
+
+scores = np.array([80, 90, 100])
+print(scores.mean())</code></pre>
+<p class="explain">NumPy 배열은 숫자 데이터를 빠르게 계산합니다. 평균은 90.0입니다.</p>
+
+<h3>코드 2. Pandas DataFrame</h3>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({
+    "이름": ["민수", "지아", "하준"],
+    "점수": [80, 95, 70]
+})
+print(df)</code></pre>
+<p class="explain">DataFrame은 표 형태 데이터입니다. 행과 열을 가진 데이터 분석의 기본 구조입니다.</p>
+
+<h3>코드 3. 기초 통계</h3>
+<pre><code>print(df["점수"].mean())
+print(df["점수"].max())</code></pre>
+<p class="explain">mean()은 평균, max()는 최댓값을 구합니다.</p>
+
+<h3>코드 4. 결측값 처리</h3>
+<pre><code>df["점수"] = df["점수"].fillna(df["점수"].mean())</code></pre>
+<p class="explain">fillna()는 비어 있는 값을 채웁니다. 여기서는 평균값으로 결측값을 대체합니다.</p>
+
+<h3>코드 5. 문자열 공백 제거</h3>
+<pre><code>df["지역"] = df["지역"].str.strip()</code></pre>
+<p class="explain">str.strip()은 문자열 양쪽 공백을 제거하여 같은 지역명이 다르게 인식되는 문제를 줄입니다.</p>
+
+<h3>코드 6. 그룹별 집계</h3>
+<pre><code>summary = df.groupby("지역")["매출"].sum()
+print(summary)</code></pre>
+<p class="explain">groupby()는 특정 기준으로 데이터를 묶고, sum()으로 그룹별 합계를 계산합니다.</p>
+
+<h3>코드 7. Matplotlib 막대그래프</h3>
+<pre><code>import matplotlib.pyplot as plt
+
+plt.bar(["A", "B", "C"], [10, 20, 15])
+plt.title("Bar Chart")
+plt.show()</code></pre>
+<p class="explain">막대그래프는 범주별 크기를 비교할 때 사용합니다.</p>
+
+<h3>코드 8. Seaborn 산점도</h3>
+<pre><code>import seaborn as sns
+
+sns.scatterplot(data=df, x="공부시간", y="점수")
+plt.show()</code></pre>
+<p class="explain">산점도는 두 변수 사이의 관계를 확인할 때 사용합니다.</p>
+
+<h3>코드 9. train_test_split</h3>
+<pre><code>from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=42
+)</code></pre>
+<p class="explain">데이터를 학습용과 테스트용으로 나누어 모델 성능을 공정하게 평가합니다.</p>
+
+<h3>코드 10. 의사결정나무 분류</h3>
+<pre><code>from sklearn.tree import DecisionTreeClassifier
+
+model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+accuracy = model.score(X_test, y_test)
+print(accuracy)</code></pre>
+<p class="explain">DecisionTreeClassifier는 분류 문제에 사용하는 머신러닝 모델입니다. score()는 테스트 정확도를 계산합니다.</p>
+</div>
+</section>
+
+<section id="projects" class="section">
+<div class="card">
+<h2>🧪 프로젝트</h2>
+<h3>1. 학생 성적 분석</h3>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({
+    "이름": ["민수", "지아", "하준"],
+    "국어": [80, 90, 70],
+    "수학": [85, 95, 75]
+})
+df["평균"] = df[["국어", "수학"]].mean(axis=1)
+print(df)
+print("전체 평균:", df["평균"].mean())</code></pre>
+
+<h3>2. 매출 분석</h3>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {"지역": ["서울", "서울", "부산", "부산"], "매출": [120, 150, 80, 100]}
+df = pd.DataFrame(data)
+summary = df.groupby("지역")["매출"].sum()
+
+summary.plot(kind="bar")
+plt.title("지역별 매출 합계")
+plt.show()</code></pre>
+
+<h3>3. 붓꽃 데이터 분류</h3>
+<pre><code>from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+X, y = load_iris(return_X_y=True)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=42
+)
+
+model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+print("정확도:", model.score(X_test, y_test))</code></pre>
+</div>
+</section>
+
+<section id="finish" class="section">
+<div class="card">
+<h2>🌟 수업마무리하기</h2>
+<p>데이터 분석과 AI는 단순히 라이브러리를 호출하는 것이 아니라, <b>데이터를 이해하고 문제를 정의하며 결과를 해석하는 과정</b>입니다.</p>
+<ul>
+<li>NumPy는 빠른 수치 계산을 돕는다.</li>
+<li>Pandas는 표 데이터를 분석한다.</li>
+<li>전처리는 분석 품질을 높인다.</li>
+<li>시각화는 데이터 패턴을 쉽게 보여준다.</li>
+<li>기초 통계는 데이터를 요약한다.</li>
+<li>머신러닝은 데이터에서 규칙을 학습한다.</li>
+</ul>
+<p class="explain"><b>핵심 정리:</b> 좋은 AI 프로젝트는 좋은 데이터 이해와 전처리에서 시작됩니다.</p>
+</div>
+</section>
+
+<section id="essay" class="section"><div class="card"><h2>✍️ 개념정리 학습코드 출력 서술형 10문항</h2><div id="essayBox"></div></div></section>
+<section id="ox" class="section"><div class="card"><h2>⭕❌ 진단평가 개념정리 OX 퀴즈 10문항</h2><div id="oxBox"></div></div></section>
+<section id="mcq" class="section"><div class="card"><h2>🧩 형성평가 개념 다지기 심화 5지선다형 10문항</h2><div id="mcqBox"></div></div></section>
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">파일명 형식: 학번_이름_1단원_점수_응시시각.txt</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+function showSec(id,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+
+const essay=[
+{q:`import numpy as np\narr=np.array([1,2,3])\nprint(arr.sum())`,a:"6",e:"NumPy 배열 [1,2,3]의 합은 6입니다."},
+{q:`import numpy as np\narr=np.array([10,20,30])\nprint(arr.mean())`,a:"20.0",e:"평균은 (10+20+30)/3 = 20.0입니다."},
+{q:`import pandas as pd\ndf=pd.DataFrame({"점수":[80,90]})\nprint(df["점수"].max())`,a:"90",e:"점수 열의 최댓값은 90입니다."},
+{q:`import pandas as pd\ndf=pd.DataFrame({"이름":["Kim","Lee"]})\nprint(len(df))`,a:"2",e:"DataFrame의 행 개수는 2입니다."},
+{q:`import pandas as pd\ndf=pd.DataFrame({"점수":[80,100]})\nprint(df["점수"].mean())`,a:"90.0",e:"80과 100의 평균은 90.0입니다."},
+{q:`data=[" 서울 ","부산"]\nprint(data[0].strip())`,a:"서울",e:"strip()은 양쪽 공백을 제거합니다."},
+{q:`import pandas as pd\ndf=pd.DataFrame({"지역":["A","A","B"],"매출":[10,20,5]})\nprint(df.groupby("지역")["매출"].sum()["A"])`,a:"30",e:"지역 A의 매출 합계는 10+20=30입니다."},
+{q:`pred=[1,0,1]\ny=[1,1,1]\nprint(sum([p==t for p,t in zip(pred,y)]))`,a:"2",e:"예측과 정답이 같은 경우는 첫 번째와 세 번째로 2개입니다."},
+{q:`score=3/4\nprint(round(score,2))`,a:"0.75",e:"3/4는 0.75이며 소수 둘째 자리까지 반올림해도 0.75입니다."},
+{q:`labels=["setosa","versicolor"]\nprint(labels[0])`,a:"setosa",e:"리스트의 첫 번째 원소는 setosa입니다."}
+];
+
+const ox=[
+{q:"NumPy는 수치 계산을 빠르게 처리하는 배열 기반 라이브러리이다.",a:"O",e:"NumPy는 배열과 벡터 연산에 강합니다."},
+{q:"Pandas의 DataFrame은 표 형태 데이터를 다루는 구조이다.",a:"O",e:"DataFrame은 행과 열로 구성됩니다."},
+{q:"데이터 전처리는 분석 전에 데이터를 정리하는 과정이다.",a:"O",e:"결측값, 중복, 공백 등을 정리합니다."},
+{q:"결측값은 항상 삭제해야만 한다.",a:"X",e:"상황에 따라 평균, 중앙값, 최빈값 등으로 대체할 수 있습니다."},
+{q:"Matplotlib은 그래프 시각화에 사용할 수 있다.",a:"O",e:"Matplotlib은 대표적인 시각화 라이브러리입니다."},
+{q:"Seaborn은 시각화 라이브러리이다.",a:"O",e:"Seaborn은 통계적 시각화에 편리합니다."},
+{q:"groupby는 데이터를 기준별로 묶어 집계할 때 사용할 수 있다.",a:"O",e:"지역별 매출 합계 같은 작업에 활용됩니다."},
+{q:"train_test_split은 데이터를 학습용과 테스트용으로 나누는 데 사용한다.",a:"O",e:"모델 평가를 위해 데이터를 나눕니다."},
+{q:"머신러닝 모델은 학습 데이터 없이도 항상 정확히 예측한다.",a:"X",e:"모델은 데이터에서 규칙을 학습해야 합니다."},
+{q:"모델 정확도는 예측이 정답과 얼마나 일치하는지 나타내는 지표가 될 수 있다.",a:"O",e:"분류 문제에서 정확도는 대표적인 평가 지표입니다."}
+];
+
+const mcq=[
+{q:"수치 계산과 배열 연산에 주로 사용하는 라이브러리는?",choices:["NumPy","Flask","Django","Tkinter","random만"],a:"1",e:"NumPy는 수치 배열 계산에 사용합니다."},
+{q:"표 형태 데이터를 다루는 대표 라이브러리는?",choices:["Pandas","math","os","time","turtle"],a:"1",e:"Pandas는 DataFrame으로 표 데이터를 다룹니다."},
+{q:"그래프를 그리는 대표 라이브러리는?",choices:["Matplotlib","json","csv만","sys","pickle"],a:"1",e:"Matplotlib은 대표적인 시각화 라이브러리입니다."},
+{q:"통계적 시각화에 자주 사용하는 라이브러리는?",choices:["Seaborn","socket","typing","re","pathlib만"],a:"1",e:"Seaborn은 통계 기반 시각화에 편리합니다."},
+{q:"결측값을 채우는 Pandas 메서드는?",choices:["fillna","dropgraph","splitfit","learn","predict_only"],a:"1",e:"fillna()는 결측값을 대체합니다."},
+{q:"지역별 매출 합계를 구할 때 적절한 기능은?",choices:["groupby","yield","decorator","break","continue"],a:"1",e:"groupby로 지역별 그룹을 만든 뒤 합계를 계산합니다."},
+{q:"학습용/테스트용 데이터 분리에 사용하는 함수는?",choices:["train_test_split","fit_only","barplot_only","read_html_only","len"],a:"1",e:"train_test_split은 데이터 분할 함수입니다."},
+{q:"scikit-learn에서 모델을 학습할 때 주로 사용하는 메서드는?",choices:["fit","paint","show_only","append","strip"],a:"1",e:"fit()은 모델 학습 메서드입니다."},
+{q:"학습된 모델로 예측할 때 주로 사용하는 메서드는?",choices:["predict","groupby","fillna","head만","title"],a:"1",e:"predict()는 예측 결과를 만듭니다."},
+{q:"붓꽃 품종 분류는 어떤 문제에 가까운가?",choices:["분류 문제","파일 삭제 문제","문자열 출력만","단순 주석","색상 선택"],a:"1",e:"붓꽃 품종을 여러 클래스 중 하나로 예측하므로 분류 문제입니다."}
+];
+
+function render(){
+ document.getElementById('essayBox').innerHTML=essay.map((it,i)=>`
+ <div class="question"><h3>서술형 ${i+1}</h3><pre><code>${it.q}</code></pre>
+ <textarea id="essay${i}" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+ <button class="action" onclick="toggleAns('essayAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="essayAns${i}"><b>정답</b><pre><code>${it.a}</code></pre><b>풀이</b><p>${it.e}</p></div></div>`).join('');
+ document.getElementById('oxBox').innerHTML=ox.map((it,i)=>`
+ <div class="question"><h3>OX ${i+1}</h3><p>${it.q}</p>
+ <label><input type="radio" name="ox${i}" value="O"> O</label>
+ <label><input type="radio" name="ox${i}" value="X"> X</label>
+ <button class="action" onclick="toggleAns('oxAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="oxAns${i}"><b>정답:</b> ${it.a}<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+ document.getElementById('mcqBox').innerHTML=mcq.map((it,i)=>`
+ <div class="question"><h3>5지선다 ${i+1}</h3><p>${it.q}</p>
+ ${it.choices.map((c,j)=>`<label><input type="radio" name="mcq${i}" value="${j+1}"> ${j+1}. ${c}</label>`).join('')}
+ <button class="action" onclick="toggleAns('mcqAns${i}')">상세 풀이 보기</button>
+ <div class="answer" id="mcqAns${i}"><b>정답:</b> ${it.a}번<br><b>풀이:</b> ${it.e}</div></div>`).join('');
+}
+function toggleAns(id){const el=document.getElementById(id);el.style.display=el.style.display==="block"?"none":"block"}
+function norm(s){return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"")}
+let lastReport="";
+function gradeAll(){
+ let score=0,total=30,lines=[];
+ lines.push("9단계 데이터 분석/AI 활용 평가 결과");
+ lines.push("================================");
+ for(let i=0;i<essay.length;i++){
+   const user=norm(document.getElementById('essay'+i).value), ans=norm(essay[i].a), ok=user===ans;
+   if(ok)score++; lines.push(`서술형 ${i+1}: ${ok?"정답":"오답"} / 정답: ${essay[i].a.replace(/\n/g,", ")}`);
+ }
+ for(let i=0;i<ox.length;i++){
+   const checked=document.querySelector(`input[name="ox${i}"]:checked`), val=checked?checked.value:"", ok=val===ox[i].a;
+   if(ok)score++; lines.push(`OX ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${ox[i].a}`);
+ }
+ for(let i=0;i<mcq.length;i++){
+   const checked=document.querySelector(`input[name="mcq${i}"]:checked`), val=checked?checked.value:"", ok=val===mcq[i].a;
+   if(ok)score++; lines.push(`5지선다 ${i+1}: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcq[i].a}`);
+ }
+ const percent=Math.round(score/total*100);
+ lines.push("================================");
+ lines.push(`총점: ${score}/${total} (${percent}점)`);
+ lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+ lastReport=lines.join("\n");
+ document.getElementById('gradeResult').textContent=lastReport;
+}
+function safeName(s){return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_")}
+function downloadTxt(){
+ if(!lastReport)gradeAll();
+ const sid=safeName(document.getElementById('studentId').value);
+ const name=safeName(document.getElementById('studentName').value);
+ const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1]||"0";
+ const now=new Date();
+ const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+ const filename=`${sid}_${name}_1단원_${scoreLine}점_${stamp}.txt`;
+ const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+}
+render();
+</script>
+</body>
+</html>
