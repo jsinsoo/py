@@ -1,0 +1,444 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>판다스 예제코드 50개 한 줄씩 상세설명</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+*{box-sizing:border-box}body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#eff6ff,#ecfdf5,#f5f3ff);color:#172033;line-height:1.7}header{padding:42px 7vw;color:white;background:linear-gradient(120deg,#0f766e,#2563eb,#7c3aed);border-bottom-left-radius:42px;border-bottom-right-radius:42px;box-shadow:0 10px 28px rgba(15,23,42,.24)}header h1{font-size:40px;margin:0}header p{font-size:20px;margin:10px 0 0;opacity:.95}.wrap{display:grid;grid-template-columns:310px 1fr;min-height:calc(100vh - 150px)}nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}nav h2{font-size:18px;margin:0 0 14px;color:#99f6e4}nav a{display:block;text-decoration:none;color:#e5e7eb;background:#374151;border-radius:14px;padding:10px 12px;margin:6px 0;font-size:14px;line-height:1.4}nav a:hover{background:#0f766e}main{padding:28px;overflow:auto}.card{background:white;border:2px solid #bfdbfe;border-radius:26px;padding:26px;margin:24px 0;box-shadow:0 10px 28px rgba(37,99,235,.1)}h2{font-size:30px;color:#0f766e;margin-top:0}h3{font-size:22px;color:#2563eb}pre{background:#042f2e;color:#ccfbf1;padding:20px;border-radius:18px;overflow:auto;font-size:15px;border:4px solid #5eead4;line-height:1.55}code{font-family:Consolas,monospace}.badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#dbeafe;color:#1e40af;font-weight:800;margin:4px}.level{display:inline-block;padding:7px 13px;border-radius:999px;background:#0f766e;color:white;font-weight:900;margin-bottom:10px}.warn{background:#fff7ed;border-left:8px solid #f97316;border-radius:16px;padding:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.mini{background:#f8fafc;border-left:8px solid #2dd4bf;border-radius:16px;padding:16px}.table{width:100%;border-collapse:collapse;margin-top:12px;font-size:16px}.table th,.table td{border:1px solid #99f6e4;padding:11px;vertical-align:top;line-height:1.65}.table th{background:#0f766e;color:white}.table td:first-child{width:55px;text-align:center;font-weight:900;color:#0f766e}.table td:nth-child(2){width:42%;background:#f8fafc}@media(max-width:900px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}.table{font-size:14px}}
+</style></head><body><header><h1>🐼 판다스 기초부터 심화까지 예제코드 50개</h1><p>초보자도 이해할 수 있도록 모든 코드 한 줄 한 줄을 꼼꼼하게 설명한 HTML 학습자료</p></header><div class="wrap"><nav><h2>📚 예제 목록</h2><a href="#ex1">01. DataFrame 만들기</a><a href="#ex2">02. Series 만들기</a><a href="#ex3">03. CSV 읽기</a><a href="#ex4">04. CSV 저장</a><a href="#ex5">05. head 사용</a><a href="#ex6">06. tail 사용</a><a href="#ex7">07. info 사용</a><a href="#ex8">08. describe 사용</a><a href="#ex9">09. 열 선택</a><a href="#ex10">10. 여러 열 선택</a><a href="#ex11">11. iloc 행 선택</a><a href="#ex12">12. loc 행 선택</a><a href="#ex13">13. 조건 필터링</a><a href="#ex14">14. 여러 조건 필터링</a><a href="#ex15">15. 새 열 추가</a><a href="#ex16">16. 열 삭제</a><a href="#ex17">17. 행 삭제</a><a href="#ex18">18. 열 이름 변경</a><a href="#ex19">19. 정렬</a><a href="#ex20">20. 인덱스 재설정</a><a href="#ex21">21. 결측치 확인</a><a href="#ex22">22. 결측치 제거</a><a href="#ex23">23. 결측치 채우기</a><a href="#ex24">24. 중복 제거</a><a href="#ex25">25. 문자열 공백 제거</a><a href="#ex26">26. 문자열 포함 필터</a><a href="#ex27">27. apply 등급 만들기</a><a href="#ex28">28. map 값 변환</a><a href="#ex29">29. astype 자료형 변환</a><a href="#ex30">30. 날짜 변환</a><a href="#ex31">31. 그룹별 평균</a><a href="#ex32">32. 그룹별 여러 통계</a><a href="#ex33">33. 피벗 테이블</a><a href="#ex34">34. value_counts</a><a href="#ex35">35. crosstab</a><a href="#ex36">36. merge 결합</a><a href="#ex37">37. concat 행 합치기</a><a href="#ex38">38. melt 긴 형태 변환</a><a href="#ex39">39. pivot 넓은 형태 변환</a><a href="#ex40">40. 순위 계산</a><a href="#ex41">41. 상관계수</a><a href="#ex42">42. 이동평균</a><a href="#ex43">43. 누적합</a><a href="#ex44">44. 월별 리샘플링</a><a href="#ex45">45. query 사용</a><a href="#ex46">46. assign 사용</a><a href="#ex47">47. pipe 사용</a><a href="#ex48">48. category 자료형</a><a href="#ex49">49. chunksize 대용량 처리</a><a href="#ex50">50. 메서드 체이닝</a></nav><main>
+<section class="card"><h2>🚀 학습 안내</h2><p>Pandas 예제 50개를 기초, 전처리, 집계, 결합, 변환, 시계열, 심화 순서로 정리하고 각 코드의 의미를 한 줄씩 설명합니다.</p><p><span class="badge">DataFrame</span><span class="badge">Series</span><span class="badge">전처리</span><span class="badge">groupby</span><span class="badge">merge</span><span class="badge">시계열</span><span class="badge">심화</span></p><div class="warn"><b>설치:</b> <code>pip install pandas</code> 실행 후 실습하세요.</div></section>
+<section class="card"><h2>🧭 코드 읽는 순서</h2><div class="grid"><div class="mini"><h3>1. import</h3><p>필요한 라이브러리를 불러옵니다.</p></div><div class="mini"><h3>2. 데이터 준비</h3><p>딕셔너리, CSV, 리스트를 준비합니다.</p></div><div class="mini"><h3>3. DataFrame 처리</h3><p>선택, 필터, 전처리, 집계를 수행합니다.</p></div><div class="mini"><h3>4. 결과 확인</h3><p>print로 표와 계산 결과를 확인합니다.</p></div></div></section>
+<section class="card" id="ex1">
+<div class="level">기초</div><h2>01. DataFrame 만들기</h2>
+<pre><code>import pandas as pd
+
+data = {&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,78]}
+df = pd.DataFrame(data)
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>data = {&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,78]}</code></td><td>분석에 사용할 데이터를 만들거나 DataFrame으로 변환합니다.</td></tr><tr><td>4</td><td><code>df = pd.DataFrame(data)</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex2">
+<div class="level">기초</div><h2>02. Series 만들기</h2>
+<pre><code>import pandas as pd
+
+s = pd.Series([90,85,78], name=&quot;점수&quot;)
+print(s)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>s = pd.Series([90,85,78], name=&quot;점수&quot;)</code></td><td>Series를 만듭니다. Series는 DataFrame의 한 열처럼 1차원 데이터 구조입니다.</td></tr><tr><td>4</td><td><code>print(s)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex3">
+<div class="level">기초</div><h2>03. CSV 읽기</h2>
+<pre><code>import pandas as pd
+
+df = pd.read_csv(&quot;students.csv&quot;)
+print(df.head())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.read_csv(&quot;students.csv&quot;)</code></td><td>CSV 파일을 읽어 DataFrame으로 가져옵니다.</td></tr><tr><td>4</td><td><code>print(df.head())</code></td><td>DataFrame의 앞부분 일부 행을 확인합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex4">
+<div class="level">기초</div><h2>04. CSV 저장</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})
+df.to_csv(&quot;result.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df.to_csv(&quot;result.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)</code></td><td>DataFrame을 CSV 파일로 저장합니다. index=False는 행 번호를 저장하지 않겠다는 뜻입니다.</td></tr></tbody></table>
+</section><section class="card" id="ex5">
+<div class="level">기초</div><h2>05. head 사용</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;], &quot;점수&quot;:[90,85,78,92]})
+print(df.head(2))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;], &quot;점수&quot;:[90,85,78,92]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.head(2))</code></td><td>DataFrame의 앞부분 일부 행을 확인합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex6">
+<div class="level">기초</div><h2>06. tail 사용</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;], &quot;점수&quot;:[90,85,78,92]})
+print(df.tail(2))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;], &quot;점수&quot;:[90,85,78,92]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.tail(2))</code></td><td>DataFrame의 뒷부분 일부 행을 확인합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex7">
+<div class="level">기초</div><h2>07. info 사용</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})
+df.info()</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df.info()</code></td><td>열 이름, 결측치, 자료형 등 DataFrame의 기본 정보를 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex8">
+<div class="level">기초</div><h2>08. describe 사용</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;국어&quot;:[90,80,70], &quot;수학&quot;:[88,95,76]})
+print(df.describe())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;국어&quot;:[90,80,70], &quot;수학&quot;:[88,95,76]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.describe())</code></td><td>숫자 열의 평균, 표준편차, 최솟값, 사분위수, 최댓값을 요약합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex9">
+<div class="level">기초</div><h2>09. 열 선택</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})
+print(df[&quot;점수&quot;])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[&quot;점수&quot;])</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex10">
+<div class="level">기초</div><h2>10. 여러 열 선택</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})
+print(df[[&quot;이름&quot;,&quot;수학&quot;]])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[[&quot;이름&quot;,&quot;수학&quot;]])</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex11">
+<div class="level">기초</div><h2>11. iloc 행 선택</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,78]})
+print(df.iloc[0])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,78]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.iloc[0])</code></td><td>행과 열의 위치 번호를 기준으로 데이터를 선택합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex12">
+<div class="level">기초</div><h2>12. loc 행 선택</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]}, index=[&quot;a&quot;,&quot;b&quot;])
+print(df.loc[&quot;b&quot;])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]}, index=[&quot;a&quot;,&quot;b&quot;])</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.loc[&quot;b&quot;])</code></td><td>인덱스 이름이나 열 이름을 기준으로 데이터를 선택합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex13">
+<div class="level">기초</div><h2>13. 조건 필터링</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,78]})
+print(df[df[&quot;점수&quot;] &gt;= 85])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,78]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[df[&quot;점수&quot;] &gt;= 85])</code></td><td>조건식을 만족하는 행만 필터링하여 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex14">
+<div class="level">기초</div><h2>14. 여러 조건 필터링</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;국어&quot;:[90,85,78], &quot;수학&quot;:[88,70,95]})
+print(df[(df[&quot;국어&quot;]&gt;=85) &amp; (df[&quot;수학&quot;]&gt;=80)])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;국어&quot;:[90,85,78], &quot;수학&quot;:[88,70,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[(df[&quot;국어&quot;]&gt;=85) &amp; (df[&quot;수학&quot;]&gt;=80)])</code></td><td>조건식을 만족하는 행만 필터링하여 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex15">
+<div class="level">기초</div><h2>15. 새 열 추가</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})
+df[&quot;평균&quot;] = (df[&quot;국어&quot;] + df[&quot;수학&quot;]) / 2
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;평균&quot;] = (df[&quot;국어&quot;] + df[&quot;수학&quot;]) / 2</code></td><td>DataFrame에 새 열을 만들거나 기존 열 값을 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex16">
+<div class="level">기초</div><h2>16. 열 삭제</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;], &quot;점수&quot;:[90], &quot;등급&quot;:[&quot;A&quot;]})
+print(df.drop(columns=[&quot;등급&quot;]))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;], &quot;점수&quot;:[90], &quot;등급&quot;:[&quot;A&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.drop(columns=[&quot;등급&quot;]))</code></td><td>지정한 열을 삭제합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex17">
+<div class="level">기초</div><h2>17. 행 삭제</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})
+print(df.drop(index=1))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.drop(index=1))</code></td><td>지정한 인덱스의 행을 삭제합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex18">
+<div class="level">기초</div><h2>18. 열 이름 변경</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;name&quot;:[&quot;Kim&quot;], &quot;score&quot;:[90]})
+print(df.rename(columns={&quot;name&quot;:&quot;이름&quot;,&quot;score&quot;:&quot;점수&quot;}))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;name&quot;:[&quot;Kim&quot;], &quot;score&quot;:[90]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.rename(columns={&quot;name&quot;:&quot;이름&quot;,&quot;score&quot;:&quot;점수&quot;}))</code></td><td>열 이름이나 인덱스 이름을 다른 이름으로 바꿉니다.</td></tr></tbody></table>
+</section><section class="card" id="ex19">
+<div class="level">기초</div><h2>19. 정렬</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,95]})
+print(df.sort_values(&quot;점수&quot;, ascending=False))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.sort_values(&quot;점수&quot;, ascending=False))</code></td><td>특정 열의 값을 기준으로 정렬합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex20">
+<div class="level">기초</div><h2>20. 인덱스 재설정</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;점수&quot;:[90,85,95]})
+df = df.sort_values(&quot;점수&quot;).reset_index(drop=True)
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;점수&quot;:[90,85,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df = df.sort_values(&quot;점수&quot;).reset_index(drop=True)</code></td><td>특정 열의 값을 기준으로 정렬합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex21">
+<div class="level">전처리</div><h2>21. 결측치 확인</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;점수&quot;:[90,None,78]})
+print(df.isna().sum())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;점수&quot;:[90,None,78]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.isna().sum())</code></td><td>결측치 여부를 확인한 뒤 열별 결측치 개수를 셉니다.</td></tr></tbody></table>
+</section><section class="card" id="ex22">
+<div class="level">전처리</div><h2>22. 결측치 제거</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;점수&quot;:[90,None,78]})
+print(df.dropna())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;점수&quot;:[90,None,78]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.dropna())</code></td><td>결측치가 들어 있는 행을 제거합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex23">
+<div class="level">전처리</div><h2>23. 결측치 채우기</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;점수&quot;:[90,None,78]})
+df[&quot;점수&quot;] = df[&quot;점수&quot;].fillna(df[&quot;점수&quot;].mean())
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;점수&quot;:[90,None,78]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;점수&quot;] = df[&quot;점수&quot;].fillna(df[&quot;점수&quot;].mean())</code></td><td>결측치를 평균 같은 다른 값으로 채웁니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex24">
+<div class="level">전처리</div><h2>24. 중복 제거</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,90,80]})
+print(df.drop_duplicates())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;김&quot;,&quot;이&quot;], &quot;점수&quot;:[90,90,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.drop_duplicates())</code></td><td>완전히 중복된 행을 제거합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex25">
+<div class="level">전처리</div><h2>25. 문자열 공백 제거</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;지역&quot;:[&quot;서울 &quot;,&quot; 부산&quot;]})
+df[&quot;지역&quot;] = df[&quot;지역&quot;].str.strip()
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;지역&quot;:[&quot;서울 &quot;,&quot; 부산&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;지역&quot;] = df[&quot;지역&quot;].str.strip()</code></td><td>문자열의 양쪽 공백을 제거합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex26">
+<div class="level">전처리</div><h2>26. 문자열 포함 필터</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;상품&quot;:[&quot;사과주스&quot;,&quot;초콜릿&quot;,&quot;오렌지주스&quot;]})
+print(df[df[&quot;상품&quot;].str.contains(&quot;주스&quot;)])</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;상품&quot;:[&quot;사과주스&quot;,&quot;초콜릿&quot;,&quot;오렌지주스&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[df[&quot;상품&quot;].str.contains(&quot;주스&quot;)])</code></td><td>문자열 안에 특정 단어가 포함되어 있는지 확인합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex27">
+<div class="level">전처리</div><h2>27. apply 등급 만들기</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;점수&quot;:[95,82,70]})
+df[&quot;등급&quot;] = df[&quot;점수&quot;].apply(lambda x: &quot;A&quot; if x&gt;=90 else &quot;B&quot;)
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;점수&quot;:[95,82,70]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;등급&quot;] = df[&quot;점수&quot;].apply(lambda x: &quot;A&quot; if x&gt;=90 else &quot;B&quot;)</code></td><td>열의 각 값에 함수를 적용합니다. lambda와 함께 조건 변환에 자주 씁니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex28">
+<div class="level">전처리</div><h2>28. map 값 변환</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;성별&quot;:[&quot;M&quot;,&quot;F&quot;,&quot;M&quot;]})
+df[&quot;성별명&quot;] = df[&quot;성별&quot;].map({&quot;M&quot;:&quot;남자&quot;,&quot;F&quot;:&quot;여자&quot;})
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;성별&quot;:[&quot;M&quot;,&quot;F&quot;,&quot;M&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;성별명&quot;] = df[&quot;성별&quot;].map({&quot;M&quot;:&quot;남자&quot;,&quot;F&quot;:&quot;여자&quot;})</code></td><td>값을 사전에 지정한 다른 값으로 매핑하여 변환합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex29">
+<div class="level">전처리</div><h2>29. astype 자료형 변환</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;점수&quot;:[&quot;90&quot;,&quot;80&quot;]})
+df[&quot;점수&quot;] = df[&quot;점수&quot;].astype(int)
+print(df[&quot;점수&quot;].mean())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;점수&quot;:[&quot;90&quot;,&quot;80&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;점수&quot;] = df[&quot;점수&quot;].astype(int)</code></td><td>열의 자료형을 정수, 실수, category 등으로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df[&quot;점수&quot;].mean())</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex30">
+<div class="level">전처리</div><h2>30. 날짜 변환</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-02&quot;]})
+df[&quot;날짜&quot;] = pd.to_datetime(df[&quot;날짜&quot;])
+print(df.dtypes)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-02&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;날짜&quot;] = pd.to_datetime(df[&quot;날짜&quot;])</code></td><td>문자열 날짜를 Pandas 날짜 자료형으로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df.dtypes)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex31">
+<div class="level">집계</div><h2>31. 그룹별 평균</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;B&quot;], &quot;점수&quot;:[90,80,70]})
+print(df.groupby(&quot;반&quot;)[&quot;점수&quot;].mean())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;B&quot;], &quot;점수&quot;:[90,80,70]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.groupby(&quot;반&quot;)[&quot;점수&quot;].mean())</code></td><td>특정 열 기준으로 그룹을 나누고 각 그룹의 평균을 계산합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex32">
+<div class="level">집계</div><h2>32. 그룹별 여러 통계</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;B&quot;], &quot;점수&quot;:[90,80,70]})
+print(df.groupby(&quot;반&quot;)[&quot;점수&quot;].agg([&quot;mean&quot;,&quot;max&quot;,&quot;min&quot;]))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;B&quot;], &quot;점수&quot;:[90,80,70]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.groupby(&quot;반&quot;)[&quot;점수&quot;].agg([&quot;mean&quot;,&quot;max&quot;,&quot;min&quot;]))</code></td><td>여러 통계 함수를 한 번에 적용합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex33">
+<div class="level">집계</div><h2>33. 피벗 테이블</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;지역&quot;:[&quot;서울&quot;,&quot;서울&quot;,&quot;부산&quot;],&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;A&quot;],&quot;매출&quot;:[100,150,80]})
+print(pd.pivot_table(df, values=&quot;매출&quot;, index=&quot;지역&quot;, columns=&quot;제품&quot;, aggfunc=&quot;sum&quot;))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;지역&quot;:[&quot;서울&quot;,&quot;서울&quot;,&quot;부산&quot;],&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;A&quot;],&quot;매출&quot;:[100,150,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(pd.pivot_table(df, values=&quot;매출&quot;, index=&quot;지역&quot;, columns=&quot;제품&quot;, aggfunc=&quot;sum&quot;))</code></td><td>행과 열 기준으로 데이터를 재구성하여 교차표를 만듭니다.</td></tr></tbody></table>
+</section><section class="card" id="ex34">
+<div class="level">집계</div><h2>34. value_counts</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;선호과목&quot;:[&quot;정보&quot;,&quot;수학&quot;,&quot;정보&quot;]})
+print(df[&quot;선호과목&quot;].value_counts())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;선호과목&quot;:[&quot;정보&quot;,&quot;수학&quot;,&quot;정보&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[&quot;선호과목&quot;].value_counts())</code></td><td>각 값이 몇 번 등장했는지 빈도를 계산합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex35">
+<div class="level">집계</div><h2>35. crosstab</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;성별&quot;:[&quot;남&quot;,&quot;여&quot;,&quot;남&quot;],&quot;선호&quot;:[&quot;정보&quot;,&quot;수학&quot;,&quot;정보&quot;]})
+print(pd.crosstab(df[&quot;성별&quot;], df[&quot;선호&quot;]))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;성별&quot;:[&quot;남&quot;,&quot;여&quot;,&quot;남&quot;],&quot;선호&quot;:[&quot;정보&quot;,&quot;수학&quot;,&quot;정보&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(pd.crosstab(df[&quot;성별&quot;], df[&quot;선호&quot;]))</code></td><td>두 범주형 변수의 교차 빈도표를 만듭니다.</td></tr></tbody></table>
+</section><section class="card" id="ex36">
+<div class="level">결합</div><h2>36. merge 결합</h2>
+<pre><code>import pandas as pd
+
+a = pd.DataFrame({&quot;학번&quot;:[1,2], &quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;]})
+b = pd.DataFrame({&quot;학번&quot;:[1,2], &quot;점수&quot;:[90,80]})
+print(pd.merge(a,b,on=&quot;학번&quot;))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>a = pd.DataFrame({&quot;학번&quot;:[1,2], &quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>b = pd.DataFrame({&quot;학번&quot;:[1,2], &quot;점수&quot;:[90,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>5</td><td><code>print(pd.merge(a,b,on=&quot;학번&quot;))</code></td><td>공통 열을 기준으로 두 DataFrame을 결합합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex37">
+<div class="level">결합</div><h2>37. concat 행 합치기</h2>
+<pre><code>import pandas as pd
+
+a = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;], &quot;점수&quot;:[90]})
+b = pd.DataFrame({&quot;이름&quot;:[&quot;이&quot;], &quot;점수&quot;:[80]})
+print(pd.concat([a,b], ignore_index=True))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>a = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;], &quot;점수&quot;:[90]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>b = pd.DataFrame({&quot;이름&quot;:[&quot;이&quot;], &quot;점수&quot;:[80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>5</td><td><code>print(pd.concat([a,b], ignore_index=True))</code></td><td>여러 DataFrame을 위아래 또는 좌우로 이어 붙입니다.</td></tr></tbody></table>
+</section><section class="card" id="ex38">
+<div class="level">변환</div><h2>38. melt 긴 형태 변환</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;], &quot;국어&quot;:[90], &quot;수학&quot;:[88]})
+print(pd.melt(df, id_vars=&quot;이름&quot;, var_name=&quot;과목&quot;, value_name=&quot;점수&quot;))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;], &quot;국어&quot;:[90], &quot;수학&quot;:[88]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(pd.melt(df, id_vars=&quot;이름&quot;, var_name=&quot;과목&quot;, value_name=&quot;점수&quot;))</code></td><td>넓은 형태 데이터를 긴 형태로 변환합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex39">
+<div class="level">변환</div><h2>39. pivot 넓은 형태 변환</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;김&quot;],&quot;과목&quot;:[&quot;국어&quot;,&quot;수학&quot;],&quot;점수&quot;:[90,88]})
+print(df.pivot(index=&quot;이름&quot;, columns=&quot;과목&quot;, values=&quot;점수&quot;))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;김&quot;],&quot;과목&quot;:[&quot;국어&quot;,&quot;수학&quot;],&quot;점수&quot;:[90,88]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.pivot(index=&quot;이름&quot;, columns=&quot;과목&quot;, values=&quot;점수&quot;))</code></td><td>긴 형태 데이터를 넓은 표 형태로 다시 변환합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex40">
+<div class="level">분석</div><h2>40. 순위 계산</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,95]})
+df[&quot;순위&quot;] = df[&quot;점수&quot;].rank(ascending=False)
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,85,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;순위&quot;] = df[&quot;점수&quot;].rank(ascending=False)</code></td><td>값의 순위를 계산합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex41">
+<div class="level">분석</div><h2>41. 상관계수</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;공부시간&quot;:[1,2,3], &quot;점수&quot;:[60,70,80]})
+print(df[&quot;공부시간&quot;].corr(df[&quot;점수&quot;]))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;공부시간&quot;:[1,2,3], &quot;점수&quot;:[60,70,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df[&quot;공부시간&quot;].corr(df[&quot;점수&quot;]))</code></td><td>두 숫자 변수 사이의 상관계수를 계산합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex42">
+<div class="level">시계열</div><h2>42. 이동평균</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;값&quot;:[10,20,30,40]})
+df[&quot;이동평균&quot;] = df[&quot;값&quot;].rolling(window=3).mean()
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;값&quot;:[10,20,30,40]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;이동평균&quot;] = df[&quot;값&quot;].rolling(window=3).mean()</code></td><td>일정한 개수의 값을 묶어 이동 계산을 합니다. 여기서는 이동평균을 구합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex43">
+<div class="level">시계열</div><h2>43. 누적합</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;매출&quot;:[100,150,120]})
+df[&quot;누적매출&quot;] = df[&quot;매출&quot;].cumsum()
+print(df)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;매출&quot;:[100,150,120]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;누적매출&quot;] = df[&quot;매출&quot;].cumsum()</code></td><td>위에서부터 차례로 누적합을 계산합니다.</td></tr><tr><td>5</td><td><code>print(df)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex44">
+<div class="level">시계열</div><h2>44. 월별 리샘플링</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-20&quot;,&quot;2026-02-01&quot;],&quot;매출&quot;:[100,150,200]})
+df[&quot;날짜&quot;] = pd.to_datetime(df[&quot;날짜&quot;])
+print(df.set_index(&quot;날짜&quot;)[&quot;매출&quot;].resample(&quot;ME&quot;).sum())</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-20&quot;,&quot;2026-02-01&quot;],&quot;매출&quot;:[100,150,200]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;날짜&quot;] = pd.to_datetime(df[&quot;날짜&quot;])</code></td><td>문자열 날짜를 Pandas 날짜 자료형으로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df.set_index(&quot;날짜&quot;)[&quot;매출&quot;].resample(&quot;ME&quot;).sum())</code></td><td>날짜를 인덱스로 설정한 뒤 시간 단위로 다시 묶어 합계를 계산합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex45">
+<div class="level">심화</div><h2>45. query 사용</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,80,70]})
+print(df.query(&quot;점수 &gt;= 80&quot;))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;], &quot;점수&quot;:[90,80,70]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.query(&quot;점수 &gt;= 80&quot;))</code></td><td>문자열 조건식을 사용해 행을 필터링합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex46">
+<div class="level">심화</div><h2>46. assign 사용</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})
+print(df.assign(평균=lambda x: (x[&quot;국어&quot;]+x[&quot;수학&quot;])/2))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>print(df.assign(평균=lambda x: (x[&quot;국어&quot;]+x[&quot;수학&quot;])/2))</code></td><td>새 열을 추가한 DataFrame을 반환합니다. 메서드 체이닝에 편리합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex47">
+<div class="level">심화</div><h2>47. pipe 사용</h2>
+<pre><code>import pandas as pd
+
+def add_average(df):
+    df[&quot;평균&quot;] = df[[&quot;국어&quot;,&quot;수학&quot;]].mean(axis=1)
+    return df
+
+df = pd.DataFrame({&quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})
+print(df.pipe(add_average))</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>def add_average(df):</code></td><td>사용자 정의 함수를 만듭니다. 반복되는 전처리 작업을 함수로 묶을 수 있습니다.</td></tr><tr><td>4</td><td><code>    df[&quot;평균&quot;] = df[[&quot;국어&quot;,&quot;수학&quot;]].mean(axis=1)</code></td><td>DataFrame에 새 열을 만들거나 기존 열 값을 바꿉니다.</td></tr><tr><td>5</td><td><code>    return df</code></td><td>처리된 DataFrame을 함수 밖으로 반환합니다.</td></tr><tr><td>6</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>7</td><td><code>df = pd.DataFrame({&quot;국어&quot;:[90,80], &quot;수학&quot;:[88,95]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>8</td><td><code>print(df.pipe(add_average))</code></td><td>DataFrame을 함수에 전달하여 파이프라인 방식으로 처리합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex48">
+<div class="level">심화</div><h2>48. category 자료형</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;등급&quot;:[&quot;상&quot;,&quot;중&quot;,&quot;하&quot;,&quot;상&quot;]})
+df[&quot;등급&quot;] = df[&quot;등급&quot;].astype(&quot;category&quot;)
+print(df.dtypes)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;등급&quot;:[&quot;상&quot;,&quot;중&quot;,&quot;하&quot;,&quot;상&quot;]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>df[&quot;등급&quot;] = df[&quot;등급&quot;].astype(&quot;category&quot;)</code></td><td>열의 자료형을 정수, 실수, category 등으로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df.dtypes)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex49">
+<div class="level">심화</div><h2>49. chunksize 대용량 처리</h2>
+<pre><code>import pandas as pd
+
+total = 0
+for chunk in pd.read_csv(&quot;big_data.csv&quot;, chunksize=1000):
+    total += chunk[&quot;매출&quot;].sum()
+print(total)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>total = 0</code></td><td>이 줄은 데이터 생성, 처리, 선택, 변환 또는 결과 확인을 위한 코드입니다. 앞뒤 줄과 함께 전체 분석 흐름을 완성합니다.</td></tr><tr><td>4</td><td><code>for chunk in pd.read_csv(&quot;big_data.csv&quot;, chunksize=1000):</code></td><td>큰 CSV 파일을 한 번에 읽지 않고 chunksize만큼 나누어 반복 처리합니다.</td></tr><tr><td>5</td><td><code>    total += chunk[&quot;매출&quot;].sum()</code></td><td>이전까지의 합계에 현재 chunk의 매출 합계를 더합니다.</td></tr><tr><td>6</td><td><code>print(total)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section><section class="card" id="ex50">
+<div class="level">심화</div><h2>50. 메서드 체이닝</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&quot;지역&quot;:[&quot;서울 &quot;,&quot;서울&quot;,&quot;부산&quot;], &quot;매출&quot;:[100,150,80]})
+result = (
+    df.assign(지역=df[&quot;지역&quot;].str.strip())
+      .groupby(&quot;지역&quot;)[&quot;매출&quot;]
+      .sum()
+      .reset_index()
+)
+print(result)</code></pre>
+<h3>🔍 한 줄씩 코드 상세 설명</h3>
+<table class="table"><thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead><tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 앞으로 pd.DataFrame, pd.read_csv처럼 사용합니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드 덩어리를 보기 좋게 구분하기 위한 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&quot;지역&quot;:[&quot;서울 &quot;,&quot;서울&quot;,&quot;부산&quot;], &quot;매출&quot;:[100,150,80]})</code></td><td>딕셔너리나 데이터를 Pandas DataFrame, 즉 행과 열이 있는 표 형태로 변환합니다.</td></tr><tr><td>4</td><td><code>result = (</code></td><td>여러 Pandas 작업을 줄바꿈하여 연결하는 메서드 체이닝을 시작합니다.</td></tr><tr><td>5</td><td><code>    df.assign(지역=df[&quot;지역&quot;].str.strip())</code></td><td>문자열의 양쪽 공백을 제거합니다.</td></tr><tr><td>6</td><td><code>      .groupby(&quot;지역&quot;)[&quot;매출&quot;]</code></td><td>앞 단계 결과를 기준으로 그룹화합니다.</td></tr><tr><td>7</td><td><code>      .sum()</code></td><td>그룹별 합계를 계산합니다.</td></tr><tr><td>8</td><td><code>      .reset_index()</code></td><td>인덱스를 0부터 다시 정리합니다. drop=True는 기존 인덱스를 열로 남기지 않습니다.</td></tr><tr><td>9</td><td><code>)</code></td><td>여러 줄로 이어진 메서드 체이닝을 끝냅니다.</td></tr><tr><td>10</td><td><code>print(result)</code></td><td>괄호 안의 결과를 화면에 출력합니다.</td></tr></tbody></table>
+</section>
+<section class="card"><h2>🏁 최종 정리</h2><pre><code>데이터 만들기/읽기
+→ DataFrame 구조 확인
+→ 행과 열 선택
+→ 조건 필터링
+→ 결측치·중복·문자열 처리
+→ 그룹별 집계
+→ 결합과 변환
+→ 시계열 분석
+→ 심화 메서드 체이닝</code></pre></section>
+</main></div></body></html>
