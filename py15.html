@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Flask와 Django 웹 페이지와 서버 기능 만들기 예제 10개</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+  background:linear-gradient(135deg,#eff6ff,#f5f3ff,#fff7ed);
+  color:#1f2937;
+}
+header{
+  padding:34px 42px;
+  background:linear-gradient(135deg,#1d4ed8,#7c3aed,#ea580c);
+  color:white;
+  box-shadow:0 8px 24px rgba(15,23,42,.24);
+}
+header h1{margin:0;font-size:34px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  min-height:calc(100vh - 130px);
+}
+nav{
+  background:#111827;
+  color:white;
+  padding:18px;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#bfdbfe}
+nav a{
+  display:block;
+  text-decoration:none;
+  color:#e5e7eb;
+  background:#374151;
+  border-radius:14px;
+  padding:12px 14px;
+  margin:7px 0;
+  font-size:14px;
+  line-height:1.45;
+}
+nav a:hover{background:#2563eb}
+main{padding:28px;overflow:auto}
+.card{
+  background:white;
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 10px 28px rgba(15,23,42,.12);
+  border:1px solid #e5e7eb;
+  position:relative;
+}
+h2{color:#1d4ed8;margin-top:0}
+h3{color:#047857}
+pre{
+  background:#0f172a;
+  color:#e5e7eb;
+  padding:18px;
+  border-radius:18px;
+  overflow:auto;
+  line-height:1.55;
+  font-size:15px;
+}
+code{font-family:Consolas,monospace}
+.desc{
+  font-size:16px;
+  line-height:1.75;
+  color:#334155;
+}
+.explain{
+  background:#f8fafc;
+  border-left:6px solid #3b82f6;
+  padding:14px 16px;
+  border-radius:14px;
+  line-height:1.75;
+}
+.warn{
+  background:#fff7ed;
+  border-left:6px solid #f97316;
+  padding:14px 16px;
+  border-radius:14px;
+  line-height:1.75;
+}
+.badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#dbeafe;
+  color:#1e40af;
+  font-weight:800;
+  margin:4px;
+}
+.label{
+  display:inline-block;
+  padding:7px 13px;
+  border-radius:999px;
+  font-weight:900;
+  margin-bottom:10px;
+  color:white;
+}
+.label.flask{background:#059669}
+.label.django{background:#7c3aed}
+.flow{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+.flow div{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:16px;
+}
+.table{
+  width:100%;
+  border-collapse:collapse;
+}
+.table th,.table td{
+  border:1px solid #e5e7eb;
+  padding:12px;
+  text-align:left;
+  vertical-align:top;
+}
+.table th{background:#dbeafe;color:#1e3a8a}
+@media(max-width:850px){
+  .wrap{grid-template-columns:1fr}
+  nav{height:auto;position:relative}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌐 Flask와 Django로 웹 페이지와 서버 기능 만들기 예제 10개</h1>
+  <p>파이썬 웹 서버 · 라우팅 · HTML 반환 · 폼 처리 · JSON API · Django 템플릿</p>
+</header>
+
+<div class="wrap">
+<nav>
+  <h2>📚 예제 목록</h2>
+  <a href="#ex1">01. Flask 기본 웹 서버 만들기</a><a href="#ex2">02. Flask HTML 문자열 반환</a><a href="#ex3">03. Flask URL 변수 사용</a><a href="#ex4">04. Flask GET 요청 파라미터 처리</a><a href="#ex5">05. Flask POST 폼 데이터 처리</a><a href="#ex6">06. Flask JSON API 서버 만들기</a><a href="#ex7">07. Django 기본 view 함수</a><a href="#ex8">08. Django HTML 템플릿 렌더링</a><a href="#ex9">09. Django URL 변수 사용</a><a href="#ex10">10. Django 간단한 게시글 목록 페이지</a>
+</nav>
+
+<main>
+<section class="card">
+  <h2>🚀 학습 안내</h2>
+  <p class="desc">이 자료는 파이썬 웹 개발의 대표 도구인 <b>Flask</b>와 <b>Django</b>를 이용해 웹 페이지와 서버 기능을 만드는 예제 10개를 정리한 HTML 학습자료입니다.</p>
+  <p>
+    <span class="badge">Flask</span>
+    <span class="badge">Django</span>
+    <span class="badge">라우팅</span>
+    <span class="badge">폼 처리</span>
+    <span class="badge">JSON API</span>
+    <span class="badge">템플릿</span>
+  </p>
+  <div class="warn">
+    <b>실행 안내:</b> Flask 예제는 보통 <code>pip install flask</code>, Django 예제는 <code>pip install django</code> 후 프로젝트 구조에 맞게 파일을 배치해야 합니다.
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧭 Flask와 Django 비교</h2>
+  <table class="table">
+    <tr><th>구분</th><th>Flask</th><th>Django</th></tr>
+    <tr><td>특징</td><td>가볍고 단순한 마이크로 웹 프레임워크</td><td>기능이 풍부한 풀스택 웹 프레임워크</td></tr>
+    <tr><td>장점</td><td>빠른 실습, API 서버, 작은 프로젝트에 적합</td><td>관리자 페이지, ORM, 보안 기능 등 대규모 서비스에 적합</td></tr>
+    <tr><td>학습 포인트</td><td>라우팅, request, jsonify, form 처리</td><td>urls.py, views.py, templates, models 구조</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>🧩 웹 서버 기본 흐름</h2>
+  <div class="flow">
+    <div><h3>1. 요청</h3><p>브라우저가 URL로 서버에 요청을 보냅니다.</p></div>
+    <div><h3>2. 라우팅</h3><p>서버는 URL에 맞는 함수를 찾습니다.</p></div>
+    <div><h3>3. 처리</h3><p>함수는 데이터 조회, 계산, 폼 처리 등을 수행합니다.</p></div>
+    <div><h3>4. 응답</h3><p>HTML, 문자열, JSON 등을 브라우저에 돌려줍니다.</p></div>
+  </div>
+</section>
+
+
+<section class="card" id="ex1">
+  <div class="label flask">Flask</div>
+  <h2>01. Flask 기본 웹 서버 만들기</h2>
+  <p class="desc">가장 기본적인 Flask 웹 서버입니다. 브라우저에서 / 주소로 접속하면 Hello Flask! 문자열이 출력됩니다.</p>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def home():
+    return &quot;Hello Flask!&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex2">
+  <div class="label flask">Flask</div>
+  <h2>02. Flask HTML 문자열 반환</h2>
+  <p class="desc">Flask 함수는 단순 문자열뿐 아니라 HTML 문자열도 반환할 수 있습니다. 간단한 웹페이지를 빠르게 만들 때 유용합니다.</p>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def home():
+    return &quot;&quot;&quot;
+    &lt;h1&gt;파이썬 Flask 웹페이지&lt;/h1&gt;
+    &lt;p&gt;HTML을 문자열로 반환할 수 있습니다.&lt;/p&gt;
+    &quot;&quot;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex3">
+  <div class="label flask">Flask</div>
+  <h2>03. Flask URL 변수 사용</h2>
+  <p class="desc">URL 경로에 들어온 값을 함수의 매개변수로 받아 동적인 페이지를 만들 수 있습니다. /user/Kim으로 접속하면 Kim님 환영합니다!가 표시됩니다.</p>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/user/&lt;name&gt;&quot;)
+def user(name):
+    return f&quot;&lt;h1&gt;{name}님 환영합니다!&lt;/h1&gt;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex4">
+  <div class="label flask">Flask</div>
+  <h2>04. Flask GET 요청 파라미터 처리</h2>
+  <p class="desc">주소 뒤의 ?q=python 같은 쿼리 파라미터를 request.args.get()으로 읽어옵니다. 검색 기능의 기본 구조입니다.</p>
+  <pre><code>from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route(&quot;/search&quot;)
+def search():
+    keyword = request.args.get(&quot;q&quot;, &quot;검색어 없음&quot;)
+    return f&quot;&lt;h1&gt;검색어: {keyword}&lt;/h1&gt;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex5">
+  <div class="label flask">Flask</div>
+  <h2>05. Flask POST 폼 데이터 처리</h2>
+  <p class="desc">GET일 때는 입력 폼을 보여주고, POST일 때는 사용자가 입력한 name 값을 받아 처리합니다. 로그인, 설문, 제출 기능의 기초입니다.</p>
+  <pre><code>from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;, methods=[&quot;GET&quot;, &quot;POST&quot;])
+def form():
+    if request.method == &quot;POST&quot;:
+        name = request.form.get(&quot;name&quot;)
+        return f&quot;&lt;h1&gt;{name}님 제출 완료!&lt;/h1&gt;&quot;
+
+    return &quot;&quot;&quot;
+    &lt;form method=&quot;post&quot;&gt;
+        &lt;input name=&quot;name&quot; placeholder=&quot;이름 입력&quot;&gt;
+        &lt;button type=&quot;submit&quot;&gt;제출&lt;/button&gt;
+    &lt;/form&gt;
+    &quot;&quot;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex6">
+  <div class="label flask">Flask</div>
+  <h2>06. Flask JSON API 서버 만들기</h2>
+  <p class="desc">HTML 페이지가 아니라 JSON 데이터를 반환하는 API 서버 예제입니다. 프론트엔드 JavaScript나 앱에서 데이터를 받아 사용할 수 있습니다.</p>
+  <pre><code>from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route(&quot;/api/weather&quot;)
+def weather_api():
+    data = {
+        &quot;city&quot;: &quot;Jeonju&quot;,
+        &quot;temp&quot;: 25,
+        &quot;weather&quot;: &quot;맑음&quot;
+    }
+    return jsonify(data)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex7">
+  <div class="label django">Django</div>
+  <h2>07. Django 기본 view 함수</h2>
+  <p class="desc">Django에서 view 함수는 요청을 받아 응답을 반환합니다. urls.py에서 주소와 view 함수를 연결해야 브라우저에서 접근할 수 있습니다.</p>
+  <pre><code># views.py
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse(&quot;Hello Django!&quot;)
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path(&quot;&quot;, views.home, name=&quot;home&quot;),
+]</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex8">
+  <div class="label django">Django</div>
+  <h2>08. Django HTML 템플릿 렌더링</h2>
+  <p class="desc">Django의 render()는 HTML 템플릿과 데이터를 결합해 웹페이지를 만듭니다. {{ title }} 같은 템플릿 변수가 context 값으로 채워집니다.</p>
+  <pre><code># views.py
+from django.shortcuts import render
+
+def home(request):
+    context = {
+        &quot;title&quot;: &quot;Django 수업&quot;,
+        &quot;message&quot;: &quot;템플릿으로 HTML을 렌더링합니다.&quot;
+    }
+    return render(request, &quot;home.html&quot;, context)
+
+# templates/home.html
+&lt;h1&gt;{{ title }}&lt;/h1&gt;
+&lt;p&gt;{{ message }}&lt;/p&gt;</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex9">
+  <div class="label django">Django</div>
+  <h2>09. Django URL 변수 사용</h2>
+  <p class="desc">Django에서도 URL 일부를 변수로 받을 수 있습니다. profile/kim/으로 접속하면 username 값으로 kim이 전달됩니다.</p>
+  <pre><code># views.py
+from django.http import HttpResponse
+
+def profile(request, username):
+    return HttpResponse(f&quot;&lt;h1&gt;{username}의 프로필&lt;/h1&gt;&quot;)
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path(&quot;profile/&lt;str:username&gt;/&quot;, views.profile, name=&quot;profile&quot;),
+]</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card" id="ex10">
+  <div class="label django">Django</div>
+  <h2>10. Django 간단한 게시글 목록 페이지</h2>
+  <p class="desc">Django 템플릿의 for 반복문을 사용해 게시글 목록을 화면에 출력하는 예제입니다. 실제 게시판 기능의 기초 구조입니다.</p>
+  <pre><code># views.py
+from django.shortcuts import render
+
+def post_list(request):
+    posts = [
+        {&quot;title&quot;: &quot;첫 번째 글&quot;, &quot;author&quot;: &quot;Kim&quot;},
+        {&quot;title&quot;: &quot;두 번째 글&quot;, &quot;author&quot;: &quot;Lee&quot;},
+        {&quot;title&quot;: &quot;세 번째 글&quot;, &quot;author&quot;: &quot;Park&quot;},
+    ]
+    return render(request, &quot;post_list.html&quot;, {&quot;posts&quot;: posts})
+
+# templates/post_list.html
+&lt;h1&gt;게시글 목록&lt;/h1&gt;
+&lt;ul&gt;
+{% for post in posts %}
+    &lt;li&gt;{{ post.title }} - {{ post.author }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;</code></pre>
+  <div class="explain">
+    <h3>상세 설명</h3>
+    <ul>
+      <li><b>핵심 목적:</b> 웹 브라우저의 요청을 받아 서버가 응답을 돌려주는 구조를 이해합니다.</li>
+      <li><b>중요 개념:</b> URL 라우팅, view 함수, 요청 객체, 응답 객체, HTML 또는 JSON 반환입니다.</li>
+      <li><b>확장 방향:</b> 입력 폼, 데이터베이스, 공공데이터 API, 로그인, 대시보드, AI 모델 연결로 확장할 수 있습니다.</li>
+    </ul>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🏁 최종 정리</h2>
+  <pre><code>브라우저 요청
+→ URL 라우팅
+→ view 함수 실행
+→ 데이터 처리
+→ HTML / JSON 응답
+→ 웹앱, API 서버, 대시보드, AI 서비스로 확장</code></pre>
+  <div class="explain">
+    <h3>프로젝트 확장 아이디어</h3>
+    <ul>
+      <li>공공데이터포털 API와 Flask를 연결해 실시간 날씨 대시보드 만들기</li>
+      <li>Django 템플릿과 데이터베이스를 연결해 게시판 만들기</li>
+      <li>Flask JSON API와 JavaScript 프론트엔드를 연결하기</li>
+      <li>AI 모델 예측 결과를 웹페이지에 표시하기</li>
+    </ul>
+  </div>
+</section>
+</main>
+</div>
+</body>
+</html>

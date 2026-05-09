@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>웹 크롤링 실제 예시 코드 10개 한 줄씩 상세 설명</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+  background:linear-gradient(135deg,#eff6ff,#f0fdf4,#fff7ed);
+  color:#1f2937;
+}
+header{
+  padding:34px 42px;
+  background:linear-gradient(135deg,#1d4ed8,#059669,#ea580c);
+  color:white;
+  box-shadow:0 8px 24px rgba(15,23,42,.24);
+}
+header h1{margin:0;font-size:34px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{
+  display:grid;
+  grid-template-columns:270px 1fr;
+  min-height:calc(100vh - 130px);
+}
+nav{
+  background:#111827;
+  color:white;
+  padding:18px;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#bfdbfe}
+nav a{
+  display:block;
+  text-decoration:none;
+  color:#e5e7eb;
+  background:#374151;
+  border-radius:14px;
+  padding:12px 14px;
+  margin:7px 0;
+  font-size:14px;
+}
+nav a:hover{background:#2563eb}
+main{padding:28px;overflow:auto}
+.card{
+  background:white;
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 10px 28px rgba(15,23,42,.12);
+  border:1px solid #e5e7eb;
+}
+h2{color:#1d4ed8;margin-top:0}
+h3{color:#047857}
+.badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#dbeafe;
+  color:#1e40af;
+  font-weight:800;
+  margin:4px;
+}
+pre{
+  background:#0f172a;
+  color:#e5e7eb;
+  padding:18px;
+  border-radius:18px;
+  overflow:auto;
+  line-height:1.55;
+  font-size:15px;
+}
+code{font-family:Consolas,monospace}
+.explain{
+  background:#f8fafc;
+  border-left:6px solid #3b82f6;
+  padding:14px 16px;
+  border-radius:14px;
+  line-height:1.75;
+}
+.warn{
+  background:#fff7ed;
+  border-left:6px solid #f97316;
+  padding:14px 16px;
+  border-radius:14px;
+  line-height:1.75;
+}
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+  overflow:hidden;
+  border-radius:16px;
+}
+.table th,.table td{
+  border:1px solid #e5e7eb;
+  padding:12px;
+  vertical-align:top;
+  line-height:1.65;
+}
+.table th{
+  background:#dbeafe;
+  color:#1e3a8a;
+}
+.table td:first-child{
+  width:55px;
+  text-align:center;
+  font-weight:900;
+  color:#1d4ed8;
+}
+.table td:nth-child(2){
+  width:38%;
+  background:#f8fafc;
+}
+.flow{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;
+}
+.flow div{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:16px;
+}
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{height:auto;position:relative}
+  .table{font-size:14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🕷 웹 크롤링 실제 예시 코드 10개</h1>
+  <p>각 코드의 한 줄 한 줄 의미를 상세하게 설명한 HTML 학습자료</p>
+</header>
+
+<div class="wrap">
+<nav>
+  <h2>📚 코드 목록</h2>
+  <a href="#ex1">01. 웹페이지 제목 가져오기</a><a href="#ex2">02. 뉴스 제목 크롤링</a><a href="#ex3">03. 모든 링크 주소 추출</a><a href="#ex4">04. 쇼핑몰 상품 가격 수집</a><a href="#ex5">05. 이미지 주소 수집</a><a href="#ex6">06. 크롤링 결과 CSV 저장</a><a href="#ex7">07. 날씨 정보 크롤링 구조</a><a href="#ex8">08. Selenium 로그인 자동화 구조</a><a href="#ex9">09. 무한 스크롤 페이지 크롤링</a><a href="#ex10">10. 크롤링 → Pandas 분석</a>
+</nav>
+
+<main>
+<section class="card">
+  <h2>🚀 학습 안내</h2>
+  <p>이 자료는 웹 크롤링 실제 예시 코드 10개를 바탕으로, 각 코드가 어떤 역할을 하는지 <b>한 줄씩</b> 분석합니다.</p>
+  <p>
+    <span class="badge">requests</span>
+    <span class="badge">BeautifulSoup</span>
+    <span class="badge">find_all</span>
+    <span class="badge">CSV</span>
+    <span class="badge">Pandas</span>
+    <span class="badge">Selenium</span>
+  </p>
+  <div class="warn">
+    <b>주의:</b> 실제 사이트 크롤링은 사이트 이용약관, robots.txt, 저작권, 개인정보 보호, 서버 부하를 반드시 고려해야 합니다.
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧭 전체 흐름</h2>
+  <div class="flow">
+    <div><h3>1. 요청</h3><p>requests 또는 Selenium으로 웹페이지에 접근합니다.</p></div>
+    <div><h3>2. 파싱</h3><p>BeautifulSoup으로 HTML 구조를 분석합니다.</p></div>
+    <div><h3>3. 선택</h3><p>태그, class, 속성, CSS 선택자로 원하는 요소를 찾습니다.</p></div>
+    <div><h3>4. 저장/분석</h3><p>CSV 또는 Pandas DataFrame으로 정리합니다.</p></div>
+  </div>
+</section>
+
+
+<section class="card" id="ex1">
+<h2>01. 웹페이지 제목 가져오기</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+print(&quot;웹페이지 제목:&quot;, soup.title.text)</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>웹 서버에 HTTP 요청을 보내기 위해 requests 라이브러리를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML 문서를 분석하기 위해 BeautifulSoup 클래스를 불러옵니다.</td></tr><tr><td>3</td><td><code>url = &quot;https://example.com&quot;</code></td><td>크롤링할 웹페이지 주소를 문자열로 저장합니다.</td></tr><tr><td>4</td><td><code>res = requests.get(url)</code></td><td>지정한 URL에 GET 요청을 보내고 서버 응답을 res 변수에 저장합니다.</td></tr><tr><td>5</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>응답으로 받은 HTML 문자열을 BeautifulSoup 객체로 변환합니다.</td></tr><tr><td>6</td><td><code>print(&quot;웹페이지 제목:&quot;, soup.title.text)</code></td><td>HTML의 title 태그 안에 있는 텍스트를 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex2">
+<h2>02. 뉴스 제목 크롤링</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://news.ycombinator.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+titles = soup.find_all(&quot;span&quot;, class_=&quot;titleline&quot;)
+
+for i, title in enumerate(titles[:10], 1):
+    print(i, title.text)</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>웹페이지 HTML을 가져오기 위해 requests 라이브러리를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML 태그를 쉽게 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>url = &quot;https://news.ycombinator.com/&quot;</code></td><td>뉴스 제목을 가져올 웹사이트 주소를 저장합니다.</td></tr><tr><td>4</td><td><code>res = requests.get(url)</code></td><td>해당 주소에 요청을 보내고 응답을 res에 저장합니다.</td></tr><tr><td>5</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>응답 HTML을 파싱 가능한 soup 객체로 만듭니다.</td></tr><tr><td>6</td><td><code>titles = soup.find_all(&quot;span&quot;, class_=&quot;titleline&quot;)</code></td><td>span 태그 중 class가 titleline인 모든 요소를 찾아 titles에 저장합니다.</td></tr><tr><td>7</td><td><code>for i, title in enumerate(titles[:10], 1):</code></td><td>앞에서부터 10개의 제목만 가져오고, 번호는 1부터 붙입니다.</td></tr><tr><td>8</td><td><code>print(i, title.text)</code></td><td>번호와 제목 텍스트를 함께 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex3">
+<h2>03. 모든 링크 주소 추출</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+links = soup.find_all(&quot;a&quot;)
+
+for link in links:
+    print(link.get(&quot;href&quot;))</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>웹페이지를 요청하기 위해 requests를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML에서 태그와 속성을 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>url = &quot;https://example.com&quot;</code></td><td>링크를 추출할 웹페이지 주소를 저장합니다.</td></tr><tr><td>4</td><td><code>res = requests.get(url)</code></td><td>웹페이지에 요청을 보내 HTML 응답을 받습니다.</td></tr><tr><td>5</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>HTML 응답을 BeautifulSoup 객체로 변환합니다.</td></tr><tr><td>6</td><td><code>links = soup.find_all(&quot;a&quot;)</code></td><td>모든 a 태그를 찾아 리스트처럼 저장합니다.</td></tr><tr><td>7</td><td><code>for link in links:</code></td><td>찾은 a 태그들을 하나씩 반복합니다.</td></tr><tr><td>8</td><td><code>print(link.get(&quot;href&quot;))</code></td><td>각 a 태그의 href 속성, 즉 링크 주소를 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex4">
+<h2>04. 쇼핑몰 상품 가격 수집</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://books.toscrape.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+prices = soup.find_all(&quot;p&quot;, class_=&quot;price_color&quot;)
+
+for price in prices[:10]:
+    print(price.text)</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>상품 페이지 HTML을 가져오기 위해 requests를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML 안의 가격 태그를 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>url = &quot;https://books.toscrape.com/&quot;</code></td><td>연습용 책 쇼핑몰 사이트 주소를 저장합니다.</td></tr><tr><td>4</td><td><code>res = requests.get(url)</code></td><td>사이트에 요청을 보내 HTML 응답을 받습니다.</td></tr><tr><td>5</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>HTML을 분석 가능한 객체로 변환합니다.</td></tr><tr><td>6</td><td><code>prices = soup.find_all(&quot;p&quot;, class_=&quot;price_color&quot;)</code></td><td>p 태그 중 class가 price_color인 가격 요소들을 모두 찾습니다.</td></tr><tr><td>7</td><td><code>for price in prices[:10]:</code></td><td>앞에서부터 10개의 가격 정보만 반복합니다.</td></tr><tr><td>8</td><td><code>print(price.text)</code></td><td>각 가격 태그의 텍스트를 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex5">
+<h2>05. 이미지 주소 수집</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+imgs = soup.find_all(&quot;img&quot;)
+
+for img in imgs:
+    print(img.get(&quot;src&quot;))</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>이미지가 포함된 웹페이지를 요청하기 위해 requests를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>img 태그를 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>url = &quot;https://example.com&quot;</code></td><td>이미지 주소를 추출할 페이지 주소를 저장합니다.</td></tr><tr><td>4</td><td><code>res = requests.get(url)</code></td><td>해당 페이지의 HTML을 요청합니다.</td></tr><tr><td>5</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>HTML 문자열을 파싱 가능한 객체로 만듭니다.</td></tr><tr><td>6</td><td><code>imgs = soup.find_all(&quot;img&quot;)</code></td><td>HTML 문서에서 모든 img 태그를 찾습니다.</td></tr><tr><td>7</td><td><code>for img in imgs:</code></td><td>찾은 이미지 태그를 하나씩 반복합니다.</td></tr><tr><td>8</td><td><code>print(img.get(&quot;src&quot;))</code></td><td>각 이미지 태그의 src 속성, 즉 이미지 파일 주소를 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex6">
+<h2>06. 크롤링 결과 CSV 저장</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import csv
+
+url = &quot;https://news.ycombinator.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+titles = soup.find_all(&quot;span&quot;, class_=&quot;titleline&quot;)
+
+with open(&quot;news.csv&quot;, &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8-sig&quot;) as f:
+    writer = csv.writer(f)
+    writer.writerow([&quot;번호&quot;, &quot;제목&quot;])
+
+    for i, title in enumerate(titles[:10], 1):
+        writer.writerow([i, title.text])</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>뉴스 페이지 HTML을 요청하기 위해 requests를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML에서 뉴스 제목 태그를 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>import csv</code></td><td>수집한 데이터를 CSV 파일로 저장하기 위해 csv 모듈을 불러옵니다.</td></tr><tr><td>4</td><td><code>url = &quot;https://news.ycombinator.com/&quot;</code></td><td>수집할 뉴스 페이지 주소를 저장합니다.</td></tr><tr><td>5</td><td><code>res = requests.get(url)</code></td><td>웹페이지에 요청을 보내 응답을 받습니다.</td></tr><tr><td>6</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>응답 HTML을 BeautifulSoup 객체로 변환합니다.</td></tr><tr><td>7</td><td><code>titles = soup.find_all(&quot;span&quot;, class_=&quot;titleline&quot;)</code></td><td>뉴스 제목이 들어 있는 span.titleline 요소들을 모두 찾습니다.</td></tr><tr><td>8</td><td><code>with open(&quot;news.csv&quot;, &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8-sig&quot;) as f:</code></td><td>news.csv 파일을 쓰기 모드로 열고, 한글 호환을 위해 utf-8-sig 인코딩을 사용합니다.</td></tr><tr><td>9</td><td><code>writer = csv.writer(f)</code></td><td>CSV 파일에 행 단위로 기록할 writer 객체를 만듭니다.</td></tr><tr><td>10</td><td><code>writer.writerow([&quot;번호&quot;, &quot;제목&quot;])</code></td><td>CSV 첫 줄에 열 제목을 기록합니다.</td></tr><tr><td>11</td><td><code>for i, title in enumerate(titles[:10], 1):</code></td><td>앞 10개의 뉴스 제목에 1부터 번호를 붙여 반복합니다.</td></tr><tr><td>12</td><td><code>writer.writerow([i, title.text])</code></td><td>번호와 제목 텍스트를 CSV 파일에 한 줄씩 저장합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex7">
+<h2>07. 날씨 정보 크롤링 구조</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com/weather&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+temp = soup.find(&quot;span&quot;, class_=&quot;temp&quot;)
+
+if temp:
+    print(&quot;현재 기온:&quot;, temp.text)
+else:
+    print(&quot;기온 정보를 찾을 수 없습니다.&quot;)</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>날씨 페이지 HTML을 요청하기 위해 requests를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML에서 기온 정보 태그를 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>url = &quot;https://example.com/weather&quot;</code></td><td>날씨 정보가 있다고 가정한 웹페이지 주소를 저장합니다.</td></tr><tr><td>4</td><td><code>res = requests.get(url)</code></td><td>해당 주소로 요청을 보내 응답을 받습니다.</td></tr><tr><td>5</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>응답 HTML을 파싱 가능한 객체로 바꿉니다.</td></tr><tr><td>6</td><td><code>temp = soup.find(&quot;span&quot;, class_=&quot;temp&quot;)</code></td><td>span 태그 중 class가 temp인 첫 번째 요소를 찾습니다.</td></tr><tr><td>7</td><td><code>if temp:</code></td><td>temp 요소를 실제로 찾았는지 확인합니다.</td></tr><tr><td>8</td><td><code>print(&quot;현재 기온:&quot;, temp.text)</code></td><td>요소가 있으면 태그 안의 기온 텍스트를 출력합니다.</td></tr><tr><td>9</td><td><code>else:</code></td><td>temp 요소를 찾지 못한 경우 실행할 블록입니다.</td></tr><tr><td>10</td><td><code>print(&quot;기온 정보를 찾을 수 없습니다.&quot;)</code></td><td>기온 태그가 없을 때 오류 대신 안내 문구를 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex8">
+<h2>08. Selenium 로그인 자동화 구조</h2>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+
+driver = webdriver.Chrome()
+
+driver.get(&quot;https://example.com/login&quot;)
+
+driver.find_element(By.NAME, &quot;username&quot;).send_keys(&quot;myid&quot;)
+driver.find_element(By.NAME, &quot;password&quot;).send_keys(&quot;mypassword&quot;)
+
+time.sleep(2)
+
+driver.quit()</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>from selenium import webdriver</code></td><td>Selenium으로 브라우저를 실행하기 위해 webdriver를 불러옵니다.</td></tr><tr><td>2</td><td><code>from selenium.webdriver.common.by import By</code></td><td>HTML 요소를 찾는 기준을 지정하기 위해 By를 불러옵니다.</td></tr><tr><td>3</td><td><code>import time</code></td><td>실행 중 잠시 기다리기 위해 time 모듈을 불러옵니다.</td></tr><tr><td>4</td><td><code>driver = webdriver.Chrome()</code></td><td>크롬 브라우저를 자동화 제어 대상으로 실행합니다.</td></tr><tr><td>5</td><td><code>driver.get(&quot;https://example.com/login&quot;)</code></td><td>브라우저로 로그인 페이지 주소에 접속합니다.</td></tr><tr><td>6</td><td><code>driver.find_element(By.NAME, &quot;username&quot;).send_keys(&quot;myid&quot;)</code></td><td>name 속성이 username인 입력창을 찾아 myid를 입력합니다.</td></tr><tr><td>7</td><td><code>driver.find_element(By.NAME, &quot;password&quot;).send_keys(&quot;mypassword&quot;)</code></td><td>name 속성이 password인 입력창을 찾아 비밀번호 문자열을 입력합니다.</td></tr><tr><td>8</td><td><code>time.sleep(2)</code></td><td>브라우저 동작을 확인하기 위해 2초 동안 기다립니다.</td></tr><tr><td>9</td><td><code>driver.quit()</code></td><td>브라우저를 종료하고 Selenium 세션을 정리합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex9">
+<h2>09. 무한 스크롤 페이지 크롤링</h2>
+<pre><code>from selenium import webdriver
+import time
+
+driver = webdriver.Chrome()
+driver.get(&quot;https://example.com&quot;)
+
+for _ in range(5):
+    driver.execute_script(
+        &quot;window.scrollTo(0, document.body.scrollHeight);&quot;
+    )
+    time.sleep(2)
+
+print(driver.page_source)
+
+driver.quit()</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>from selenium import webdriver</code></td><td>브라우저 자동화를 위해 Selenium webdriver를 불러옵니다.</td></tr><tr><td>2</td><td><code>import time</code></td><td>스크롤 후 새 내용이 로딩될 시간을 주기 위해 time 모듈을 불러옵니다.</td></tr><tr><td>3</td><td><code>driver = webdriver.Chrome()</code></td><td>크롬 브라우저를 실행합니다.</td></tr><tr><td>4</td><td><code>driver.get(&quot;https://example.com&quot;)</code></td><td>크롤링할 페이지로 이동합니다.</td></tr><tr><td>5</td><td><code>for _ in range(5):</code></td><td>스크롤 동작을 5번 반복합니다.</td></tr><tr><td>6</td><td><code>driver.execute_script(</code></td><td>브라우저에서 JavaScript 코드를 실행합니다.</td></tr><tr><td>7</td><td><code>&quot;window.scrollTo(0, document.body.scrollHeight);&quot;</code></td><td>페이지 맨 아래까지 스크롤하라는 JavaScript 명령입니다.</td></tr><tr><td>8</td><td><code>time.sleep(2)</code></td><td>새 콘텐츠가 로딩될 수 있도록 2초 기다립니다.</td></tr><tr><td>9</td><td><code>print(driver.page_source)</code></td><td>현재 브라우저에 로딩된 전체 HTML 소스를 출력합니다.</td></tr><tr><td>10</td><td><code>driver.quit()</code></td><td>브라우저를 종료합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="card" id="ex10">
+<h2>10. 크롤링 → Pandas 분석</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = &quot;https://books.toscrape.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+titles = soup.find_all(&quot;h3&quot;)
+
+data = []
+
+for t in titles:
+    data.append(t.text.strip())
+
+df = pd.DataFrame(data, columns=[&quot;책 제목&quot;])
+
+print(df)</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>import requests</code></td><td>책 목록 페이지 HTML을 요청하기 위해 requests를 불러옵니다.</td></tr><tr><td>2</td><td><code>from bs4 import BeautifulSoup</code></td><td>HTML에서 책 제목 태그를 찾기 위해 BeautifulSoup을 불러옵니다.</td></tr><tr><td>3</td><td><code>import pandas as pd</code></td><td>수집한 데이터를 표 형태 DataFrame으로 만들기 위해 pandas를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>4</td><td><code>url = &quot;https://books.toscrape.com/&quot;</code></td><td>크롤링할 연습용 책 사이트 주소를 저장합니다.</td></tr><tr><td>5</td><td><code>res = requests.get(url)</code></td><td>사이트에 GET 요청을 보내 HTML 응답을 받습니다.</td></tr><tr><td>6</td><td><code>soup = BeautifulSoup(res.text, &quot;html.parser&quot;)</code></td><td>HTML 문자열을 BeautifulSoup 객체로 변환합니다.</td></tr><tr><td>7</td><td><code>titles = soup.find_all(&quot;h3&quot;)</code></td><td>책 제목이 들어 있는 h3 태그들을 모두 찾습니다.</td></tr><tr><td>8</td><td><code>data = []</code></td><td>수집한 책 제목을 저장할 빈 리스트를 만듭니다.</td></tr><tr><td>9</td><td><code>for t in titles:</code></td><td>찾은 h3 태그를 하나씩 반복합니다.</td></tr><tr><td>10</td><td><code>data.append(t.text.strip())</code></td><td>태그의 텍스트에서 양쪽 공백을 제거한 뒤 data 리스트에 추가합니다.</td></tr><tr><td>11</td><td><code>df = pd.DataFrame(data, columns=[&quot;책 제목&quot;])</code></td><td>수집한 리스트를 책 제목이라는 열을 가진 DataFrame으로 변환합니다.</td></tr><tr><td>12</td><td><code>print(df)</code></td><td>완성된 DataFrame을 출력합니다.</td></tr>
+</tbody>
+</table>
+</section>
+
+
+<section class="card">
+<h2>🏁 최종 정리</h2>
+<pre><code>웹페이지 요청
+→ HTML 응답 확인
+→ BeautifulSoup 파싱
+→ 태그/속성 선택
+→ 데이터 추출
+→ CSV/Pandas 저장
+→ Selenium 자동화 확장</code></pre>
+<div class="explain">
+웹 크롤링 코드는 처음에는 짧아 보이지만, 실제로는 요청·응답·HTML 구조·태그 선택·예외 처리·저장 방식이 모두 연결되어 있습니다. 한 줄씩 의미를 이해하면 스스로 새로운 사이트 구조에 맞게 코드를 수정할 수 있습니다.
+</div>
+</section>
+</main>
+</div>
+</body>
+</html>

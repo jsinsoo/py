@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Pandas + Matplotlib OOP 예제 20개 한 줄씩 상세 설명</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#eff6ff,#ecfdf5,#f5f3ff);color:#172033;font-size:18px;line-height:1.7}
+header{padding:42px 7vw;color:white;background:linear-gradient(120deg,#0f766e,#2563eb,#7c3aed);border-bottom-left-radius:38px;border-bottom-right-radius:38px;box-shadow:0 10px 28px rgba(15,23,42,.22)}
+header h1{font-size:38px;margin:0}
+header p{font-size:20px;margin:10px 0 0;opacity:.95}
+.wrap{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 140px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#99f6e4}
+nav a{display:block;text-decoration:none;color:#e5e7eb;background:#374151;border-radius:14px;padding:11px 13px;margin:7px 0;font-size:14px;line-height:1.45}
+nav a:hover{background:#0f766e}
+main{padding:28px;overflow:auto}
+.card{background:white;border:2px solid #bfdbfe;border-radius:26px;padding:26px;margin:24px 0;box-shadow:0 10px 28px rgba(37,99,235,.1)}
+h2{font-size:30px;color:#0f766e;margin-top:0}
+h3{font-size:23px;color:#2563eb}
+pre{background:#042f2e;color:#ccfbf1;padding:20px;border-radius:18px;overflow:auto;font-size:15px;border:4px solid #5eead4;line-height:1.55}
+code{font-family:Consolas,monospace}
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#dbeafe;color:#1e40af;font-weight:800;margin:4px}
+.warn{background:#fff7ed;border-left:8px solid #f97316;border-radius:16px;padding:16px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.flow div{background:#f8fafc;border-left:8px solid #2dd4bf;border-radius:16px;padding:16px}
+.table{width:100%;border-collapse:collapse;margin-top:12px;font-size:16px}
+.table th,.table td{border:1px solid #99f6e4;padding:11px;vertical-align:top;line-height:1.65}
+.table th{background:#0f766e;color:white}
+.table td:first-child{width:55px;text-align:center;font-weight:900;color:#0f766e}
+.table td:nth-child(2){width:38%;background:#f8fafc}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}.table{font-size:14px}}
+</style>
+</head>
+<body>
+<header>
+<h1>🐼📊 Pandas + Matplotlib OOP 예제 20개</h1>
+<p>초보자도 이해할 수 있도록 각 코드의 한 줄 한 줄을 꼼꼼하게 설명한 HTML 학습자료</p>
+</header>
+<div class="wrap">
+<nav>
+<h2>📚 예제 목록</h2>
+<a href="#ex1">1. 과목별 점수 막대그래프</a><a href="#ex2">2. 월별 매출 선그래프</a><a href="#ex3">3. 공부 시간과 점수 산점도</a><a href="#ex4">4. 점수 분포 히스토그램</a><a href="#ex5">5. 용돈 사용 비율 원그래프</a><a href="#ex6">6. 반별 평균 점수 비교</a><a href="#ex7">7. 지역별 제품 매출 누적 막대</a><a href="#ex8">8. 날짜별 방문자 시계열</a><a href="#ex9">9. 월별 매출 집계 그래프</a><a href="#ex10">10. 결측치 개수 시각화</a><a href="#ex11">11. 반별 점수 박스플롯</a><a href="#ex12">12. 상관행렬 히트맵</a><a href="#ex13">13. Top N 제품 매출</a><a href="#ex14">14. 범주별 빈도 그래프</a><a href="#ex15">15. 이중 축 그래프</a><a href="#ex16">16. 이동평균 그래프</a><a href="#ex17">17. 누적합 그래프</a><a href="#ex18">18. 조건별 산점도</a><a href="#ex19">19. 미니 대시보드</a><a href="#ex20">20. 종합 분석 리포트</a>
+</nav>
+<main>
+<section class="card">
+<h2>🚀 학습 안내</h2>
+<p>이 자료는 업로드된 Pandas + Matplotlib 데이터 시각화 OOP 예제 20개를 바탕으로, 코드 한 줄마다 역할과 의미를 쉽게 설명합니다.</p>
+<p><span class="badge">Pandas</span><span class="badge">Matplotlib</span><span class="badge">DataFrame</span><span class="badge">OOP</span><span class="badge">시각화</span><span class="badge">대시보드</span></p>
+<div class="warn"><b>주의:</b> 코랩에서 한글 그래프가 깨질 때는 NanumGothic 폰트를 설치하고 런타임을 다시 시작해야 합니다.</div>
+</section>
+<section class="card">
+<h2>🧭 코드 이해 흐름</h2>
+<div class="flow">
+<div><h3>1. 라이브러리 불러오기</h3><p>Pandas와 Matplotlib을 준비합니다.</p></div>
+<div><h3>2. 클래스 만들기</h3><p>데이터와 그래프 기능을 객체로 묶습니다.</p></div>
+<div><h3>3. DataFrame 생성</h3><p>딕셔너리 데이터를 표 형태로 바꿉니다.</p></div>
+<div><h3>4. 분석 메서드</h3><p>평균, 합계, 빈도, 결측치 등을 계산합니다.</p></div>
+<div><h3>5. 그래프 메서드</h3><p>막대, 선, 산점도, 히스토그램 등으로 시각화합니다.</p></div>
+<div><h3>6. 객체 실행</h3><p>객체를 만들고 메서드를 호출하여 결과를 확인합니다.</p></div>
+</div>
+</section>
+
+<section class="card" id="ex1">
+<h2>1. 과목별 점수 막대그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class SubjectScoreBarChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def average_scores(self):
+        return self.df[[&quot;국어&quot;, &quot;수학&quot;, &quot;정보&quot;, &quot;과학&quot;]].mean()
+
+    def draw(self):
+        avg = self.average_scores()
+        plt.figure(figsize=(8, 5))
+        plt.bar(avg.index, avg.values)
+        plt.title(&quot;과목별 평균 점수&quot;)
+        plt.xlabel(&quot;과목&quot;)
+        plt.ylabel(&quot;평균 점수&quot;)
+        plt.ylim(0, 100)
+        plt.show()
+
+data = {&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;],&quot;국어&quot;:[90,85,78,92],&quot;수학&quot;:[88,95,80,91],&quot;정보&quot;:[96,89,85,98],&quot;과학&quot;:[84,90,87,93]}
+chart = SubjectScoreBarChart(data)
+print(chart.average_scores())
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class SubjectScoreBarChart:</code></td><td>SubjectScoreBarChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def average_scores(self):</code></td><td>average_scores라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df[[&quot;국어&quot;, &quot;수학&quot;, &quot;정보&quot;, &quot;과학&quot;]].mean()</code></td><td>mean()으로 평균을 계산하여 반환합니다. 숫자 열의 대표값을 구할 때 사용합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        avg = self.average_scores()</code></td><td>avg 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.bar(avg.index, avg.values)</code></td><td>막대그래프를 그립니다. 범주별 크기를 비교할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.title(&quot;과목별 평균 점수&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.xlabel(&quot;과목&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.ylabel(&quot;평균 점수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.ylim(0, 100)</code></td><td>y축 값의 표시 범위를 설정합니다.</td></tr><tr><td>19</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>20</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>21</td><td><code>data = {&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;],&quot;국어&quot;:[90,85,78,92],&quot;수학&quot;:[88,95,80,91],&quot;정보&quot;:[96,89,85,98],&quot;과학&quot;:[84,90,87,93]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>22</td><td><code>chart = SubjectScoreBarChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>23</td><td><code>print(chart.average_scores())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>24</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex2">
+<h2>2. 월별 매출 선그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class MonthlySalesLineChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def draw(self):
+        plt.figure(figsize=(8, 5))
+        plt.plot(self.df[&quot;월&quot;], self.df[&quot;매출&quot;], marker=&quot;o&quot;)
+        plt.title(&quot;월별 매출 변화&quot;)
+        plt.xlabel(&quot;월&quot;)
+        plt.ylabel(&quot;매출&quot;)
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;월&quot;:[&quot;1월&quot;,&quot;2월&quot;,&quot;3월&quot;,&quot;4월&quot;,&quot;5월&quot;],&quot;매출&quot;:[120,150,130,180,210]}
+chart = MonthlySalesLineChart(data)
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class MonthlySalesLineChart:</code></td><td>MonthlySalesLineChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>10</td><td><code>        plt.plot(self.df[&quot;월&quot;], self.df[&quot;매출&quot;], marker=&quot;o&quot;)</code></td><td>선그래프를 그립니다. 시간에 따른 변화나 순서가 있는 데이터를 표현할 때 사용합니다.</td></tr><tr><td>11</td><td><code>        plt.title(&quot;월별 매출 변화&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>12</td><td><code>        plt.xlabel(&quot;월&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>13</td><td><code>        plt.ylabel(&quot;매출&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>14</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>15</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>16</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>17</td><td><code>data = {&quot;월&quot;:[&quot;1월&quot;,&quot;2월&quot;,&quot;3월&quot;,&quot;4월&quot;,&quot;5월&quot;],&quot;매출&quot;:[120,150,130,180,210]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>18</td><td><code>chart = MonthlySalesLineChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>19</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex3">
+<h2>3. 공부 시간과 점수 산점도</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class StudyScatterPlot:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def correlation(self):
+        return self.df[&quot;공부시간&quot;].corr(self.df[&quot;점수&quot;])
+
+    def draw(self):
+        plt.figure(figsize=(8, 5))
+        plt.scatter(self.df[&quot;공부시간&quot;], self.df[&quot;점수&quot;])
+        plt.title(&quot;공부 시간과 점수의 관계&quot;)
+        plt.xlabel(&quot;공부 시간&quot;)
+        plt.ylabel(&quot;점수&quot;)
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;공부시간&quot;:[1,2,3,4,5,6],&quot;점수&quot;:[55,60,68,75,84,92]}
+plot = StudyScatterPlot(data)
+print(&quot;상관계수:&quot;, plot.correlation())
+plot.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class StudyScatterPlot:</code></td><td>StudyScatterPlot라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def correlation(self):</code></td><td>correlation라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df[&quot;공부시간&quot;].corr(self.df[&quot;점수&quot;])</code></td><td>corr()로 두 변수 사이의 상관계수를 계산합니다. 값이 1에 가까울수록 양의 관계가 강합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>13</td><td><code>        plt.scatter(self.df[&quot;공부시간&quot;], self.df[&quot;점수&quot;])</code></td><td>산점도를 그립니다. 두 숫자 변수 사이의 관계를 점으로 표현합니다.</td></tr><tr><td>14</td><td><code>        plt.title(&quot;공부 시간과 점수의 관계&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>15</td><td><code>        plt.xlabel(&quot;공부 시간&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.ylabel(&quot;점수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>18</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>19</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>20</td><td><code>data = {&quot;공부시간&quot;:[1,2,3,4,5,6],&quot;점수&quot;:[55,60,68,75,84,92]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>21</td><td><code>plot = StudyScatterPlot(data)</code></td><td>plot 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>22</td><td><code>print(&quot;상관계수:&quot;, plot.correlation())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>23</td><td><code>plot.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex4">
+<h2>4. 점수 분포 히스토그램</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class ScoreHistogram:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def mean_score(self):
+        return self.df[&quot;점수&quot;].mean()
+
+    def draw(self):
+        plt.figure(figsize=(8, 5))
+        plt.hist(self.df[&quot;점수&quot;], bins=5)
+        plt.title(&quot;점수 분포&quot;)
+        plt.xlabel(&quot;점수 구간&quot;)
+        plt.ylabel(&quot;학생 수&quot;)
+        plt.show()
+
+data = {&quot;점수&quot;:[55,62,70,71,75,80,82,85,88,91,93,95]}
+hist = ScoreHistogram(data)
+print(&quot;평균:&quot;, hist.mean_score())
+hist.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class ScoreHistogram:</code></td><td>ScoreHistogram라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def mean_score(self):</code></td><td>mean_score라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df[&quot;점수&quot;].mean()</code></td><td>mean()으로 평균을 계산하여 반환합니다. 숫자 열의 대표값을 구할 때 사용합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>13</td><td><code>        plt.hist(self.df[&quot;점수&quot;], bins=5)</code></td><td>히스토그램을 그립니다. 값이 어떤 구간에 많이 분포하는지 확인할 때 사용합니다.</td></tr><tr><td>14</td><td><code>        plt.title(&quot;점수 분포&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>15</td><td><code>        plt.xlabel(&quot;점수 구간&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.ylabel(&quot;학생 수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>18</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>19</td><td><code>data = {&quot;점수&quot;:[55,62,70,71,75,80,82,85,88,91,93,95]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>20</td><td><code>hist = ScoreHistogram(data)</code></td><td>hist 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>21</td><td><code>print(&quot;평균:&quot;, hist.mean_score())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>22</td><td><code>hist.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex5">
+<h2>5. 용돈 사용 비율 원그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class AllowancePieChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def percentage_table(self):
+        total = self.df[&quot;금액&quot;].sum()
+        self.df[&quot;비율&quot;] = self.df[&quot;금액&quot;] / total * 100
+        return self.df
+
+    def draw(self):
+        plt.figure(figsize=(7, 7))
+        plt.pie(self.df[&quot;금액&quot;], labels=self.df[&quot;항목&quot;], autopct=&quot;%1.1f%%&quot;)
+        plt.title(&quot;용돈 사용 비율&quot;)
+        plt.show()
+
+data = {&quot;항목&quot;:[&quot;교통&quot;,&quot;식비&quot;,&quot;문화&quot;,&quot;저축&quot;],&quot;금액&quot;:[20000,40000,15000,25000]}
+pie = AllowancePieChart(data)
+print(pie.percentage_table())
+pie.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class AllowancePieChart:</code></td><td>AllowancePieChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def percentage_table(self):</code></td><td>percentage_table라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        total = self.df[&quot;금액&quot;].sum()</code></td><td>total 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>10</td><td><code>        self.df[&quot;비율&quot;] = self.df[&quot;금액&quot;] / total * 100</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>11</td><td><code>        return self.df</code></td><td>현재 객체 자신을 반환합니다. 메서드 체이닝처럼 다음 작업을 이어서 할 수 있게 합니다.</td></tr><tr><td>12</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>13</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>14</td><td><code>        plt.figure(figsize=(7, 7))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>15</td><td><code>        plt.pie(self.df[&quot;금액&quot;], labels=self.df[&quot;항목&quot;], autopct=&quot;%1.1f%%&quot;)</code></td><td>원그래프를 그립니다. 전체에서 각 항목이 차지하는 비율을 보여줍니다.</td></tr><tr><td>16</td><td><code>        plt.title(&quot;용돈 사용 비율&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>18</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>19</td><td><code>data = {&quot;항목&quot;:[&quot;교통&quot;,&quot;식비&quot;,&quot;문화&quot;,&quot;저축&quot;],&quot;금액&quot;:[20000,40000,15000,25000]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>20</td><td><code>pie = AllowancePieChart(data)</code></td><td>pie 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>21</td><td><code>print(pie.percentage_table())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>22</td><td><code>pie.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex6">
+<h2>6. 반별 평균 점수 비교</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class ClassAverageChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def class_average(self):
+        return self.df.groupby(&quot;반&quot;)[&quot;점수&quot;].mean()
+
+    def draw(self):
+        avg = self.class_average()
+        plt.figure(figsize=(8, 5))
+        plt.bar(avg.index, avg.values)
+        plt.title(&quot;반별 평균 점수&quot;)
+        plt.xlabel(&quot;반&quot;)
+        plt.ylabel(&quot;평균 점수&quot;)
+        plt.ylim(0, 100)
+        plt.show()
+
+data = {&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;C&quot;,&quot;C&quot;],&quot;점수&quot;:[90,82,77,91,88,95]}
+chart = ClassAverageChart(data)
+print(chart.class_average())
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class ClassAverageChart:</code></td><td>ClassAverageChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def class_average(self):</code></td><td>class_average라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df.groupby(&quot;반&quot;)[&quot;점수&quot;].mean()</code></td><td>mean()으로 평균을 계산하여 반환합니다. 숫자 열의 대표값을 구할 때 사용합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        avg = self.class_average()</code></td><td>avg 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.bar(avg.index, avg.values)</code></td><td>막대그래프를 그립니다. 범주별 크기를 비교할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.title(&quot;반별 평균 점수&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.xlabel(&quot;반&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.ylabel(&quot;평균 점수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.ylim(0, 100)</code></td><td>y축 값의 표시 범위를 설정합니다.</td></tr><tr><td>19</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>20</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>21</td><td><code>data = {&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;C&quot;,&quot;C&quot;],&quot;점수&quot;:[90,82,77,91,88,95]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>22</td><td><code>chart = ClassAverageChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>23</td><td><code>print(chart.class_average())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>24</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex7">
+<h2>7. 지역별 제품 매출 누적 막대</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class StackedSalesChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def pivot_sales(self):
+        return pd.pivot_table(self.df, values=&quot;매출&quot;, index=&quot;지역&quot;, columns=&quot;제품&quot;, aggfunc=&quot;sum&quot;, fill_value=0)
+
+    def draw(self):
+        pivot = self.pivot_sales()
+        pivot.plot(kind=&quot;bar&quot;, stacked=True, figsize=(8, 5))
+        plt.title(&quot;지역별 제품 매출 구성&quot;)
+        plt.xlabel(&quot;지역&quot;)
+        plt.ylabel(&quot;매출&quot;)
+        plt.legend(title=&quot;제품&quot;)
+        plt.show()
+
+data = {&quot;지역&quot;:[&quot;서울&quot;,&quot;서울&quot;,&quot;부산&quot;,&quot;부산&quot;,&quot;대구&quot;,&quot;대구&quot;],&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;A&quot;,&quot;B&quot;,&quot;A&quot;,&quot;B&quot;],&quot;매출&quot;:[100,150,80,120,90,60]}
+chart = StackedSalesChart(data)
+print(chart.pivot_sales())
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class StackedSalesChart:</code></td><td>StackedSalesChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def pivot_sales(self):</code></td><td>pivot_sales라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return pd.pivot_table(self.df, values=&quot;매출&quot;, index=&quot;지역&quot;, columns=&quot;제품&quot;, aggfunc=&quot;sum&quot;, fill_value=0)</code></td><td>pivot_table()로 데이터를 행과 열 기준으로 재구성합니다. 지역별·제품별 매출표처럼 교차표를 만들 때 유용합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        pivot = self.pivot_sales()</code></td><td>pivot 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        pivot.plot(kind=&quot;bar&quot;, stacked=True, figsize=(8, 5))</code></td><td>DataFrame의 plot() 기능으로 누적 막대그래프를 그립니다. stacked=True는 항목을 쌓아서 표시한다는 뜻입니다.</td></tr><tr><td>14</td><td><code>        plt.title(&quot;지역별 제품 매출 구성&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>15</td><td><code>        plt.xlabel(&quot;지역&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.ylabel(&quot;매출&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.legend(title=&quot;제품&quot;)</code></td><td>그래프 범례를 표시합니다. 여러 데이터가 있을 때 무엇을 의미하는지 알려 줍니다.</td></tr><tr><td>18</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>19</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>20</td><td><code>data = {&quot;지역&quot;:[&quot;서울&quot;,&quot;서울&quot;,&quot;부산&quot;,&quot;부산&quot;,&quot;대구&quot;,&quot;대구&quot;],&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;A&quot;,&quot;B&quot;,&quot;A&quot;,&quot;B&quot;],&quot;매출&quot;:[100,150,80,120,90,60]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>21</td><td><code>chart = StackedSalesChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>22</td><td><code>print(chart.pivot_sales())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>23</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex8">
+<h2>8. 날짜별 방문자 시계열</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class VisitorTimeSeries:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+        self.df[&quot;날짜&quot;] = pd.to_datetime(self.df[&quot;날짜&quot;])
+
+    def draw(self):
+        plt.figure(figsize=(9, 5))
+        plt.plot(self.df[&quot;날짜&quot;], self.df[&quot;방문자&quot;], marker=&quot;o&quot;)
+        plt.title(&quot;날짜별 방문자 수&quot;)
+        plt.xlabel(&quot;날짜&quot;)
+        plt.ylabel(&quot;방문자 수&quot;)
+        plt.grid(True)
+        plt.xticks(rotation=30)
+        plt.show()
+
+data = {&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-02&quot;,&quot;2026-01-03&quot;,&quot;2026-01-04&quot;],&quot;방문자&quot;:[120,150,170,160]}
+ts = VisitorTimeSeries(data)
+ts.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class VisitorTimeSeries:</code></td><td>VisitorTimeSeries라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>        self.df[&quot;날짜&quot;] = pd.to_datetime(self.df[&quot;날짜&quot;])</code></td><td>문자열로 된 날짜를 Pandas 날짜 자료형으로 변환합니다. 시계열 그래프와 날짜별 집계에 필요합니다.</td></tr><tr><td>8</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>9</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>10</td><td><code>        plt.figure(figsize=(9, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>11</td><td><code>        plt.plot(self.df[&quot;날짜&quot;], self.df[&quot;방문자&quot;], marker=&quot;o&quot;)</code></td><td>선그래프를 그립니다. 시간에 따른 변화나 순서가 있는 데이터를 표현할 때 사용합니다.</td></tr><tr><td>12</td><td><code>        plt.title(&quot;날짜별 방문자 수&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>13</td><td><code>        plt.xlabel(&quot;날짜&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>14</td><td><code>        plt.ylabel(&quot;방문자 수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>15</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>16</td><td><code>        plt.xticks(rotation=30)</code></td><td>x축 눈금의 위치나 이름, 회전 각도를 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>18</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>19</td><td><code>data = {&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-02&quot;,&quot;2026-01-03&quot;,&quot;2026-01-04&quot;],&quot;방문자&quot;:[120,150,170,160]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>20</td><td><code>ts = VisitorTimeSeries(data)</code></td><td>ts 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>21</td><td><code>ts.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex9">
+<h2>9. 월별 매출 집계 그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class MonthlySalesAggregator:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+        self.df[&quot;날짜&quot;] = pd.to_datetime(self.df[&quot;날짜&quot;])
+
+    def monthly_sum(self):
+        temp = self.df.set_index(&quot;날짜&quot;)
+        return temp[&quot;매출&quot;].resample(&quot;M&quot;).sum()
+
+    def draw(self):
+        monthly = self.monthly_sum()
+        plt.figure(figsize=(8, 5))
+        plt.plot(monthly.index, monthly.values, marker=&quot;o&quot;)
+        plt.title(&quot;월별 매출 합계&quot;)
+        plt.xlabel(&quot;월&quot;)
+        plt.ylabel(&quot;매출 합계&quot;)
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-15&quot;,&quot;2026-02-01&quot;,&quot;2026-02-20&quot;],&quot;매출&quot;:[100,150,80,120]}
+chart = MonthlySalesAggregator(data)
+print(chart.monthly_sum())
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class MonthlySalesAggregator:</code></td><td>MonthlySalesAggregator라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>        self.df[&quot;날짜&quot;] = pd.to_datetime(self.df[&quot;날짜&quot;])</code></td><td>문자열로 된 날짜를 Pandas 날짜 자료형으로 변환합니다. 시계열 그래프와 날짜별 집계에 필요합니다.</td></tr><tr><td>8</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>9</td><td><code>    def monthly_sum(self):</code></td><td>monthly_sum라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>10</td><td><code>        temp = self.df.set_index(&quot;날짜&quot;)</code></td><td>특정 열을 DataFrame의 인덱스로 설정합니다. 날짜를 인덱스로 만들면 resample 같은 시계열 기능을 사용할 수 있습니다.</td></tr><tr><td>11</td><td><code>        return temp[&quot;매출&quot;].resample(&quot;M&quot;).sum()</code></td><td>sum()으로 합계를 계산하여 반환합니다.</td></tr><tr><td>12</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>13</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>14</td><td><code>        monthly = self.monthly_sum()</code></td><td>monthly 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>15</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>16</td><td><code>        plt.plot(monthly.index, monthly.values, marker=&quot;o&quot;)</code></td><td>선그래프를 그립니다. 시간에 따른 변화나 순서가 있는 데이터를 표현할 때 사용합니다.</td></tr><tr><td>17</td><td><code>        plt.title(&quot;월별 매출 합계&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.xlabel(&quot;월&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>19</td><td><code>        plt.ylabel(&quot;매출 합계&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>20</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>21</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>22</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>23</td><td><code>data = {&quot;날짜&quot;:[&quot;2026-01-01&quot;,&quot;2026-01-15&quot;,&quot;2026-02-01&quot;,&quot;2026-02-20&quot;],&quot;매출&quot;:[100,150,80,120]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>24</td><td><code>chart = MonthlySalesAggregator(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>25</td><td><code>print(chart.monthly_sum())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>26</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex10">
+<h2>10. 결측치 개수 시각화</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class MissingValueVisualization:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def missing_count(self):
+        return self.df.isna().sum()
+
+    def draw_missing(self):
+        counts = self.missing_count()
+        plt.figure(figsize=(8, 5))
+        plt.bar(counts.index, counts.values)
+        plt.title(&quot;열별 결측치 개수&quot;)
+        plt.xlabel(&quot;열&quot;)
+        plt.ylabel(&quot;결측치 개수&quot;)
+        plt.show()
+
+data = {&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;],&quot;점수&quot;:[90,None,85,None],&quot;출석&quot;:[10,9,None,8]}
+viz = MissingValueVisualization(data)
+print(viz.missing_count())
+viz.draw_missing()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class MissingValueVisualization:</code></td><td>MissingValueVisualization라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def missing_count(self):</code></td><td>missing_count라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df.isna().sum()</code></td><td>sum()으로 합계를 계산하여 반환합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw_missing(self):</code></td><td>draw_missing라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        counts = self.missing_count()</code></td><td>counts 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.bar(counts.index, counts.values)</code></td><td>막대그래프를 그립니다. 범주별 크기를 비교할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.title(&quot;열별 결측치 개수&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.xlabel(&quot;열&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.ylabel(&quot;결측치 개수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>19</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>20</td><td><code>data = {&quot;이름&quot;:[&quot;김&quot;,&quot;이&quot;,&quot;박&quot;,&quot;최&quot;],&quot;점수&quot;:[90,None,85,None],&quot;출석&quot;:[10,9,None,8]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>21</td><td><code>viz = MissingValueVisualization(data)</code></td><td>viz 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>22</td><td><code>print(viz.missing_count())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>23</td><td><code>viz.draw_missing()</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex11">
+<h2>11. 반별 점수 박스플롯</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class ClassBoxPlot:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def draw(self):
+        groups = [group[&quot;점수&quot;].values for _, group in self.df.groupby(&quot;반&quot;)]
+        labels = list(self.df[&quot;반&quot;].unique())
+        plt.figure(figsize=(8, 5))
+        plt.boxplot(groups, labels=labels)
+        plt.title(&quot;반별 점수 분포&quot;)
+        plt.xlabel(&quot;반&quot;)
+        plt.ylabel(&quot;점수&quot;)
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;],&quot;점수&quot;:[90,85,88,70,95,78]}
+box = ClassBoxPlot(data)
+box.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class ClassBoxPlot:</code></td><td>ClassBoxPlot라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        groups = [group[&quot;점수&quot;].values for _, group in self.df.groupby(&quot;반&quot;)]</code></td><td>groups 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>10</td><td><code>        labels = list(self.df[&quot;반&quot;].unique())</code></td><td>labels 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>11</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>12</td><td><code>        plt.boxplot(groups, labels=labels)</code></td><td>박스플롯을 그립니다. 중앙값, 사분위수, 이상값 등 분포 특징을 한눈에 보여줍니다.</td></tr><tr><td>13</td><td><code>        plt.title(&quot;반별 점수 분포&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>14</td><td><code>        plt.xlabel(&quot;반&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>15</td><td><code>        plt.ylabel(&quot;점수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>17</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>18</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>19</td><td><code>data = {&quot;반&quot;:[&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;],&quot;점수&quot;:[90,85,88,70,95,78]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>20</td><td><code>box = ClassBoxPlot(data)</code></td><td>box 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>21</td><td><code>box.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex12">
+<h2>12. 상관행렬 히트맵</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class CorrelationHeatmap:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def correlation_matrix(self):
+        return self.df.corr(numeric_only=True)
+
+    def draw(self):
+        corr = self.correlation_matrix()
+        plt.figure(figsize=(7, 6))
+        plt.imshow(corr)
+        plt.xticks(range(len(corr.columns)), corr.columns)
+        plt.yticks(range(len(corr.index)), corr.index)
+        plt.colorbar()
+        plt.title(&quot;상관행렬 히트맵&quot;)
+        plt.show()
+
+data = {&quot;공부시간&quot;:[1,2,3,4,5],&quot;점수&quot;:[55,65,70,85,90],&quot;결석&quot;:[5,4,3,1,0]}
+heatmap = CorrelationHeatmap(data)
+print(heatmap.correlation_matrix())
+heatmap.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class CorrelationHeatmap:</code></td><td>CorrelationHeatmap라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def correlation_matrix(self):</code></td><td>correlation_matrix라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df.corr(numeric_only=True)</code></td><td>corr()로 두 변수 사이의 상관계수를 계산합니다. 값이 1에 가까울수록 양의 관계가 강합니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        corr = self.correlation_matrix()</code></td><td>corr 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(7, 6))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.imshow(corr)</code></td><td>행렬 형태의 값을 색으로 표현합니다. 상관행렬 히트맵을 만들 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.xticks(range(len(corr.columns)), corr.columns)</code></td><td>x축 눈금의 위치나 이름, 회전 각도를 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.yticks(range(len(corr.index)), corr.index)</code></td><td>y축 눈금의 위치나 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.colorbar()</code></td><td>색이 어떤 값 범위를 의미하는지 보여주는 색상 막대를 추가합니다.</td></tr><tr><td>18</td><td><code>        plt.title(&quot;상관행렬 히트맵&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>19</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>20</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>21</td><td><code>data = {&quot;공부시간&quot;:[1,2,3,4,5],&quot;점수&quot;:[55,65,70,85,90],&quot;결석&quot;:[5,4,3,1,0]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>22</td><td><code>heatmap = CorrelationHeatmap(data)</code></td><td>heatmap 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>23</td><td><code>print(heatmap.correlation_matrix())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>24</td><td><code>heatmap.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex13">
+<h2>13. Top N 제품 매출</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class TopNBarChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def top_n(self, n=3):
+        return self.df.sort_values(&quot;매출&quot;, ascending=False).head(n)
+
+    def draw(self, n=3):
+        top = self.top_n(n)
+        plt.figure(figsize=(8, 5))
+        plt.bar(top[&quot;제품&quot;], top[&quot;매출&quot;])
+        plt.title(f&quot;상위 {n}개 제품 매출&quot;)
+        plt.xlabel(&quot;제품&quot;)
+        plt.ylabel(&quot;매출&quot;)
+        plt.show()
+
+data = {&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;],&quot;매출&quot;:[120,300,180,90,250]}
+chart = TopNBarChart(data)
+print(chart.top_n(3))
+chart.draw(3)</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class TopNBarChart:</code></td><td>TopNBarChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def top_n(self, n=3):</code></td><td>top_n라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df.sort_values(&quot;매출&quot;, ascending=False).head(n)</code></td><td>sort_values()로 특정 열 기준으로 데이터를 정렬합니다. ascending=False는 큰 값부터 정렬한다는 뜻입니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self, n=3):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        top = self.top_n(n)</code></td><td>top 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.bar(top[&quot;제품&quot;], top[&quot;매출&quot;])</code></td><td>막대그래프를 그립니다. 범주별 크기를 비교할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.title(f&quot;상위 {n}개 제품 매출&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.xlabel(&quot;제품&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.ylabel(&quot;매출&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>19</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>20</td><td><code>data = {&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;],&quot;매출&quot;:[120,300,180,90,250]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>21</td><td><code>chart = TopNBarChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>22</td><td><code>print(chart.top_n(3))</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>23</td><td><code>chart.draw(3)</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex14">
+<h2>14. 범주별 빈도 그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class CategoryCountChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def counts(self):
+        return self.df[&quot;선호과목&quot;].value_counts()
+
+    def draw(self):
+        counts = self.counts()
+        plt.figure(figsize=(8, 5))
+        plt.bar(counts.index, counts.values)
+        plt.title(&quot;선호 과목 빈도&quot;)
+        plt.xlabel(&quot;과목&quot;)
+        plt.ylabel(&quot;학생 수&quot;)
+        plt.show()
+
+data = {&quot;선호과목&quot;:[&quot;정보&quot;,&quot;수학&quot;,&quot;정보&quot;,&quot;과학&quot;,&quot;정보&quot;,&quot;수학&quot;]}
+chart = CategoryCountChart(data)
+print(chart.counts())
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class CategoryCountChart:</code></td><td>CategoryCountChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def counts(self):</code></td><td>counts라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        return self.df[&quot;선호과목&quot;].value_counts()</code></td><td>value_counts()는 같은 값이 몇 번 나왔는지 빈도를 계산합니다. 범주형 데이터 분석에 자주 사용됩니다.</td></tr><tr><td>10</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>11</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>12</td><td><code>        counts = self.counts()</code></td><td>counts 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.bar(counts.index, counts.values)</code></td><td>막대그래프를 그립니다. 범주별 크기를 비교할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.title(&quot;선호 과목 빈도&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.xlabel(&quot;과목&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.ylabel(&quot;학생 수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>19</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>20</td><td><code>data = {&quot;선호과목&quot;:[&quot;정보&quot;,&quot;수학&quot;,&quot;정보&quot;,&quot;과학&quot;,&quot;정보&quot;,&quot;수학&quot;]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>21</td><td><code>chart = CategoryCountChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>22</td><td><code>print(chart.counts())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>23</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex15">
+<h2>15. 이중 축 그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class DualAxisChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def draw(self):
+        fig, ax1 = plt.subplots(figsize=(9, 5))
+        ax1.plot(self.df[&quot;월&quot;], self.df[&quot;매출&quot;], marker=&quot;o&quot;)
+        ax1.set_xlabel(&quot;월&quot;)
+        ax1.set_ylabel(&quot;매출&quot;)
+        ax2 = ax1.twinx()
+        ax2.bar(self.df[&quot;월&quot;], self.df[&quot;광고비&quot;], alpha=0.3)
+        ax2.set_ylabel(&quot;광고비&quot;)
+        plt.title(&quot;월별 매출과 광고비&quot;)
+        plt.show()
+
+data = {&quot;월&quot;:[&quot;1월&quot;,&quot;2월&quot;,&quot;3월&quot;,&quot;4월&quot;],&quot;매출&quot;:[120,150,180,210],&quot;광고비&quot;:[20,35,45,50]}
+chart = DualAxisChart(data)
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class DualAxisChart:</code></td><td>DualAxisChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        fig, ax1 = plt.subplots(figsize=(9, 5))</code></td><td>Figure와 첫 번째 축 ax1을 만듭니다. 여러 축을 사용할 때 객체지향 방식으로 그래프를 제어합니다.</td></tr><tr><td>10</td><td><code>        ax1.plot(self.df[&quot;월&quot;], self.df[&quot;매출&quot;], marker=&quot;o&quot;)</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>11</td><td><code>        ax1.set_xlabel(&quot;월&quot;)</code></td><td>해당 축의 x축 이름을 설정합니다.</td></tr><tr><td>12</td><td><code>        ax1.set_ylabel(&quot;매출&quot;)</code></td><td>해당 축의 y축 이름을 설정합니다.</td></tr><tr><td>13</td><td><code>        ax2 = ax1.twinx()</code></td><td>기존 x축은 공유하고 y축을 하나 더 만듭니다. 단위가 다른 두 데이터를 함께 표시할 때 사용합니다.</td></tr><tr><td>14</td><td><code>        ax2.bar(self.df[&quot;월&quot;], self.df[&quot;광고비&quot;], alpha=0.3)</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>15</td><td><code>        ax2.set_ylabel(&quot;광고비&quot;)</code></td><td>해당 축의 y축 이름을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.title(&quot;월별 매출과 광고비&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>18</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>19</td><td><code>data = {&quot;월&quot;:[&quot;1월&quot;,&quot;2월&quot;,&quot;3월&quot;,&quot;4월&quot;],&quot;매출&quot;:[120,150,180,210],&quot;광고비&quot;:[20,35,45,50]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>20</td><td><code>chart = DualAxisChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>21</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex16">
+<h2>16. 이동평균 그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class MovingAverageChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def add_moving_average(self, window=3):
+        self.df[&quot;이동평균&quot;] = self.df[&quot;값&quot;].rolling(window=window).mean()
+        return self.df
+
+    def draw(self):
+        plt.figure(figsize=(9, 5))
+        plt.plot(self.df[&quot;날짜&quot;], self.df[&quot;값&quot;], marker=&quot;o&quot;, label=&quot;원자료&quot;)
+        plt.plot(self.df[&quot;날짜&quot;], self.df[&quot;이동평균&quot;], marker=&quot;o&quot;, label=&quot;이동평균&quot;)
+        plt.title(&quot;원자료와 이동평균&quot;)
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;날짜&quot;:[&quot;1일&quot;,&quot;2일&quot;,&quot;3일&quot;,&quot;4일&quot;,&quot;5일&quot;,&quot;6일&quot;],&quot;값&quot;:[10,15,13,20,18,25]}
+chart = MovingAverageChart(data)
+print(chart.add_moving_average(3))
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class MovingAverageChart:</code></td><td>MovingAverageChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def add_moving_average(self, window=3):</code></td><td>add_moving_average라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        self.df[&quot;이동평균&quot;] = self.df[&quot;값&quot;].rolling(window=window).mean()</code></td><td>rolling()은 일정한 창(window)을 움직이며 계산합니다. 이동평균처럼 추세를 부드럽게 볼 때 사용합니다.</td></tr><tr><td>10</td><td><code>        return self.df</code></td><td>현재 객체 자신을 반환합니다. 메서드 체이닝처럼 다음 작업을 이어서 할 수 있게 합니다.</td></tr><tr><td>11</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>12</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(9, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.plot(self.df[&quot;날짜&quot;], self.df[&quot;값&quot;], marker=&quot;o&quot;, label=&quot;원자료&quot;)</code></td><td>선그래프를 그립니다. 시간에 따른 변화나 순서가 있는 데이터를 표현할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.plot(self.df[&quot;날짜&quot;], self.df[&quot;이동평균&quot;], marker=&quot;o&quot;, label=&quot;이동평균&quot;)</code></td><td>선그래프를 그립니다. 시간에 따른 변화나 순서가 있는 데이터를 표현할 때 사용합니다.</td></tr><tr><td>16</td><td><code>        plt.title(&quot;원자료와 이동평균&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.legend()</code></td><td>그래프 범례를 표시합니다. 여러 데이터가 있을 때 무엇을 의미하는지 알려 줍니다.</td></tr><tr><td>18</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>19</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>20</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>21</td><td><code>data = {&quot;날짜&quot;:[&quot;1일&quot;,&quot;2일&quot;,&quot;3일&quot;,&quot;4일&quot;,&quot;5일&quot;,&quot;6일&quot;],&quot;값&quot;:[10,15,13,20,18,25]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>22</td><td><code>chart = MovingAverageChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>23</td><td><code>print(chart.add_moving_average(3))</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>24</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex17">
+<h2>17. 누적합 그래프</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class CumulativeSumChart:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def add_cumsum(self):
+        self.df[&quot;누적매출&quot;] = self.df[&quot;매출&quot;].cumsum()
+        return self.df
+
+    def draw(self):
+        plt.figure(figsize=(8, 5))
+        plt.plot(self.df[&quot;월&quot;], self.df[&quot;누적매출&quot;], marker=&quot;o&quot;)
+        plt.title(&quot;월별 누적 매출&quot;)
+        plt.xlabel(&quot;월&quot;)
+        plt.ylabel(&quot;누적 매출&quot;)
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;월&quot;:[&quot;1월&quot;,&quot;2월&quot;,&quot;3월&quot;,&quot;4월&quot;],&quot;매출&quot;:[100,120,90,150]}
+chart = CumulativeSumChart(data)
+print(chart.add_cumsum())
+chart.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class CumulativeSumChart:</code></td><td>CumulativeSumChart라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def add_cumsum(self):</code></td><td>add_cumsum라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        self.df[&quot;누적매출&quot;] = self.df[&quot;매출&quot;].cumsum()</code></td><td>cumsum()은 누적합을 계산합니다. 시간이 지남에 따라 값이 얼마나 쌓였는지 볼 수 있습니다.</td></tr><tr><td>10</td><td><code>        return self.df</code></td><td>현재 객체 자신을 반환합니다. 메서드 체이닝처럼 다음 작업을 이어서 할 수 있게 합니다.</td></tr><tr><td>11</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>12</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>13</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>14</td><td><code>        plt.plot(self.df[&quot;월&quot;], self.df[&quot;누적매출&quot;], marker=&quot;o&quot;)</code></td><td>선그래프를 그립니다. 시간에 따른 변화나 순서가 있는 데이터를 표현할 때 사용합니다.</td></tr><tr><td>15</td><td><code>        plt.title(&quot;월별 누적 매출&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>16</td><td><code>        plt.xlabel(&quot;월&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>17</td><td><code>        plt.ylabel(&quot;누적 매출&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>19</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>20</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>21</td><td><code>data = {&quot;월&quot;:[&quot;1월&quot;,&quot;2월&quot;,&quot;3월&quot;,&quot;4월&quot;],&quot;매출&quot;:[100,120,90,150]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>22</td><td><code>chart = CumulativeSumChart(data)</code></td><td>chart 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>23</td><td><code>print(chart.add_cumsum())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>24</td><td><code>chart.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex18">
+<h2>18. 조건별 산점도</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class ConditionalScatter:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def add_level(self):
+        self.df[&quot;수준&quot;] = self.df[&quot;점수&quot;].apply(lambda x: &quot;높음&quot; if x &gt;= 80 else &quot;낮음&quot;)
+        return self.df
+
+    def draw(self):
+        self.add_level()
+        plt.figure(figsize=(8, 5))
+        for level, group in self.df.groupby(&quot;수준&quot;):
+            plt.scatter(group[&quot;공부시간&quot;], group[&quot;점수&quot;], label=level)
+        plt.title(&quot;공부 시간과 점수: 수준별 표시&quot;)
+        plt.xlabel(&quot;공부 시간&quot;)
+        plt.ylabel(&quot;점수&quot;)
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+
+data = {&quot;공부시간&quot;:[1,2,3,4,5,6],&quot;점수&quot;:[55,62,75,83,88,95]}
+plot = ConditionalScatter(data)
+print(plot.add_level())
+plot.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class ConditionalScatter:</code></td><td>ConditionalScatter라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def add_level(self):</code></td><td>add_level라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        self.df[&quot;수준&quot;] = self.df[&quot;점수&quot;].apply(lambda x: &quot;높음&quot; if x &gt;= 80 else &quot;낮음&quot;)</code></td><td>apply()는 각 값에 함수를 적용합니다. lambda는 짧은 익명 함수이며, 조건에 따라 새로운 값을 만들 때 사용합니다.</td></tr><tr><td>10</td><td><code>        return self.df</code></td><td>현재 객체 자신을 반환합니다. 메서드 체이닝처럼 다음 작업을 이어서 할 수 있게 합니다.</td></tr><tr><td>11</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>12</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>13</td><td><code>        self.add_level()</code></td><td>객체의 데이터 처리 메서드를 호출합니다. 새로운 열을 추가하거나 계산 결과를 확인합니다.</td></tr><tr><td>14</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>15</td><td><code>        for level, group in self.df.groupby(&quot;수준&quot;):</code></td><td>groupby로 나눈 그룹을 하나씩 반복하면서 각 그룹에 대해 그래프를 그립니다.</td></tr><tr><td>16</td><td><code>            plt.scatter(group[&quot;공부시간&quot;], group[&quot;점수&quot;], label=level)</code></td><td>산점도를 그립니다. 두 숫자 변수 사이의 관계를 점으로 표현합니다.</td></tr><tr><td>17</td><td><code>        plt.title(&quot;공부 시간과 점수: 수준별 표시&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>18</td><td><code>        plt.xlabel(&quot;공부 시간&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>19</td><td><code>        plt.ylabel(&quot;점수&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>20</td><td><code>        plt.legend()</code></td><td>그래프 범례를 표시합니다. 여러 데이터가 있을 때 무엇을 의미하는지 알려 줍니다.</td></tr><tr><td>21</td><td><code>        plt.grid(True)</code></td><td>그래프에 격자선을 표시하여 값을 읽기 쉽게 만듭니다.</td></tr><tr><td>22</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>23</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>24</td><td><code>data = {&quot;공부시간&quot;:[1,2,3,4,5,6],&quot;점수&quot;:[55,62,75,83,88,95]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>25</td><td><code>plot = ConditionalScatter(data)</code></td><td>plot 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>26</td><td><code>print(plot.add_level())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>27</td><td><code>plot.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex19">
+<h2>19. 미니 대시보드</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class MiniDashboard:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def draw(self):
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+        axes[0].bar(self.df[&quot;제품&quot;], self.df[&quot;매출&quot;])
+        axes[0].set_title(&quot;제품별 매출&quot;)
+        axes[1].plot(self.df[&quot;제품&quot;], self.df[&quot;이익&quot;], marker=&quot;o&quot;)
+        axes[1].set_title(&quot;제품별 이익&quot;)
+        axes[1].grid(True)
+        plt.tight_layout()
+        plt.show()
+
+data = {&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;],&quot;매출&quot;:[100,150,90,200],&quot;이익&quot;:[20,35,10,50]}
+dashboard = MiniDashboard(data)
+dashboard.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class MiniDashboard:</code></td><td>MiniDashboard라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        fig, axes = plt.subplots(1, 2, figsize=(12, 5))</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>10</td><td><code>        axes[0].bar(self.df[&quot;제품&quot;], self.df[&quot;매출&quot;])</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>11</td><td><code>        axes[0].set_title(&quot;제품별 매출&quot;)</code></td><td>해당 그래프 영역의 제목을 설정합니다.</td></tr><tr><td>12</td><td><code>        axes[1].plot(self.df[&quot;제품&quot;], self.df[&quot;이익&quot;], marker=&quot;o&quot;)</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>13</td><td><code>        axes[1].set_title(&quot;제품별 이익&quot;)</code></td><td>해당 그래프 영역의 제목을 설정합니다.</td></tr><tr><td>14</td><td><code>        axes[1].grid(True)</code></td><td>이 줄은 데이터 분석, 계산, 그래프 설정 또는 객체 사용을 위한 코드입니다. 앞뒤 줄과 함께 실행되어 전체 분석 흐름을 완성합니다.</td></tr><tr><td>15</td><td><code>        plt.tight_layout()</code></td><td>그래프 요소들이 겹치지 않도록 배치를 자동 조정합니다.</td></tr><tr><td>16</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>17</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>18</td><td><code>data = {&quot;제품&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;],&quot;매출&quot;:[100,150,90,200],&quot;이익&quot;:[20,35,10,50]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>19</td><td><code>dashboard = MiniDashboard(data)</code></td><td>dashboard 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>20</td><td><code>dashboard.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex20">
+<h2>20. 종합 분석 리포트</h2>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+class SalesVisualizationReport:
+    def __init__(self, data):
+        self.df = pd.DataFrame(data)
+
+    def clean(self):
+        self.df[&quot;지역&quot;] = self.df[&quot;지역&quot;].str.strip()
+        self.df[&quot;매출&quot;] = self.df[&quot;매출&quot;].fillna(self.df[&quot;매출&quot;].mean())
+        return self
+
+    def summary(self):
+        return self.df.groupby(&quot;지역&quot;)[&quot;매출&quot;].sum()
+
+    def draw(self):
+        summary = self.summary()
+        plt.figure(figsize=(8, 5))
+        plt.bar(summary.index, summary.values)
+        plt.title(&quot;지역별 총매출&quot;)
+        plt.xlabel(&quot;지역&quot;)
+        plt.ylabel(&quot;총매출&quot;)
+        plt.show()
+
+    def report(self):
+        total = self.df[&quot;매출&quot;].sum()
+        best_region = self.summary().idxmax()
+        return f&quot;전체 매출은 {total:.1f}, 최고 지역은 {best_region}입니다.&quot;
+
+data = {&quot;지역&quot;:[&quot;서울 &quot;,&quot;서울&quot;,&quot;부산&quot;,&quot;부산&quot;,&quot;대구&quot;],&quot;매출&quot;:[120,None,80,150,90]}
+report = SalesVisualizationReport(data)
+report.clean()
+print(report.summary())
+print(report.report())
+report.draw()</code></pre>
+<h3>🔍 초보자용 한 줄씩 꼼꼼한 코드 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>상세 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 짧은 이름으로 불러옵니다. 표 형태 데이터인 DataFrame을 만들고 분석할 때 사용합니다.</td></tr><tr><td>2</td><td><code>import matplotlib.pyplot as plt</code></td><td>Matplotlib의 pyplot 기능을 plt라는 이름으로 불러옵니다. 그래프를 그리고 화면에 보여줄 때 사용합니다.</td></tr><tr><td>3</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>4</td><td><code>class SalesVisualizationReport:</code></td><td>SalesVisualizationReport라는 클래스를 정의합니다. 데이터 분석과 그래프 그리기 기능을 하나의 객체로 묶기 위한 설계도입니다.</td></tr><tr><td>5</td><td><code>    def __init__(self, data):</code></td><td>__init__은 생성자입니다. 객체가 만들어질 때 자동으로 실행되어 초기 데이터를 준비합니다.</td></tr><tr><td>6</td><td><code>        self.df = pd.DataFrame(data)</code></td><td>입력받은 data를 Pandas DataFrame으로 변환하여 self.df에 저장합니다. 이후 모든 분석과 그래프는 이 표 데이터를 기준으로 진행됩니다.</td></tr><tr><td>7</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>8</td><td><code>    def clean(self):</code></td><td>clean라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>9</td><td><code>        self.df[&quot;지역&quot;] = self.df[&quot;지역&quot;].str.strip()</code></td><td>문자열의 양쪽 공백을 제거합니다. &#x27;서울 &#x27;과 &#x27;서울&#x27;을 같은 값으로 처리하기 위해 사용합니다.</td></tr><tr><td>10</td><td><code>        self.df[&quot;매출&quot;] = self.df[&quot;매출&quot;].fillna(self.df[&quot;매출&quot;].mean())</code></td><td>fillna()는 비어 있는 결측값을 다른 값으로 채웁니다. 여기서는 평균값으로 결측 매출을 대체합니다.</td></tr><tr><td>11</td><td><code>        return self</code></td><td>현재 객체 자신을 반환합니다. 메서드 체이닝처럼 다음 작업을 이어서 할 수 있게 합니다.</td></tr><tr><td>12</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>13</td><td><code>    def summary(self):</code></td><td>summary라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>14</td><td><code>        return self.df.groupby(&quot;지역&quot;)[&quot;매출&quot;].sum()</code></td><td>sum()으로 합계를 계산하여 반환합니다.</td></tr><tr><td>15</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>16</td><td><code>    def draw(self):</code></td><td>draw라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>17</td><td><code>        summary = self.summary()</code></td><td>summary 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>18</td><td><code>        plt.figure(figsize=(8, 5))</code></td><td>새 그래프 영역을 만듭니다. figsize는 그래프의 가로와 세로 크기를 지정합니다.</td></tr><tr><td>19</td><td><code>        plt.bar(summary.index, summary.values)</code></td><td>막대그래프를 그립니다. 범주별 크기를 비교할 때 사용합니다.</td></tr><tr><td>20</td><td><code>        plt.title(&quot;지역별 총매출&quot;)</code></td><td>그래프의 제목을 설정합니다.</td></tr><tr><td>21</td><td><code>        plt.xlabel(&quot;지역&quot;)</code></td><td>x축 이름을 설정합니다.</td></tr><tr><td>22</td><td><code>        plt.ylabel(&quot;총매출&quot;)</code></td><td>y축 이름을 설정합니다.</td></tr><tr><td>23</td><td><code>        plt.show()</code></td><td>완성된 그래프를 화면에 표시합니다.</td></tr><tr><td>24</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>25</td><td><code>    def report(self):</code></td><td>report라는 메서드를 정의합니다. 클래스 안에서 특정 작업을 수행하는 함수입니다.</td></tr><tr><td>26</td><td><code>        total = self.df[&quot;매출&quot;].sum()</code></td><td>total 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>27</td><td><code>        best_region = self.summary().idxmax()</code></td><td>best_region 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>28</td><td><code>        return f&quot;전체 매출은 {total:.1f}, 최고 지역은 {best_region}입니다.&quot;</code></td><td>f-string을 사용해 변수 값을 문장 안에 넣어 문자열을 반환합니다.</td></tr><tr><td>29</td><td><code>&nbsp;</code></td><td>빈 줄입니다. 코드를 읽기 쉽게 구분하기 위한 줄입니다.</td></tr><tr><td>30</td><td><code>data = {&quot;지역&quot;:[&quot;서울 &quot;,&quot;서울&quot;,&quot;부산&quot;,&quot;부산&quot;,&quot;대구&quot;],&quot;매출&quot;:[120,None,80,150,90]}</code></td><td>분석에 사용할 원본 데이터를 딕셔너리 형태로 만듭니다. 각 키는 열 이름, 값 리스트는 열 데이터가 됩니다.</td></tr><tr><td>31</td><td><code>report = SalesVisualizationReport(data)</code></td><td>report 변수에 객체나 계산 결과를 저장합니다. 이후 이 변수를 통해 메서드를 호출하거나 데이터를 사용할 수 있습니다.</td></tr><tr><td>32</td><td><code>report.clean()</code></td><td>데이터 정제 메서드를 실행합니다. 공백 제거와 결측값 처리 같은 전처리를 수행합니다.</td></tr><tr><td>33</td><td><code>print(report.summary())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>34</td><td><code>print(report.report())</code></td><td>괄호 안의 값을 화면에 출력합니다. 분석 결과나 표를 확인하기 위해 사용합니다.</td></tr><tr><td>35</td><td><code>report.draw()</code></td><td>객체의 draw 메서드를 호출하여 그래프를 그립니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>🏁 최종 정리</h2>
+<pre><code>데이터 준비
+→ 클래스 생성
+→ DataFrame 변환
+→ 분석 메서드 실행
+→ Matplotlib 그래프 그리기
+→ 결과 출력과 시각화
+→ 대시보드와 자동 리포트로 확장</code></pre>
+<p>한 줄씩 코드를 이해하면, 새로운 데이터가 들어와도 클래스 구조를 조금만 바꾸어 다양한 시각화 프로그램을 만들 수 있습니다.</p>
+</section>
+</main>
+</div>
+</body>
+</html>

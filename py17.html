@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Flask Django 예제 10개 한 줄씩 상세 설명</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#eff6ff,#f5f3ff,#fff7ed);color:#1f2937}
+header{padding:34px 42px;background:linear-gradient(135deg,#1d4ed8,#7c3aed,#ea580c);color:white;box-shadow:0 8px 24px rgba(15,23,42,.24)}
+header h1{margin:0;font-size:34px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 130px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#bfdbfe}
+nav a{display:block;text-decoration:none;color:#e5e7eb;background:#374151;border-radius:14px;padding:12px 14px;margin:7px 0;font-size:14px;line-height:1.45}
+nav a:hover{background:#2563eb}
+main{padding:28px;overflow:auto}
+.card{background:white;border-radius:24px;padding:24px;margin-bottom:24px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb;position:relative}
+h2{color:#1d4ed8;margin-top:0}
+h3{color:#047857}
+pre{background:#0f172a;color:#e5e7eb;padding:18px;border-radius:18px;overflow:auto;line-height:1.55;font-size:15px}
+code{font-family:Consolas,monospace}
+.desc{font-size:16px;line-height:1.75;color:#334155}
+.explain{background:#f8fafc;border-left:6px solid #3b82f6;padding:14px 16px;border-radius:14px;line-height:1.75}
+.warn{background:#fff7ed;border-left:6px solid #f97316;padding:14px 16px;border-radius:14px;line-height:1.75}
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#dbeafe;color:#1e40af;font-weight:800;margin:4px}
+.label{display:inline-block;padding:7px 13px;border-radius:999px;font-weight:900;margin-bottom:10px;color:white}
+.label.flask{background:#059669}
+.label.django{background:#7c3aed}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.flow div{background:#f8fafc;border:1px solid #e5e7eb;border-radius:18px;padding:16px}
+.table{width:100%;border-collapse:collapse;margin-top:12px}
+.table th,.table td{border:1px solid #e5e7eb;padding:12px;text-align:left;vertical-align:top;line-height:1.65}
+.table th{background:#dbeafe;color:#1e3a8a}
+.table td:first-child{width:55px;text-align:center;font-weight:900;color:#1d4ed8}
+.table td:nth-child(2){width:38%;background:#f8fafc}
+@media(max-width:850px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}.table{font-size:14px}}
+</style>
+</head>
+<body>
+<header>
+<h1>🌐 Flask·Django 예제 10개 한 줄씩 상세 설명</h1>
+<p>초보자도 이해할 수 있도록 코드 한 줄마다 역할과 의미를 꼼꼼하게 설명한 HTML 학습자료</p>
+</header>
+<div class="wrap">
+<nav>
+<h2>📚 예제 목록</h2>
+<a href="#ex1">01. Flask 기본 웹 서버 만들기</a><a href="#ex2">02. Flask HTML 문자열 반환</a><a href="#ex3">03. Flask URL 변수 사용</a><a href="#ex4">04. Flask GET 요청 파라미터 처리</a><a href="#ex5">05. Flask POST 폼 데이터 처리</a><a href="#ex6">06. Flask JSON API 서버 만들기</a><a href="#ex7">07. Django 기본 view 함수</a><a href="#ex8">08. Django HTML 템플릿 렌더링</a><a href="#ex9">09. Django URL 변수 사용</a><a href="#ex10">10. Django 간단한 게시글 목록 페이지</a>
+</nav>
+<main>
+<section class="card">
+<h2>🚀 학습 안내</h2>
+<p class="desc">이 자료는 Flask와 Django로 웹 페이지와 서버 기능을 만드는 예제 10개를 바탕으로, 코드의 각 줄이 어떤 역할을 하는지 초보자 눈높이에서 설명합니다.</p>
+<p><span class="badge">Flask</span><span class="badge">Django</span><span class="badge">라우팅</span><span class="badge">GET/POST</span><span class="badge">JSON API</span><span class="badge">템플릿</span></p>
+<div class="warn"><b>실행 안내:</b> Flask는 <code>pip install flask</code>, Django는 <code>pip install django</code> 후 프로젝트 구조에 맞게 실행해야 합니다.</div>
+</section>
+<section class="card">
+<h2>🧭 웹 서버 코드 이해 흐름</h2>
+<div class="flow">
+<div><h3>1. 앱 생성</h3><p>Flask 앱 객체 또는 Django 프로젝트 구조를 준비합니다.</p></div>
+<div><h3>2. URL 연결</h3><p>특정 주소가 어떤 함수를 실행할지 정합니다.</p></div>
+<div><h3>3. 함수 처리</h3><p>요청을 읽고 문자열, HTML, JSON, 템플릿을 준비합니다.</p></div>
+<div><h3>4. 응답 반환</h3><p>브라우저에 최종 결과를 돌려줍니다.</p></div>
+</div>
+</section>
+
+<section class="card" id="ex1">
+<div class="label flask">Flask</div>
+<h2>01. Flask 기본 웹 서버 만들기</h2>
+<pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def home():
+    return &quot;Hello Flask!&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>from flask import Flask</code></td><td>Flask 라이브러리에서 Flask 클래스를 가져옵니다. 이 클래스가 웹 서버 앱을 만드는 핵심 도구입니다.</td></tr><tr><td>2</td><td><code>app = Flask(__name__)</code></td><td>Flask 웹 애플리케이션 객체를 만듭니다. __name__은 현재 파일 이름 정보를 Flask에 알려 주어, 템플릿이나 정적 파일 위치를 찾는 기준이 됩니다.</td></tr><tr><td>3</td><td><code>@app.route(&quot;/&quot;)</code></td><td>사용자가 웹 브라우저에서 기본 주소 / 로 접속했을 때 바로 아래의 home() 함수를 실행하라는 뜻입니다.</td></tr><tr><td>4</td><td><code>def home():</code></td><td>home이라는 함수를 정의합니다. Flask에서는 이런 함수를 보통 view 함수라고 부릅니다.</td></tr><tr><td>5</td><td><code>return &quot;Hello Flask!&quot;</code></td><td>브라우저에 보낼 응답 내용을 반환합니다. 이 경우 화면에 Hello Flask!가 보입니다.</td></tr><tr><td>6</td><td><code>if __name__ == &quot;__main__&quot;:</code></td><td>이 파일을 직접 실행했을 때만 아래 코드를 실행하라는 조건문입니다. 다른 파일에서 import될 때는 실행되지 않게 합니다.</td></tr><tr><td>7</td><td><code>app.run(debug=True)</code></td><td>Flask 개발용 서버를 실행합니다. debug=True는 코드 수정 시 자동 재시작과 오류 화면 표시를 도와줍니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex2">
+<div class="label flask">Flask</div>
+<h2>02. Flask HTML 문자열 반환</h2>
+<pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def home():
+    return &quot;&quot;&quot;
+    &lt;h1&gt;파이썬 Flask 웹페이지&lt;/h1&gt;
+    &lt;p&gt;HTML을 문자열로 반환할 수 있습니다.&lt;/p&gt;
+    &quot;&quot;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>from flask import Flask</code></td><td>Flask 웹 서버를 만들기 위해 Flask 클래스를 불러옵니다.</td></tr><tr><td>2</td><td><code>app = Flask(__name__)</code></td><td>Flask 애플리케이션 객체 app을 생성합니다. 이후 이 app에 URL 경로와 함수를 연결합니다.</td></tr><tr><td>3</td><td><code>@app.route(&quot;/&quot;)</code></td><td>기본 주소 / 로 요청이 들어오면 바로 아래 home() 함수를 실행하도록 등록합니다.</td></tr><tr><td>4</td><td><code>def home():</code></td><td>사용자의 요청에 응답할 home 함수를 정의합니다.</td></tr><tr><td>5</td><td><code>return &quot;&quot;&quot;</code></td><td>여러 줄 문자열을 반환하기 시작합니다. 파이썬에서 큰따옴표 3개는 여러 줄 문자열을 만들 때 사용합니다.</td></tr><tr><td>6</td><td><code>&lt;h1&gt;파이썬 Flask 웹페이지&lt;/h1&gt;</code></td><td>HTML의 h1 태그입니다. 브라우저에서는 큰 제목으로 표시됩니다.</td></tr><tr><td>7</td><td><code>&lt;p&gt;HTML을 문자열로 반환할 수 있습니다.&lt;/p&gt;</code></td><td>HTML의 p 태그입니다. 브라우저에서는 문단으로 표시됩니다.</td></tr><tr><td>8</td><td><code>&quot;&quot;&quot;</code></td><td>여러 줄 문자열이 끝나는 지점입니다. 이 HTML 문자열 전체가 브라우저로 전송됩니다.</td></tr><tr><td>9</td><td><code>if __name__ == &quot;__main__&quot;:</code></td><td>현재 파일을 직접 실행할 때만 서버 실행 코드가 작동하도록 하는 조건입니다.</td></tr><tr><td>10</td><td><code>app.run(debug=True)</code></td><td>Flask 개발 서버를 실행합니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex3">
+<div class="label flask">Flask</div>
+<h2>03. Flask URL 변수 사용</h2>
+<pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/user/&lt;name&gt;&quot;)
+def user(name):
+    return f&quot;&lt;h1&gt;{name}님 환영합니다!&lt;/h1&gt;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>from flask import Flask</code></td><td>Flask 웹 애플리케이션을 만들기 위해 Flask 클래스를 가져옵니다.</td></tr><tr><td>2</td><td><code>app = Flask(__name__)</code></td><td>Flask 앱 객체를 생성합니다.</td></tr><tr><td>3</td><td><code>@app.route(&quot;/user/&lt;name&gt;&quot;)</code></td><td>URL에서 /user/ 뒤에 오는 값을 name이라는 변수로 받아 오도록 설정합니다. 예를 들어 /user/Kim이면 name은 Kim입니다.</td></tr><tr><td>4</td><td><code>def user(name):</code></td><td>URL에서 받은 name 값을 매개변수로 받는 user 함수를 정의합니다.</td></tr><tr><td>5</td><td><code>return f&quot;&lt;h1&gt;{name}님 환영합니다!&lt;/h1&gt;&quot;</code></td><td>f-string을 사용해 name 값을 HTML 문장 안에 넣어 반환합니다.</td></tr><tr><td>6</td><td><code>if __name__ == &quot;__main__&quot;:</code></td><td>직접 실행할 때만 아래 서버 실행 코드를 작동시킵니다.</td></tr><tr><td>7</td><td><code>app.run(debug=True)</code></td><td>Flask 개발 서버를 실행합니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex4">
+<div class="label flask">Flask</div>
+<h2>04. Flask GET 요청 파라미터 처리</h2>
+<pre><code>from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route(&quot;/search&quot;)
+def search():
+    keyword = request.args.get(&quot;q&quot;, &quot;검색어 없음&quot;)
+    return f&quot;&lt;h1&gt;검색어: {keyword}&lt;/h1&gt;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>from flask import Flask, request</code></td><td>Flask 앱을 만들기 위한 Flask와, 사용자의 요청 정보를 읽기 위한 request를 가져옵니다.</td></tr><tr><td>2</td><td><code>app = Flask(__name__)</code></td><td>Flask 웹 애플리케이션 객체를 생성합니다.</td></tr><tr><td>3</td><td><code>@app.route(&quot;/search&quot;)</code></td><td>/search 주소로 요청이 들어오면 search() 함수를 실행하도록 연결합니다.</td></tr><tr><td>4</td><td><code>def search():</code></td><td>검색 요청을 처리할 search 함수를 정의합니다.</td></tr><tr><td>5</td><td><code>keyword = request.args.get(&quot;q&quot;, &quot;검색어 없음&quot;)</code></td><td>URL 뒤에 붙는 ?q=값 형태의 GET 파라미터에서 q 값을 읽습니다. q가 없으면 검색어 없음이라는 기본값을 사용합니다.</td></tr><tr><td>6</td><td><code>return f&quot;&lt;h1&gt;검색어: {keyword}&lt;/h1&gt;&quot;</code></td><td>읽어 온 keyword 값을 HTML 제목 형태로 브라우저에 반환합니다.</td></tr><tr><td>7</td><td><code>if __name__ == &quot;__main__&quot;:</code></td><td>현재 파일을 직접 실행하는 경우에만 서버를 실행합니다.</td></tr><tr><td>8</td><td><code>app.run(debug=True)</code></td><td>Flask 개발 서버를 실행합니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex5">
+<div class="label flask">Flask</div>
+<h2>05. Flask POST 폼 데이터 처리</h2>
+<pre><code>from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;, methods=[&quot;GET&quot;, &quot;POST&quot;])
+def form():
+    if request.method == &quot;POST&quot;:
+        name = request.form.get(&quot;name&quot;)
+        return f&quot;&lt;h1&gt;{name}님 제출 완료!&lt;/h1&gt;&quot;
+
+    return &quot;&quot;&quot;
+    &lt;form method=&quot;post&quot;&gt;
+        &lt;input name=&quot;name&quot; placeholder=&quot;이름 입력&quot;&gt;
+        &lt;button type=&quot;submit&quot;&gt;제출&lt;/button&gt;
+    &lt;/form&gt;
+    &quot;&quot;&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>from flask import Flask, request</code></td><td>Flask 앱 생성 도구와 요청 데이터를 읽는 request 객체를 가져옵니다.</td></tr><tr><td>2</td><td><code>app = Flask(__name__)</code></td><td>Flask 웹 애플리케이션 객체를 만듭니다.</td></tr><tr><td>3</td><td><code>@app.route(&quot;/&quot;, methods=[&quot;GET&quot;, &quot;POST&quot;])</code></td><td>기본 주소 / 에서 GET 요청과 POST 요청을 모두 받을 수 있게 설정합니다.</td></tr><tr><td>4</td><td><code>def form():</code></td><td>폼 화면을 보여주거나 제출 데이터를 처리할 form 함수를 정의합니다.</td></tr><tr><td>5</td><td><code>if request.method == &quot;POST&quot;:</code></td><td>현재 요청 방식이 POST인지 확인합니다. 사용자가 폼을 제출하면 보통 POST 요청이 됩니다.</td></tr><tr><td>6</td><td><code>name = request.form.get(&quot;name&quot;)</code></td><td>폼에서 name이라는 이름을 가진 입력칸의 값을 가져옵니다.</td></tr><tr><td>7</td><td><code>return f&quot;&lt;h1&gt;{name}님 제출 완료!&lt;/h1&gt;&quot;</code></td><td>입력받은 이름을 넣어 제출 완료 메시지를 HTML로 반환합니다.</td></tr><tr><td>8</td><td><code>return &quot;&quot;&quot;</code></td><td>POST가 아닌 경우, 즉 처음 접속한 GET 요청일 때 보여줄 HTML 폼을 반환하기 시작합니다.</td></tr><tr><td>9</td><td><code>&lt;form method=&quot;post&quot;&gt;</code></td><td>HTML 폼을 만듭니다. method=&#x27;post&#x27;는 제출 시 POST 방식으로 서버에 데이터를 보내겠다는 뜻입니다.</td></tr><tr><td>10</td><td><code>&lt;input name=&quot;name&quot; placeholder=&quot;이름 입력&quot;&gt;</code></td><td>사용자가 이름을 입력할 수 있는 입력칸입니다. name=&#x27;name&#x27;이므로 서버에서 request.form.get(&#x27;name&#x27;)으로 읽을 수 있습니다.</td></tr><tr><td>11</td><td><code>&lt;button type=&quot;submit&quot;&gt;제출&lt;/button&gt;</code></td><td>폼을 제출하는 버튼입니다.</td></tr><tr><td>12</td><td><code>&lt;/form&gt;</code></td><td>HTML 폼 태그를 닫습니다.</td></tr><tr><td>13</td><td><code>&quot;&quot;&quot;</code></td><td>여러 줄 HTML 문자열을 끝냅니다.</td></tr><tr><td>14</td><td><code>if __name__ == &quot;__main__&quot;:</code></td><td>직접 실행할 때만 서버 실행 코드가 작동하도록 합니다.</td></tr><tr><td>15</td><td><code>app.run(debug=True)</code></td><td>Flask 개발 서버를 실행합니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex6">
+<div class="label flask">Flask</div>
+<h2>06. Flask JSON API 서버 만들기</h2>
+<pre><code>from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route(&quot;/api/weather&quot;)
+def weather_api():
+    data = {
+        &quot;city&quot;: &quot;Jeonju&quot;,
+        &quot;temp&quot;: 25,
+        &quot;weather&quot;: &quot;맑음&quot;
+    }
+    return jsonify(data)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code>from flask import Flask, jsonify</code></td><td>Flask 앱 생성 도구와 JSON 응답을 만들기 위한 jsonify 함수를 가져옵니다.</td></tr><tr><td>2</td><td><code>app = Flask(__name__)</code></td><td>Flask 웹 애플리케이션 객체를 생성합니다.</td></tr><tr><td>3</td><td><code>@app.route(&quot;/api/weather&quot;)</code></td><td>/api/weather 주소로 요청이 오면 아래 weather_api() 함수를 실행하도록 설정합니다.</td></tr><tr><td>4</td><td><code>def weather_api():</code></td><td>날씨 데이터를 반환할 API 함수를 정의합니다.</td></tr><tr><td>5</td><td><code>data = {</code></td><td>응답으로 보낼 데이터를 딕셔너리 형태로 만들기 시작합니다.</td></tr><tr><td>6</td><td><code>&quot;city&quot;: &quot;Jeonju&quot;,</code></td><td>city라는 키에 Jeonju라는 도시 이름 값을 저장합니다.</td></tr><tr><td>7</td><td><code>&quot;temp&quot;: 25,</code></td><td>temp라는 키에 기온 값 25를 저장합니다.</td></tr><tr><td>8</td><td><code>&quot;weather&quot;: &quot;맑음&quot;</code></td><td>weather라는 키에 날씨 상태 맑음을 저장합니다.</td></tr><tr><td>9</td><td><code>}</code></td><td>딕셔너리 정의를 끝냅니다.</td></tr><tr><td>10</td><td><code>return jsonify(data)</code></td><td>파이썬 딕셔너리 data를 JSON 형식의 HTTP 응답으로 변환해 반환합니다.</td></tr><tr><td>11</td><td><code>if __name__ == &quot;__main__&quot;:</code></td><td>현재 파일을 직접 실행할 때만 서버를 실행합니다.</td></tr><tr><td>12</td><td><code>app.run(debug=True)</code></td><td>Flask 개발 서버를 실행합니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex7">
+<div class="label django">Django</div>
+<h2>07. Django 기본 view 함수</h2>
+<pre><code># views.py
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse(&quot;Hello Django!&quot;)
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path(&quot;&quot;, views.home, name=&quot;home&quot;),
+]</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code># views.py</code></td><td>아래 코드는 Django의 views.py 파일에 작성하는 부분임을 표시하는 주석입니다.</td></tr><tr><td>2</td><td><code>from django.http import HttpResponse</code></td><td>브라우저에 문자열이나 HTML 응답을 보내기 위한 HttpResponse 클래스를 가져옵니다.</td></tr><tr><td>3</td><td><code>def home(request):</code></td><td>home이라는 view 함수를 정의합니다. request는 사용자의 요청 정보를 담고 있습니다.</td></tr><tr><td>4</td><td><code>return HttpResponse(&quot;Hello Django!&quot;)</code></td><td>브라우저에 Hello Django!라는 문자열 응답을 보냅니다.</td></tr><tr><td>5</td><td><code># urls.py</code></td><td>아래 코드는 Django의 urls.py 파일에 작성하는 부분임을 표시하는 주석입니다.</td></tr><tr><td>6</td><td><code>from django.urls import path</code></td><td>URL 경로와 view 함수를 연결하기 위한 path 함수를 가져옵니다.</td></tr><tr><td>7</td><td><code>from . import views</code></td><td>같은 앱 폴더에 있는 views.py 파일을 가져옵니다.</td></tr><tr><td>8</td><td><code>urlpatterns = [</code></td><td>URL 연결 목록을 담는 리스트를 시작합니다.</td></tr><tr><td>9</td><td><code>path(&quot;&quot;, views.home, name=&quot;home&quot;),</code></td><td>빈 경로, 즉 기본 주소로 접속하면 views.home 함수를 실행하도록 연결합니다. name=&#x27;home&#x27;은 이 URL 패턴의 이름입니다.</td></tr><tr><td>10</td><td><code>]</code></td><td>urlpatterns 리스트를 닫습니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex8">
+<div class="label django">Django</div>
+<h2>08. Django HTML 템플릿 렌더링</h2>
+<pre><code># views.py
+from django.shortcuts import render
+
+def home(request):
+    context = {
+        &quot;title&quot;: &quot;Django 수업&quot;,
+        &quot;message&quot;: &quot;템플릿으로 HTML을 렌더링합니다.&quot;
+    }
+    return render(request, &quot;home.html&quot;, context)
+
+# templates/home.html
+&lt;h1&gt;{{ title }}&lt;/h1&gt;
+&lt;p&gt;{{ message }}&lt;/p&gt;</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code># views.py</code></td><td>아래 코드는 Django의 views.py 파일에 작성하는 부분임을 알려 주는 주석입니다.</td></tr><tr><td>2</td><td><code>from django.shortcuts import render</code></td><td>HTML 템플릿과 데이터를 결합해 응답을 만드는 render 함수를 가져옵니다.</td></tr><tr><td>3</td><td><code>def home(request):</code></td><td>home view 함수를 정의합니다. request는 사용자의 요청 정보입니다.</td></tr><tr><td>4</td><td><code>context = {</code></td><td>템플릿에 전달할 데이터를 딕셔너리 형태로 만들기 시작합니다.</td></tr><tr><td>5</td><td><code>&quot;title&quot;: &quot;Django 수업&quot;,</code></td><td>title이라는 이름으로 Django 수업이라는 값을 저장합니다.</td></tr><tr><td>6</td><td><code>&quot;message&quot;: &quot;템플릿으로 HTML을 렌더링합니다.&quot;</code></td><td>message라는 이름으로 문장 값을 저장합니다.</td></tr><tr><td>7</td><td><code>}</code></td><td>context 딕셔너리 정의를 끝냅니다.</td></tr><tr><td>8</td><td><code>return render(request, &quot;home.html&quot;, context)</code></td><td>home.html 템플릿에 context 데이터를 넣어 최종 HTML 응답을 만듭니다.</td></tr><tr><td>9</td><td><code># templates/home.html</code></td><td>아래 코드는 templates 폴더 안의 home.html 파일에 작성하는 부분임을 나타냅니다.</td></tr><tr><td>10</td><td><code>&lt;h1&gt;{{ title }}&lt;/h1&gt;</code></td><td>템플릿 변수 {{ title }} 위치에 context의 title 값이 들어가 h1 제목으로 표시됩니다.</td></tr><tr><td>11</td><td><code>&lt;p&gt;{{ message }}&lt;/p&gt;</code></td><td>템플릿 변수 {{ message }} 위치에 context의 message 값이 들어가 문단으로 표시됩니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex9">
+<div class="label django">Django</div>
+<h2>09. Django URL 변수 사용</h2>
+<pre><code># views.py
+from django.http import HttpResponse
+
+def profile(request, username):
+    return HttpResponse(f&quot;&lt;h1&gt;{username}의 프로필&lt;/h1&gt;&quot;)
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path(&quot;profile/&lt;str:username&gt;/&quot;, views.profile, name=&quot;profile&quot;),
+]</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code># views.py</code></td><td>Django의 views.py에 작성하는 코드 부분임을 표시합니다.</td></tr><tr><td>2</td><td><code>from django.http import HttpResponse</code></td><td>문자열 또는 HTML 응답을 만들기 위한 HttpResponse를 가져옵니다.</td></tr><tr><td>3</td><td><code>def profile(request, username):</code></td><td>profile view 함수를 정의합니다. request는 요청 정보이고 username은 URL에서 전달받는 값입니다.</td></tr><tr><td>4</td><td><code>return HttpResponse(f&quot;&lt;h1&gt;{username}의 프로필&lt;/h1&gt;&quot;)</code></td><td>URL에서 받은 username 값을 HTML h1 문장에 넣어 응답으로 보냅니다.</td></tr><tr><td>5</td><td><code># urls.py</code></td><td>Django의 urls.py에 작성하는 코드 부분임을 표시합니다.</td></tr><tr><td>6</td><td><code>from django.urls import path</code></td><td>URL 패턴을 정의하기 위한 path 함수를 가져옵니다.</td></tr><tr><td>7</td><td><code>from . import views</code></td><td>현재 앱의 views.py 파일을 가져옵니다.</td></tr><tr><td>8</td><td><code>urlpatterns = [</code></td><td>URL 패턴 목록을 시작합니다.</td></tr><tr><td>9</td><td><code>path(&quot;profile/&lt;str:username&gt;/&quot;, views.profile, name=&quot;profile&quot;),</code></td><td>profile/ 뒤에 오는 문자열을 username 변수로 받아 views.profile 함수에 전달합니다.</td></tr><tr><td>10</td><td><code>]</code></td><td>URL 패턴 목록을 끝냅니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card" id="ex10">
+<div class="label django">Django</div>
+<h2>10. Django 간단한 게시글 목록 페이지</h2>
+<pre><code># views.py
+from django.shortcuts import render
+
+def post_list(request):
+    posts = [
+        {&quot;title&quot;: &quot;첫 번째 글&quot;, &quot;author&quot;: &quot;Kim&quot;},
+        {&quot;title&quot;: &quot;두 번째 글&quot;, &quot;author&quot;: &quot;Lee&quot;},
+        {&quot;title&quot;: &quot;세 번째 글&quot;, &quot;author&quot;: &quot;Park&quot;},
+    ]
+    return render(request, &quot;post_list.html&quot;, {&quot;posts&quot;: posts})
+
+# templates/post_list.html
+&lt;h1&gt;게시글 목록&lt;/h1&gt;
+&lt;ul&gt;
+{% for post in posts %}
+    &lt;li&gt;{{ post.title }} - {{ post.author }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;</code></pre>
+<h3>🔍 초보자용 한 줄씩 상세 설명</h3>
+<table class="table">
+<thead><tr><th>줄</th><th>코드</th><th>꼼꼼한 설명</th></tr></thead>
+<tbody><tr><td>1</td><td><code># views.py</code></td><td>Django의 views.py에 작성할 코드 부분임을 나타내는 주석입니다.</td></tr><tr><td>2</td><td><code>from django.shortcuts import render</code></td><td>템플릿을 렌더링하기 위한 render 함수를 가져옵니다.</td></tr><tr><td>3</td><td><code>def post_list(request):</code></td><td>게시글 목록 페이지를 처리할 post_list view 함수를 정의합니다.</td></tr><tr><td>4</td><td><code>posts = [</code></td><td>게시글 데이터를 담을 리스트를 만들기 시작합니다.</td></tr><tr><td>5</td><td><code>{&quot;title&quot;: &quot;첫 번째 글&quot;, &quot;author&quot;: &quot;Kim&quot;},</code></td><td>첫 번째 게시글 데이터를 딕셔너리로 저장합니다. 제목은 첫 번째 글, 작성자는 Kim입니다.</td></tr><tr><td>6</td><td><code>{&quot;title&quot;: &quot;두 번째 글&quot;, &quot;author&quot;: &quot;Lee&quot;},</code></td><td>두 번째 게시글 데이터를 저장합니다.</td></tr><tr><td>7</td><td><code>{&quot;title&quot;: &quot;세 번째 글&quot;, &quot;author&quot;: &quot;Park&quot;},</code></td><td>세 번째 게시글 데이터를 저장합니다.</td></tr><tr><td>8</td><td><code>]</code></td><td>posts 리스트 정의를 끝냅니다.</td></tr><tr><td>9</td><td><code>return render(request, &quot;post_list.html&quot;, {&quot;posts&quot;: posts})</code></td><td>post_list.html 템플릿에 posts 데이터를 전달해 HTML 페이지를 만듭니다.</td></tr><tr><td>10</td><td><code># templates/post_list.html</code></td><td>아래 코드는 templates 폴더 안의 post_list.html에 작성하는 부분임을 표시합니다.</td></tr><tr><td>11</td><td><code>&lt;h1&gt;게시글 목록&lt;/h1&gt;</code></td><td>페이지의 큰 제목으로 게시글 목록을 표시합니다.</td></tr><tr><td>12</td><td><code>&lt;ul&gt;</code></td><td>순서 없는 목록을 시작합니다.</td></tr><tr><td>13</td><td><code>{% for post in posts %}</code></td><td>posts 리스트의 게시글을 하나씩 post 변수에 담아 반복합니다.</td></tr><tr><td>14</td><td><code>&lt;li&gt;{{ post.title }} - {{ post.author }}&lt;/li&gt;</code></td><td>각 게시글의 제목과 작성자를 목록 항목으로 출력합니다.</td></tr><tr><td>15</td><td><code>{% endfor %}</code></td><td>Django 템플릿 반복문을 종료합니다.</td></tr><tr><td>16</td><td><code>&lt;/ul&gt;</code></td><td>순서 없는 목록을 닫습니다.</td></tr></tbody>
+</table>
+</section>
+
+<section class="card">
+<h2>🏁 최종 정리</h2>
+<pre><code>웹 브라우저 요청
+→ URL 라우팅
+→ view 함수 실행
+→ 데이터 처리
+→ HTML / JSON / 템플릿 응답
+→ 웹앱, API 서버, 대시보드, AI 서비스로 확장</code></pre>
+<div class="explain">웹 서버 코드는 처음에는 복잡해 보이지만, 한 줄씩 보면 대부분 “요청을 받고, 함수를 실행하고, 응답을 돌려주는 구조”입니다.</div>
+</section>
+</main>
+</div>
+</body>
+</html>

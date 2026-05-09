@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>웹 크롤링 실제 예시 코드 10개</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+  background:linear-gradient(135deg,#eff6ff,#f0fdf4,#fff7ed);
+  color:#1f2937;
+}
+header{
+  padding:34px 42px;
+  background:linear-gradient(135deg,#1d4ed8,#059669,#ea580c);
+  color:white;
+  box-shadow:0 8px 24px rgba(15,23,42,.24);
+}
+header h1{margin:0;font-size:34px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  min-height:calc(100vh - 130px);
+}
+nav{
+  background:#111827;
+  color:white;
+  padding:18px;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+}
+nav h2{font-size:18px;margin:0 0 14px;color:#bfdbfe}
+nav a{
+  display:block;
+  text-decoration:none;
+  color:#e5e7eb;
+  background:#374151;
+  border-radius:14px;
+  padding:12px 14px;
+  margin:7px 0;
+  font-size:14px;
+}
+nav a:hover{background:#2563eb}
+main{padding:28px;overflow:auto}
+.card{
+  background:white;
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 10px 28px rgba(15,23,42,.12);
+  border:1px solid #e5e7eb;
+}
+h2{color:#1d4ed8;margin-top:0}
+h3{color:#047857}
+.badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#dbeafe;
+  color:#1e40af;
+  font-weight:800;
+  margin:4px;
+}
+pre{
+  background:#0f172a;
+  color:#e5e7eb;
+  padding:18px;
+  border-radius:18px;
+  overflow:auto;
+  line-height:1.55;
+  font-size:15px;
+}
+code{font-family:Consolas,monospace}
+.explain{
+  background:#f8fafc;
+  border-left:6px solid #3b82f6;
+  padding:14px 16px;
+  border-radius:14px;
+  line-height:1.75;
+}
+.warn{
+  background:#fff7ed;
+  border-left:6px solid #f97316;
+  padding:14px 16px;
+  border-radius:14px;
+  line-height:1.75;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+.small{
+  color:#64748b;
+  font-size:14px;
+  line-height:1.6;
+}
+@media(max-width:800px){
+  .wrap{grid-template-columns:1fr}
+  nav{height:auto;position:relative}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🕷 웹 크롤링 실제 예시 코드 10개</h1>
+  <p>requests · BeautifulSoup · CSV 저장 · Pandas 분석 · Selenium 자동화까지 단계별 실습</p>
+</header>
+
+<div class="wrap">
+<nav>
+  <h2>📚 예시 코드 목록</h2>
+  <a href="#ex1">01. 웹페이지 제목 가져오기</a>
+  <a href="#ex2">02. 뉴스 제목 크롤링</a>
+  <a href="#ex3">03. 모든 링크 주소 추출</a>
+  <a href="#ex4">04. 상품 가격 수집</a>
+  <a href="#ex5">05. 이미지 주소 수집</a>
+  <a href="#ex6">06. CSV 저장</a>
+  <a href="#ex7">07. 날씨 정보 크롤링 구조</a>
+  <a href="#ex8">08. Selenium 로그인 자동화</a>
+  <a href="#ex9">09. 무한 스크롤 크롤링</a>
+  <a href="#ex10">10. 크롤링 → Pandas 분석</a>
+</nav>
+
+<main>
+<section class="card">
+  <h2>🚀 수업 들어가기</h2>
+  <p>웹 크롤링은 웹페이지에서 필요한 정보를 자동으로 가져오는 기술입니다. 이 자료는 기초 요청부터 HTML 파싱, CSV 저장, 데이터 분석, Selenium 자동화까지 실제 코드 중심으로 학습할 수 있도록 구성했습니다.</p>
+  <p>
+    <span class="badge">requests</span>
+    <span class="badge">BeautifulSoup</span>
+    <span class="badge">CSV</span>
+    <span class="badge">Pandas</span>
+    <span class="badge">Selenium</span>
+  </p>
+  <div class="warn">
+    <b>주의:</b> 실제 사이트를 크롤링할 때는 반드시 이용약관, robots.txt, 저작권, 개인정보 보호, 서버 부하를 고려해야 합니다.
+    과도한 요청이나 로그인 정보 자동 입력은 허가된 환경에서만 실습하세요.
+  </div>
+</section>
+
+<section class="card" id="ex1">
+<h2>01. 웹페이지 제목 가져오기</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = "https://example.com"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+print("웹페이지 제목:", soup.title.text)</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>가장 기초적인 크롤링 예제입니다. <b>requests.get()</b>으로 웹페이지 HTML을 가져오고, <b>BeautifulSoup</b>으로 HTML을 분석한 뒤 title 태그의 텍스트를 출력합니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex2">
+<h2>02. 뉴스 제목 크롤링</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = "https://news.ycombinator.com/"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+titles = soup.find_all("span", class_="titleline")
+
+for i, title in enumerate(titles[:10], 1):
+    print(i, title.text)</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>뉴스나 게시글 제목처럼 반복되는 HTML 요소를 수집하는 예제입니다. <b>find_all()</b>은 조건에 맞는 모든 태그를 리스트 형태로 가져옵니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex3">
+<h2>03. 모든 링크 주소 추출</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = "https://example.com"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+links = soup.find_all("a")
+
+for link in links:
+    print(link.get("href"))</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>a 태그는 보통 링크를 의미합니다. href 속성에 실제 이동 주소가 들어 있습니다. <b>link.get("href")</b>는 href 속성이 없을 때도 오류를 줄일 수 있는 안전한 방식입니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex4">
+<h2>04. 쇼핑몰 상품 가격 수집</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = "https://books.toscrape.com/"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+prices = soup.find_all("p", class_="price_color")
+
+for price in prices[:10]:
+    print(price.text)</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>연습용 사이트인 books.toscrape.com에서 책 가격 정보를 가져오는 예제입니다. 상품 가격, 책 제목, 평점 등을 함께 수집하면 가격 비교 데이터셋을 만들 수 있습니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex5">
+<h2>05. 이미지 주소 수집</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = "https://example.com"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+imgs = soup.find_all("img")
+
+for img in imgs:
+    print(img.get("src"))</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>img 태그의 src 속성에는 이미지 주소가 들어 있습니다. 이미지 주소를 수집할 때는 저작권과 사용 가능 여부를 반드시 확인해야 합니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex6">
+<h2>06. 크롤링 결과 CSV 저장</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import csv
+
+url = "https://news.ycombinator.com/"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+titles = soup.find_all("span", class_="titleline")
+
+with open("news.csv", "w", newline="", encoding="utf-8-sig") as f:
+    writer = csv.writer(f)
+    writer.writerow(["번호", "제목"])
+
+    for i, title in enumerate(titles[:10], 1):
+        writer.writerow([i, title.text])</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>수집한 데이터를 파일로 저장하는 예제입니다. CSV로 저장하면 엑셀, 구글 스프레드시트, Pandas에서 쉽게 열어 분석할 수 있습니다. 한글 깨짐 방지를 위해 <b>utf-8-sig</b>를 사용했습니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex7">
+<h2>07. 날씨 정보 크롤링 구조</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = "https://example.com/weather"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+temp = soup.find("span", class_="temp")
+
+if temp:
+    print("현재 기온:", temp.text)
+else:
+    print("기온 정보를 찾을 수 없습니다.")</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>날씨 사이트의 기온 정보를 가져오는 구조 예제입니다. 실제 사이트마다 태그와 class 이름이 다르므로 개발자 도구로 HTML 구조를 확인해야 합니다. 조건문을 넣어 태그를 찾지 못했을 때 오류를 방지합니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex8">
+<h2>08. Selenium 로그인 자동화 구조</h2>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+
+driver = webdriver.Chrome()
+
+driver.get("https://example.com/login")
+
+driver.find_element(By.NAME, "username").send_keys("myid")
+driver.find_element(By.NAME, "password").send_keys("mypassword")
+
+time.sleep(2)
+
+driver.quit()</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>Selenium은 실제 브라우저를 자동으로 조작합니다. 로그인, 버튼 클릭, 검색 입력, 무한 스크롤처럼 JavaScript가 필요한 작업에 사용됩니다. 실제 로그인 자동화는 사이트 정책을 확인한 뒤 허가된 환경에서만 사용해야 합니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex9">
+<h2>09. 무한 스크롤 페이지 크롤링</h2>
+<pre><code>from selenium import webdriver
+import time
+
+driver = webdriver.Chrome()
+driver.get("https://example.com")
+
+for _ in range(5):
+    driver.execute_script(
+        "window.scrollTo(0, document.body.scrollHeight);"
+    )
+    time.sleep(2)
+
+print(driver.page_source)
+
+driver.quit()</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>무한 스크롤 페이지는 아래로 내려야 새 내용이 로딩됩니다. Selenium의 <b>execute_script()</b>로 브라우저 스크롤을 내리고, <b>page_source</b>로 로딩된 HTML을 확인할 수 있습니다.</p>
+</div>
+</section>
+
+<section class="card" id="ex10">
+<h2>10. 크롤링 → Pandas 분석</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = "https://books.toscrape.com/"
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, "html.parser")
+
+titles = soup.find_all("h3")
+
+data = []
+
+for t in titles:
+    data.append(t.text.strip())
+
+df = pd.DataFrame(data, columns=["책 제목"])
+
+print(df)</code></pre>
+<div class="explain">
+<h3>상세 설명</h3>
+<p>크롤링한 데이터를 Pandas DataFrame으로 변환하는 예제입니다. 이후 CSV 저장, 빈도 분석, 시각화, 머신러닝 데이터셋 생성으로 확장할 수 있습니다.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>📌 난이도별 학습 흐름</h2>
+<div class="grid">
+<div class="card"><h3>기초</h3><p class="small">페이지 요청 → 제목 추출 → 링크 추출 → 이미지 주소 추출</p></div>
+<div class="card"><h3>중급</h3><p class="small">반복 요소 수집 → CSV 저장 → 예외 처리 → 데이터 정리</p></div>
+<div class="card"><h3>고급</h3><p class="small">Selenium 자동화 → 무한 스크롤 → Pandas 분석 → AI 데이터셋 구축</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>🏁 최종 정리</h2>
+<p>웹 크롤링은 <b>요청 → 응답 확인 → HTML 파싱 → 필요한 데이터 추출 → 저장/분석</b>의 흐름으로 이해하면 됩니다.</p>
+<pre><code>웹페이지 요청
+→ HTML 응답 확인
+→ BeautifulSoup 파싱
+→ 태그/속성 선택
+→ 데이터 정리
+→ CSV/Pandas 저장
+→ 분석/자동화/AI 프로젝트 확장</code></pre>
+</section>
+
+</main>
+</div>
+</body>
+</html>

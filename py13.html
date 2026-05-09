@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>웹 크롤링 코드별 평가 자료</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;background:linear-gradient(135deg,#eff6ff,#f0fdf4,#fff7ed);color:#1f2937}
+header{padding:30px 38px;background:linear-gradient(135deg,#1d4ed8,#059669,#ea580c);color:white;box-shadow:0 8px 24px rgba(15,23,42,.24)}
+header h1{margin:0;font-size:33px}
+header p{margin:10px 0 0;font-size:18px;opacity:.95}
+.wrap{display:grid;grid-template-columns:270px 1fr;min-height:calc(100vh - 125px)}
+nav{background:#111827;color:white;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav h2{font-size:18px;margin:0 0 14px;color:#bfdbfe}
+nav button{width:100%;text-align:left;border:0;border-radius:14px;padding:12px 14px;margin:6px 0;color:white;background:#374151;cursor:pointer;font-size:15px}
+nav button:hover,nav button.active{background:#1d4ed8}
+main{padding:28px;overflow:auto}
+.section{display:none;animation:fade .25s ease-in-out}
+.section.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:white;border-radius:24px;padding:24px;margin-bottom:24px;box-shadow:0 10px 28px rgba(15,23,42,.12);border:1px solid #e5e7eb}
+h2{color:#1d4ed8;margin-top:0;font-size:28px}
+h3{color:#047857;margin-bottom:10px}
+pre{background:#0f172a;color:#e5e7eb;padding:18px;border-radius:18px;overflow:auto;line-height:1.55;font-size:15px}
+code{font-family:Consolas,monospace}
+.question{border:1px solid #e5e7eb;border-radius:18px;padding:18px;margin:16px 0;background:#ffffff}
+textarea,input[type=text]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-top:8px}
+label{display:block;margin:8px 0;line-height:1.5}
+.action{border:0;border-radius:14px;padding:13px 18px;background:#1d4ed8;color:white;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}
+.action.secondary{background:#059669}
+.answer{display:none;margin-top:10px;padding:12px;background:#f0fdf4;border-left:5px solid #22c55e;border-radius:12px;line-height:1.7}
+.result{padding:16px;border-radius:16px;background:#eff6ff;border:1px solid #93c5fd;margin-top:16px;white-space:pre-wrap;line-height:1.7}
+.warn{background:#fff7ed;border-left:6px solid #f97316;padding:14px 16px;border-radius:14px;line-height:1.75}
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;background:#dbeafe;color:#1e40af;font-weight:800;margin:4px}
+.footer-note{font-size:14px;color:#64748b}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}nav{height:auto;position:relative}}
+</style>
+</head>
+<body>
+<header>
+<h1>🕷 웹 크롤링 실제 예시 코드 10개 평가 자료</h1>
+<p>각 코드마다 출력 결과 서술형 1개 · 개념 OX 1개 · 심화 5지선다형 1개 · TXT 점수 산출</p>
+</header>
+
+<div class="wrap">
+<nav>
+<h2>📚 코드별 평가</h2>
+<button onclick="showSec('ex1',this)">코드 1</button><button onclick="showSec('ex2',this)">코드 2</button><button onclick="showSec('ex3',this)">코드 3</button><button onclick="showSec('ex4',this)">코드 4</button><button onclick="showSec('ex5',this)">코드 5</button><button onclick="showSec('ex6',this)">코드 6</button><button onclick="showSec('ex7',this)">코드 7</button><button onclick="showSec('ex8',this)">코드 8</button><button onclick="showSec('ex9',this)">코드 9</button><button onclick="showSec('ex10',this)">코드 10</button>
+<button onclick="showSec('submit',this)">📥 채점·TXT 산출</button>
+</nav>
+<main>
+<section class="card">
+<h2>🚀 학습 안내</h2>
+<p>각 코드별로 <b>출력 결과 서술형</b>, <b>개념 OX</b>, <b>심화 5지선다</b>를 풀어 보세요.</p>
+<p><span class="badge">총 30문항</span><span class="badge">자동 채점</span><span class="badge">상세 풀이</span><span class="badge">TXT 다운로드</span></p>
+<div class="warn"><b>파일명:</b> 학번_이름_웹크롤링_점수_응시시각.txt 형식으로 저장됩니다.</div>
+</section>
+
+
+<section id="ex1" class="section active">
+<div class="card">
+<h2>01. 웹페이지 제목 가져오기</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+print(&quot;웹페이지 제목:&quot;, soup.title.text)</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>example.com의 title 태그가 Example Domain이라고 가정할 때 출력 결과를 쓰시오.</p>
+<textarea id="essay1" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns1')">상세 풀이 보기</button>
+<div class="answer" id="essayAns1">
+<b>정답</b><pre><code>웹페이지 제목: Example Domain</code></pre>
+<b>상세 풀이</b><p>soup.title.text는 title 태그의 텍스트를 가져옵니다. print()는 앞 문자열과 title 텍스트를 공백으로 구분하여 출력합니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>BeautifulSoup(res.text, &#x27;html.parser&#x27;)는 HTML 문자열을 분석 가능한 객체로 바꾸는 역할을 한다.</p>
+<label><input type="radio" name="ox1" value="O"> O</label>
+<label><input type="radio" name="ox1" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns1')">상세 풀이 보기</button>
+<div class="answer" id="oxAns1">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> BeautifulSoup은 HTML 문자열을 태그 단위로 탐색할 수 있는 객체로 변환합니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>웹페이지의 title 태그 텍스트를 가져오는 표현으로 가장 적절한 것은?</p>
+<label><input type="radio" name="mcq1" value="1"> 1. soup.title.text</label><label><input type="radio" name="mcq1" value="2"> 2. res.title()</label><label><input type="radio" name="mcq1" value="3"> 3. requests.title</label><label><input type="radio" name="mcq1" value="4"> 4. soup.get(&#x27;title&#x27;)</label><label><input type="radio" name="mcq1" value="5"> 5. BeautifulSoup.title_only()</label>
+<button class="action" onclick="toggleAns('mcqAns1')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns1">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> soup.title은 title 태그를 의미하고, .text는 태그 안의 텍스트를 가져옵니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex2" class="section ">
+<div class="card">
+<h2>02. 뉴스 제목 크롤링</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://news.ycombinator.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+titles = soup.find_all(&quot;span&quot;, class_=&quot;titleline&quot;)
+
+for i, title in enumerate(titles[:10], 1):
+    print(i, title.text)</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>titles에 제목 텍스트가 [&#x27;Alpha&#x27;, &#x27;Beta&#x27;] 두 개만 있다고 가정하고 titles[:10]을 반복하면 출력 결과를 쓰시오.</p>
+<textarea id="essay2" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns2')">상세 풀이 보기</button>
+<div class="answer" id="essayAns2">
+<b>정답</b><pre><code>1 Alpha
+2 Beta</code></pre>
+<b>상세 풀이</b><p>enumerate(titles[:10], 1)은 번호를 1부터 붙입니다. 제목이 두 개뿐이면 두 줄만 출력됩니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>find_all(&#x27;span&#x27;, class_=&#x27;titleline&#x27;)은 조건에 맞는 span 태그들을 모두 찾는다.</p>
+<label><input type="radio" name="ox2" value="O"> O</label>
+<label><input type="radio" name="ox2" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns2')">상세 풀이 보기</button>
+<div class="answer" id="oxAns2">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> find_all()은 조건에 맞는 모든 요소를 리스트처럼 반환합니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>enumerate(titles[:10], 1)에서 숫자 1의 의미는?</p>
+<label><input type="radio" name="mcq2" value="1"> 1. 번호 시작값을 1로 한다</label><label><input type="radio" name="mcq2" value="2"> 2. 10개만 건너뛴다</label><label><input type="radio" name="mcq2" value="3"> 3. 제목을 1개만 가져온다</label><label><input type="radio" name="mcq2" value="4"> 4. HTML을 1번만 요청한다</label><label><input type="radio" name="mcq2" value="5"> 5. class 이름을 1로 바꾼다</label>
+<button class="action" onclick="toggleAns('mcqAns2')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns2">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> enumerate(iterable, start)는 번호의 시작값을 start로 지정합니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex3" class="section ">
+<div class="card">
+<h2>03. 모든 링크 주소 추출</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+links = soup.find_all(&quot;a&quot;)
+
+for link in links:
+    print(link.get(&quot;href&quot;))</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>HTML에 &lt;a href=&#x27;https://a.com&#x27;&gt;A&lt;/a&gt;&lt;a href=&#x27;https://b.com&#x27;&gt;B&lt;/a&gt; 두 링크가 있다고 가정할 때 출력 결과를 쓰시오.</p>
+<textarea id="essay3" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns3')">상세 풀이 보기</button>
+<div class="answer" id="essayAns3">
+<b>정답</b><pre><code>https://a.com
+https://b.com</code></pre>
+<b>상세 풀이</b><p>find_all(&#x27;a&#x27;)는 모든 a 태그를 찾고, get(&#x27;href&#x27;)는 각 링크의 href 속성값을 가져옵니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>a 태그의 href 속성에는 보통 이동할 링크 주소가 들어 있다.</p>
+<label><input type="radio" name="ox3" value="O"> O</label>
+<label><input type="radio" name="ox3" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns3')">상세 풀이 보기</button>
+<div class="answer" id="oxAns3">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> HTML에서 a 태그는 하이퍼링크를 만들고 href 속성에 이동 주소를 넣습니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>태그의 href 속성을 안전하게 가져오는 코드로 가장 적절한 것은?</p>
+<label><input type="radio" name="mcq3" value="1"> 1. link.get(&#x27;href&#x27;)</label><label><input type="radio" name="mcq3" value="2"> 2. link.href()</label><label><input type="radio" name="mcq3" value="3"> 3. link.find_all(&#x27;href&#x27;)</label><label><input type="radio" name="mcq3" value="4"> 4. requests.href(link)</label><label><input type="radio" name="mcq3" value="5"> 5. soup.href.text</label>
+<button class="action" onclick="toggleAns('mcqAns3')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns3">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> get(&#x27;href&#x27;)는 해당 속성이 없을 때도 None을 반환하여 비교적 안전합니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex4" class="section ">
+<div class="card">
+<h2>04. 쇼핑몰 상품 가격 수집</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://books.toscrape.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+prices = soup.find_all(&quot;p&quot;, class_=&quot;price_color&quot;)
+
+for price in prices[:10]:
+    print(price.text)</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>prices의 텍스트가 [&#x27;£51.77&#x27;, &#x27;£53.74&#x27;] 두 개만 있다고 가정할 때 출력 결과를 쓰시오.</p>
+<textarea id="essay4" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns4')">상세 풀이 보기</button>
+<div class="answer" id="essayAns4">
+<b>정답</b><pre><code>£51.77
+£53.74</code></pre>
+<b>상세 풀이</b><p>prices[:10]은 최대 10개를 의미하지만 실제 요소가 2개면 2개만 반복 출력됩니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>class_=&#x27;price_color&#x27;에서 class_처럼 밑줄을 붙이는 이유는 class가 파이썬 예약어이기 때문이다.</p>
+<label><input type="radio" name="ox4" value="O"> O</label>
+<label><input type="radio" name="ox4" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns4')">상세 풀이 보기</button>
+<div class="answer" id="oxAns4">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> class는 파이썬 문법에서 예약어이므로 BeautifulSoup에서는 class_ 매개변수를 사용합니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>p 태그 중 class가 price_color인 요소를 모두 찾는 코드는?</p>
+<label><input type="radio" name="mcq4" value="1"> 1. soup.find_all(&#x27;p&#x27;, class_=&#x27;price_color&#x27;)</label><label><input type="radio" name="mcq4" value="2"> 2. soup.get_all(&#x27;price_color&#x27;)</label><label><input type="radio" name="mcq4" value="3"> 3. soup.price_color(&#x27;p&#x27;)</label><label><input type="radio" name="mcq4" value="4"> 4. requests.find(&#x27;p&#x27;)</label><label><input type="radio" name="mcq4" value="5"> 5. csv.find_all(&#x27;p&#x27;)</label>
+<button class="action" onclick="toggleAns('mcqAns4')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns4">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> find_all(태그명, class_=&#x27;클래스명&#x27;) 형식으로 조건에 맞는 태그를 모두 찾습니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex5" class="section ">
+<div class="card">
+<h2>05. 이미지 주소 수집</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+imgs = soup.find_all(&quot;img&quot;)
+
+for img in imgs:
+    print(img.get(&quot;src&quot;))</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>HTML에 &lt;img src=&#x27;cat.png&#x27;&gt;&lt;img src=&#x27;dog.png&#x27;&gt;가 있다고 가정할 때 출력 결과를 쓰시오.</p>
+<textarea id="essay5" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns5')">상세 풀이 보기</button>
+<div class="answer" id="essayAns5">
+<b>정답</b><pre><code>cat.png
+dog.png</code></pre>
+<b>상세 풀이</b><p>find_all(&#x27;img&#x27;)는 모든 이미지 태그를 찾고, get(&#x27;src&#x27;)는 이미지 파일 주소를 가져옵니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>img 태그의 src 속성에는 이미지 파일 경로나 URL이 들어 있을 수 있다.</p>
+<label><input type="radio" name="ox5" value="O"> O</label>
+<label><input type="radio" name="ox5" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns5')">상세 풀이 보기</button>
+<div class="answer" id="oxAns5">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> src는 source의 의미로 이미지의 위치를 나타냅니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>이미지 주소가 주로 들어 있는 속성은?</p>
+<label><input type="radio" name="mcq5" value="1"> 1. src</label><label><input type="radio" name="mcq5" value="2"> 2. href</label><label><input type="radio" name="mcq5" value="3"> 3. class</label><label><input type="radio" name="mcq5" value="4"> 4. id</label><label><input type="radio" name="mcq5" value="5"> 5. alt만</label>
+<button class="action" onclick="toggleAns('mcqAns5')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns5">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> img 태그의 이미지 주소는 일반적으로 src 속성에 저장됩니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex6" class="section ">
+<div class="card">
+<h2>06. 크롤링 결과 CSV 저장</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import csv
+
+url = &quot;https://news.ycombinator.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+titles = soup.find_all(&quot;span&quot;, class_=&quot;titleline&quot;)
+
+with open(&quot;news.csv&quot;, &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8-sig&quot;) as f:
+    writer = csv.writer(f)
+    writer.writerow([&quot;번호&quot;, &quot;제목&quot;])
+
+    for i, title in enumerate(titles[:10], 1):
+        writer.writerow([i, title.text])</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>titles에 &#x27;Alpha&#x27; 하나만 있다고 가정할 때 CSV에 데이터 행으로 저장되는 내용 형식을 쓰시오.</p>
+<textarea id="essay6" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns6')">상세 풀이 보기</button>
+<div class="answer" id="essayAns6">
+<b>정답</b><pre><code>1,Alpha</code></pre>
+<b>상세 풀이</b><p>writer.writerow([i, title.text])는 번호와 제목을 한 행에 저장합니다. CSV에서는 쉼표로 구분된 형태로 이해할 수 있습니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>utf-8-sig 인코딩은 엑셀에서 한글 CSV가 깨지는 문제를 줄이는 데 도움이 될 수 있다.</p>
+<label><input type="radio" name="ox6" value="O"> O</label>
+<label><input type="radio" name="ox6" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns6')">상세 풀이 보기</button>
+<div class="answer" id="oxAns6">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> utf-8-sig는 BOM을 포함하여 일부 프로그램에서 한글 인식을 더 안정적으로 해 줍니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>CSV 파일에 한 줄을 기록하는 메서드는?</p>
+<label><input type="radio" name="mcq6" value="1"> 1. writer.writerow()</label><label><input type="radio" name="mcq6" value="2"> 2. writer.readrow()</label><label><input type="radio" name="mcq6" value="3"> 3. csv.print()</label><label><input type="radio" name="mcq6" value="4"> 4. file.find_all()</label><label><input type="radio" name="mcq6" value="5"> 5. requests.writerow()</label>
+<button class="action" onclick="toggleAns('mcqAns6')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns6">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> csv.writer 객체의 writerow()는 한 행을 CSV 파일에 기록합니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex7" class="section ">
+<div class="card">
+<h2>07. 날씨 정보 크롤링 구조</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com/weather&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+temp = soup.find(&quot;span&quot;, class_=&quot;temp&quot;)
+
+if temp:
+    print(&quot;현재 기온:&quot;, temp.text)
+else:
+    print(&quot;기온 정보를 찾을 수 없습니다.&quot;)</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>temp 요소를 찾지 못해 temp가 None이라고 가정할 때 출력 결과를 쓰시오.</p>
+<textarea id="essay7" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns7')">상세 풀이 보기</button>
+<div class="answer" id="essayAns7">
+<b>정답</b><pre><code>기온 정보를 찾을 수 없습니다.</code></pre>
+<b>상세 풀이</b><p>if temp 조건이 거짓이므로 else 블록이 실행되어 안내 문구가 출력됩니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>if temp:는 temp 요소를 찾았는지 확인하여 None일 때 오류를 방지하는 데 도움이 된다.</p>
+<label><input type="radio" name="ox7" value="O"> O</label>
+<label><input type="radio" name="ox7" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns7')">상세 풀이 보기</button>
+<div class="answer" id="oxAns7">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> soup.find()가 실패하면 None을 반환하므로 조건문으로 확인하면 안전합니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>soup.find(&#x27;span&#x27;, class_=&#x27;temp&#x27;)가 요소를 찾지 못했을 때 일반적으로 반환되는 값은?</p>
+<label><input type="radio" name="mcq7" value="1"> 1. None</label><label><input type="radio" name="mcq7" value="2"> 2. 0</label><label><input type="radio" name="mcq7" value="3"> 3. False 문자열</label><label><input type="radio" name="mcq7" value="4"> 4. 빈 CSV 파일</label><label><input type="radio" name="mcq7" value="5"> 5. requests 객체</label>
+<button class="action" onclick="toggleAns('mcqAns7')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns7">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> BeautifulSoup의 find()는 조건에 맞는 요소가 없으면 None을 반환합니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex8" class="section ">
+<div class="card">
+<h2>08. Selenium 로그인 자동화 구조</h2>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+
+driver = webdriver.Chrome()
+
+driver.get(&quot;https://example.com/login&quot;)
+
+driver.find_element(By.NAME, &quot;username&quot;).send_keys(&quot;myid&quot;)
+driver.find_element(By.NAME, &quot;password&quot;).send_keys(&quot;mypassword&quot;)
+
+time.sleep(2)
+
+driver.quit()</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>이 코드에서 username 입력창에 입력되는 문자열을 쓰시오.</p>
+<textarea id="essay8" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns8')">상세 풀이 보기</button>
+<div class="answer" id="essayAns8">
+<b>정답</b><pre><code>myid</code></pre>
+<b>상세 풀이</b><p>send_keys(&#x27;myid&#x27;)가 username이라는 name 속성을 가진 입력창에 myid를 입력합니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>driver.quit()은 브라우저를 종료하고 Selenium 세션을 정리한다.</p>
+<label><input type="radio" name="ox8" value="O"> O</label>
+<label><input type="radio" name="ox8" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns8')">상세 풀이 보기</button>
+<div class="answer" id="oxAns8">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> driver.quit()은 자동화된 브라우저를 닫고 관련 자원을 정리합니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>Selenium에서 name 속성이 username인 요소를 찾는 코드로 가장 적절한 것은?</p>
+<label><input type="radio" name="mcq8" value="1"> 1. driver.find_element(By.NAME, &#x27;username&#x27;)</label><label><input type="radio" name="mcq8" value="2"> 2. driver.find_all(&#x27;username&#x27;)</label><label><input type="radio" name="mcq8" value="3"> 3. BeautifulSoup.NAME(&#x27;username&#x27;)</label><label><input type="radio" name="mcq8" value="4"> 4. requests.get(&#x27;username&#x27;)</label><label><input type="radio" name="mcq8" value="5"> 5. csv.writer(&#x27;username&#x27;)</label>
+<button class="action" onclick="toggleAns('mcqAns8')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns8">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> Selenium은 find_element(By.NAME, 값) 형식으로 name 속성 기준 요소를 찾을 수 있습니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex9" class="section ">
+<div class="card">
+<h2>09. 무한 스크롤 페이지 크롤링</h2>
+<pre><code>from selenium import webdriver
+import time
+
+driver = webdriver.Chrome()
+driver.get(&quot;https://example.com&quot;)
+
+for _ in range(5):
+    driver.execute_script(
+        &quot;window.scrollTo(0, document.body.scrollHeight);&quot;
+    )
+    time.sleep(2)
+
+print(driver.page_source)
+
+driver.quit()</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>for _ in range(5):에 의해 스크롤 명령은 몇 번 실행되는지 쓰시오.</p>
+<textarea id="essay9" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns9')">상세 풀이 보기</button>
+<div class="answer" id="essayAns9">
+<b>정답</b><pre><code>5</code></pre>
+<b>상세 풀이</b><p>range(5)는 0부터 4까지 총 5번 반복하므로 스크롤 명령도 5번 실행됩니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>execute_script()는 브라우저 안에서 JavaScript 코드를 실행할 수 있다.</p>
+<label><input type="radio" name="ox9" value="O"> O</label>
+<label><input type="radio" name="ox9" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns9')">상세 풀이 보기</button>
+<div class="answer" id="oxAns9">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> Selenium의 execute_script()는 현재 페이지에서 JavaScript를 실행합니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>페이지 맨 아래까지 스크롤하는 JavaScript 명령으로 가장 적절한 것은?</p>
+<label><input type="radio" name="mcq9" value="1"> 1. window.scrollTo(0, document.body.scrollHeight);</label><label><input type="radio" name="mcq9" value="2"> 2. window.closeAll();</label><label><input type="radio" name="mcq9" value="3"> 3. document.deleteBody();</label><label><input type="radio" name="mcq9" value="4"> 4. page.scrollCSV();</label><label><input type="radio" name="mcq9" value="5"> 5. BeautifulSoup.scroll()</label>
+<button class="action" onclick="toggleAns('mcqAns9')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns9">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> window.scrollTo(0, document.body.scrollHeight)는 문서의 아래쪽 끝까지 스크롤합니다.
+</div>
+</div>
+</div>
+</section>
+
+<section id="ex10" class="section ">
+<div class="card">
+<h2>10. 크롤링 → Pandas 분석</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = &quot;https://books.toscrape.com/&quot;
+res = requests.get(url)
+
+soup = BeautifulSoup(res.text, &quot;html.parser&quot;)
+
+titles = soup.find_all(&quot;h3&quot;)
+
+data = []
+
+for t in titles:
+    data.append(t.text.strip())
+
+df = pd.DataFrame(data, columns=[&quot;책 제목&quot;])
+
+print(df)</code></pre>
+
+<h3>✍️ 출력 결과 서술형</h3>
+<div class="question">
+<p>data = [&#x27;Book A&#x27;, &#x27;Book B&#x27;]일 때 DataFrame의 열 이름은 무엇인지 쓰시오.</p>
+<textarea id="essay10" rows="3" placeholder="출력 결과를 입력하세요"></textarea>
+<button class="action" onclick="toggleAns('essayAns10')">상세 풀이 보기</button>
+<div class="answer" id="essayAns10">
+<b>정답</b><pre><code>책 제목</code></pre>
+<b>상세 풀이</b><p>pd.DataFrame(data, columns=[&#x27;책 제목&#x27;])에서 columns 인자로 지정한 열 이름은 책 제목입니다.</p>
+</div>
+</div>
+
+<h3>⭕❌ 개념 OX 퀴즈</h3>
+<div class="question">
+<p>Pandas DataFrame은 표 형태 데이터를 다루는 데 사용할 수 있다.</p>
+<label><input type="radio" name="ox10" value="O"> O</label>
+<label><input type="radio" name="ox10" value="X"> X</label>
+<button class="action" onclick="toggleAns('oxAns10')">상세 풀이 보기</button>
+<div class="answer" id="oxAns10">
+<b>정답:</b> O<br>
+<b>상세 풀이:</b> DataFrame은 행과 열로 구성된 표 형태 데이터 구조입니다.
+</div>
+</div>
+
+<h3>🧩 심화 5지선다형</h3>
+<div class="question">
+<p>리스트 data를 &#x27;책 제목&#x27; 열을 가진 DataFrame으로 만드는 코드는?</p>
+<label><input type="radio" name="mcq10" value="1"> 1. pd.DataFrame(data, columns=[&#x27;책 제목&#x27;])</label><label><input type="radio" name="mcq10" value="2"> 2. pd.to_csv(data, &#x27;책 제목&#x27;)</label><label><input type="radio" name="mcq10" value="3"> 3. BeautifulSoup(data, columns)</label><label><input type="radio" name="mcq10" value="4"> 4. requests.DataFrame(data)</label><label><input type="radio" name="mcq10" value="5"> 5. csv.DataFrame(columns)</label>
+<button class="action" onclick="toggleAns('mcqAns10')">상세 풀이 보기</button>
+<div class="answer" id="mcqAns10">
+<b>정답:</b> 1번<br>
+<b>상세 풀이:</b> pd.DataFrame()에 data와 columns를 전달해 표 형태 데이터로 변환합니다.
+</div>
+</div>
+</div>
+</section>
+
+
+<section id="submit" class="section">
+<div class="card">
+<h2>📥 채점 및 TXT 산출</h2>
+<label>학번 <input type="text" id="studentId" placeholder="예: 1201"></label>
+<label>이름 <input type="text" id="studentName" placeholder="예: 김학생"></label>
+<button class="action secondary" onclick="gradeAll()">채점하기</button>
+<button class="action" onclick="downloadTxt()">TXT 다운로드</button>
+<div id="gradeResult" class="result">아직 채점하지 않았습니다.</div>
+<p class="footer-note">서술형은 띄어쓰기와 줄바꿈까지 최대한 정답과 같게 입력하세요.</p>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+const essayAnswers = ['웹페이지 제목: Example Domain', '1 Alpha\n2 Beta', 'https://a.com\nhttps://b.com', '£51.77\n£53.74', 'cat.png\ndog.png', '1,Alpha', '기온 정보를 찾을 수 없습니다.', 'myid', '5', '책 제목'];
+const oxAnswers = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'];
+const mcqAnswers = ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1'];
+const titles = ['01. 웹페이지 제목 가져오기', '02. 뉴스 제목 크롤링', '03. 모든 링크 주소 추출', '04. 쇼핑몰 상품 가격 수집', '05. 이미지 주소 수집', '06. 크롤링 결과 CSV 저장', '07. 날씨 정보 크롤링 구조', '08. Selenium 로그인 자동화 구조', '09. 무한 스크롤 페이지 크롤링', '10. 크롤링 → Pandas 분석'];
+
+function showSec(id,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+function toggleAns(id){
+ const el=document.getElementById(id);
+ el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+function norm(s){
+ return (s||"").replace(/\r/g,"").trim().replace(/[ \t]+$/gm,"");
+}
+let lastReport="";
+function gradeAll(){
+ let score=0,total=30,lines=[];
+ lines.push("웹 크롤링 실제 예시 코드 10개 평가 결과");
+ lines.push("================================");
+ for(let i=1;i<=10;i++){
+   const user=norm(document.getElementById('essay'+i).value);
+   const ans=norm(essayAnswers[i-1]);
+   const ok=user===ans;
+   if(ok) score++;
+   lines.push(`${titles[i-1]} - 서술형: ${ok?"정답":"오답"} / 정답: ${essayAnswers[i-1].replace(/\n/g," | ")}`);
+ }
+ for(let i=1;i<=10;i++){
+   const checked=document.querySelector(`input[name="ox${i}"]:checked`);
+   const val=checked?checked.value:"";
+   const ok=val===oxAnswers[i-1];
+   if(ok) score++;
+   lines.push(`${titles[i-1]} - OX: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${oxAnswers[i-1]}`);
+ }
+ for(let i=1;i<=10;i++){
+   const checked=document.querySelector(`input[name="mcq${i}"]:checked`);
+   const val=checked?checked.value:"";
+   const ok=val===mcqAnswers[i-1];
+   if(ok) score++;
+   lines.push(`${titles[i-1]} - 5지선다: ${ok?"정답":"오답"} / 선택: ${val||"미응답"} / 정답: ${mcqAnswers[i-1]}번`);
+ }
+ const percent=Math.round(score/total*100);
+ lines.push("================================");
+ lines.push(`총점: ${score}/${total} (${percent}점)`);
+ lines.push(`응시시각: ${new Date().toLocaleString("ko-KR")}`);
+ lastReport=lines.join("\n");
+ document.getElementById('gradeResult').textContent=lastReport;
+ document.getElementById('submit').classList.add('active');
+}
+function safeName(s){
+ return (s||"미입력").trim().replace(/[\\/:*?"<>| ]/g,"_");
+}
+function downloadTxt(){
+ if(!lastReport) gradeAll();
+ const sid=safeName(document.getElementById('studentId').value);
+ const name=safeName(document.getElementById('studentName').value);
+ const scoreLine=(lastReport.match(/총점:.*\((\d+)점\)/)||[])[1]||"0";
+ const now=new Date();
+ const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+"-"+String(now.getMinutes()).padStart(2,"0");
+ const filename=`${sid}_${name}_웹크롤링_${scoreLine}점_${stamp}.txt`;
+ const blob=new Blob([`학번: ${sid}\n이름: ${name}\n\n${lastReport}`],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=filename;
+ a.click();
+ URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
