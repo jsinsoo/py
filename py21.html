@@ -1,0 +1,977 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>Pandas 문자열 처리 예제 코드 50개</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:"Malgun Gothic",Arial,sans-serif;background:linear-gradient(135deg,#fff7ed,#eff6ff,#ecfdf5);color:#172033;line-height:1.7}
+header{padding:30px 6vw;background:linear-gradient(120deg,#ea580c,#2563eb,#0f766e);color:white;border-bottom-left-radius:34px;border-bottom-right-radius:34px} header h1{margin:0;font-size:34px}
+nav{position:sticky;top:0;background:white;padding:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;box-shadow:0 4px 12px #0001;z-index:10} nav a{text-decoration:none;background:#ea580c;color:white;border-radius:999px;padding:6px 11px;font-weight:bold} nav a:hover{background:#0f766e}
+main{max-width:1200px;margin:auto;padding:24px} .card{background:white;border:2px solid #fed7aa;border-radius:24px;padding:22px;margin:24px 0;box-shadow:0 8px 22px #ea580c18}
+h2{color:#c2410c} h3{color:#2563eb} pre{background:#431407;color:#ffedd5;padding:16px;border-radius:16px;overflow:auto;border:4px solid #fdba74}
+table{width:100%;border-collapse:collapse;margin:10px 0} th,td{border:1px solid #fed7aa;padding:9px;vertical-align:top} th{background:#ea580c;color:white} td:nth-child(2){background:#fff7ed;width:46%}
+textarea,input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px} button{border:0;border-radius:14px;background:#ea580c;color:white;font-weight:800;padding:11px 16px;margin:8px 4px;cursor:pointer} button:hover{background:#f97316}
+.solution{display:none;background:#fff7ed;border-left:6px solid #f97316;border-radius:14px;padding:14px;margin-top:10px} .result{white-space:pre-wrap;background:#eff6ff;border:1px solid #93c5fd;border-radius:16px;padding:16px}
+.info{background:white;border-radius:20px;padding:20px;margin:20px 0;border:2px solid #bfdbfe} .badge{display:inline-block;background:#0f766e;color:white;border-radius:999px;padding:6px 12px;margin:4px;font-weight:bold}
+</style></head><body>
+<header><h1>🐼 Pandas 문자열 처리 예제 코드 50개</h1><p>문자열 정리, 추출, 변환, 정규표현식, 범주 처리까지 한 줄씩 상세 설명 + 출력 결과 서술형 평가</p></header>
+<nav><a href="#q1">1</a><a href="#q2">2</a><a href="#q3">3</a><a href="#q4">4</a><a href="#q5">5</a><a href="#q6">6</a><a href="#q7">7</a><a href="#q8">8</a><a href="#q9">9</a><a href="#q10">10</a><a href="#q11">11</a><a href="#q12">12</a><a href="#q13">13</a><a href="#q14">14</a><a href="#q15">15</a><a href="#q16">16</a><a href="#q17">17</a><a href="#q18">18</a><a href="#q19">19</a><a href="#q20">20</a><a href="#q21">21</a><a href="#q22">22</a><a href="#q23">23</a><a href="#q24">24</a><a href="#q25">25</a><a href="#q26">26</a><a href="#q27">27</a><a href="#q28">28</a><a href="#q29">29</a><a href="#q30">30</a><a href="#q31">31</a><a href="#q32">32</a><a href="#q33">33</a><a href="#q34">34</a><a href="#q35">35</a><a href="#q36">36</a><a href="#q37">37</a><a href="#q38">38</a><a href="#q39">39</a><a href="#q40">40</a><a href="#q41">41</a><a href="#q42">42</a><a href="#q43">43</a><a href="#q44">44</a><a href="#q45">45</a><a href="#q46">46</a><a href="#q47">47</a><a href="#q48">48</a><a href="#q49">49</a><a href="#q50">50</a><a href="#submit">채점</a></nav><main>
+<section class="info"><h2>🎯 학습 목표</h2><p>Pandas의 <code>.str</code> 접근자를 이용하여 실생활 텍스트 데이터를 정리하고, 필요한 정보를 추출하며, 분석 가능한 형태로 변환할 수 있습니다.</p><span class="badge">strip</span><span class="badge">contains</span><span class="badge">replace</span><span class="badge">split</span><span class="badge">extract</span><span class="badge">정규표현식</span></section>
+
+<section class="card" id="q1">
+<h2>01. 공백 제거 strip()</h2>
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({&#x27;이름&#x27;:[&#x27; 민수 &#x27;,&#x27; 지아 &#x27;,&#x27;하준 &#x27;]})
+df[&#x27;이름&#x27;]=df[&#x27;이름&#x27;].str.strip()
+print(df[&#x27;이름&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df = pd.DataFrame({&#x27;이름&#x27;:[&#x27; 민수 &#x27;,&#x27; 지아 &#x27;,&#x27;하준 &#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;이름&#x27;]=df[&#x27;이름&#x27;].str.strip()</code></td><td>문자열 양쪽 공백을 제거합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;이름&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a1" rows="2"></textarea>
+<button onclick="toggle('s1')">상세풀이 보기</button>
+<div class="solution" id="s1">
+<b>정답:</b> <code>[&#x27;민수&#x27;, &#x27;지아&#x27;, &#x27;하준&#x27;]</code>
+<p><b>공백 제거 strip()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q2">
+<h2>02. 왼쪽 공백 제거 lstrip()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;지역&#x27;:[&#x27; 서울&#x27;,&#x27; 부산&#x27;,&#x27;대구&#x27;]})
+df[&#x27;지역&#x27;]=df[&#x27;지역&#x27;].str.lstrip()
+print(df[&#x27;지역&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;지역&#x27;:[&#x27; 서울&#x27;,&#x27; 부산&#x27;,&#x27;대구&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;지역&#x27;]=df[&#x27;지역&#x27;].str.lstrip()</code></td><td>문자열 왼쪽 공백을 제거합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;지역&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a2" rows="2"></textarea>
+<button onclick="toggle('s2')">상세풀이 보기</button>
+<div class="solution" id="s2">
+<b>정답:</b> <code>[&#x27;서울&#x27;, &#x27;부산&#x27;, &#x27;대구&#x27;]</code>
+<p><b>왼쪽 공백 제거 lstrip()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q3">
+<h2>03. 오른쪽 공백 제거 rstrip()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;지역&#x27;:[&#x27;서울 &#x27;,&#x27;부산 &#x27;,&#x27;대구&#x27;]})
+df[&#x27;지역&#x27;]=df[&#x27;지역&#x27;].str.rstrip()
+print(df[&#x27;지역&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;지역&#x27;:[&#x27;서울 &#x27;,&#x27;부산 &#x27;,&#x27;대구&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;지역&#x27;]=df[&#x27;지역&#x27;].str.rstrip()</code></td><td>문자열 오른쪽 공백을 제거합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;지역&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a3" rows="2"></textarea>
+<button onclick="toggle('s3')">상세풀이 보기</button>
+<div class="solution" id="s3">
+<b>정답:</b> <code>[&#x27;서울&#x27;, &#x27;부산&#x27;, &#x27;대구&#x27;]</code>
+<p><b>오른쪽 공백 제거 rstrip()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q4">
+<h2>04. 소문자 변환 lower()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;아이디&#x27;:[&#x27;KIM01&#x27;,&#x27;LEE02&#x27;,&#x27;PARK03&#x27;]})
+df[&#x27;아이디&#x27;]=df[&#x27;아이디&#x27;].str.lower()
+print(df[&#x27;아이디&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;아이디&#x27;:[&#x27;KIM01&#x27;,&#x27;LEE02&#x27;,&#x27;PARK03&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;아이디&#x27;]=df[&#x27;아이디&#x27;].str.lower()</code></td><td>문자열을 소문자로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;아이디&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a4" rows="2"></textarea>
+<button onclick="toggle('s4')">상세풀이 보기</button>
+<div class="solution" id="s4">
+<b>정답:</b> <code>[&#x27;kim01&#x27;, &#x27;lee02&#x27;, &#x27;park03&#x27;]</code>
+<p><b>소문자 변환 lower()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q5">
+<h2>05. 대문자 변환 upper()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;a01&#x27;,&#x27;b02&#x27;,&#x27;c03&#x27;]})
+df[&#x27;코드&#x27;]=df[&#x27;코드&#x27;].str.upper()
+print(df[&#x27;코드&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;a01&#x27;,&#x27;b02&#x27;,&#x27;c03&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;코드&#x27;]=df[&#x27;코드&#x27;].str.upper()</code></td><td>문자열을 대문자로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;코드&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a5" rows="2"></textarea>
+<button onclick="toggle('s5')">상세풀이 보기</button>
+<div class="solution" id="s5">
+<b>정답:</b> <code>[&#x27;A01&#x27;, &#x27;B02&#x27;, &#x27;C03&#x27;]</code>
+<p><b>대문자 변환 upper()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q6">
+<h2>06. 첫 글자 대문자 capitalize()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;단어&#x27;:[&#x27;apple&#x27;,&#x27;banana&#x27;,&#x27;cat&#x27;]})
+df[&#x27;단어&#x27;]=df[&#x27;단어&#x27;].str.capitalize()
+print(df[&#x27;단어&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;단어&#x27;:[&#x27;apple&#x27;,&#x27;banana&#x27;,&#x27;cat&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;단어&#x27;]=df[&#x27;단어&#x27;].str.capitalize()</code></td><td>문자열 첫 글자를 대문자로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;단어&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a6" rows="2"></textarea>
+<button onclick="toggle('s6')">상세풀이 보기</button>
+<div class="solution" id="s6">
+<b>정답:</b> <code>[&#x27;Apple&#x27;, &#x27;Banana&#x27;, &#x27;Cat&#x27;]</code>
+<p><b>첫 글자 대문자 capitalize()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q7">
+<h2>07. 단어별 첫 글자 대문자 title()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;data science&#x27;,&#x27;machine learning&#x27;]})
+df[&#x27;문장&#x27;]=df[&#x27;문장&#x27;].str.title()
+print(df[&#x27;문장&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;data science&#x27;,&#x27;machine learning&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;문장&#x27;]=df[&#x27;문장&#x27;].str.title()</code></td><td>각 단어의 첫 글자를 대문자로 변환합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;문장&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a7" rows="2"></textarea>
+<button onclick="toggle('s7')">상세풀이 보기</button>
+<div class="solution" id="s7">
+<b>정답:</b> <code>[&#x27;Data Science&#x27;, &#x27;Machine Learning&#x27;]</code>
+<p><b>단어별 첫 글자 대문자 title()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q8">
+<h2>08. 문자열 포함 여부 contains()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;상품&#x27;:[&#x27;사과주스&#x27;,&#x27;초콜릿&#x27;,&#x27;오렌지주스&#x27;]})
+result=df[df[&#x27;상품&#x27;].str.contains(&#x27;주스&#x27;)]
+print(result[&#x27;상품&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;상품&#x27;:[&#x27;사과주스&#x27;,&#x27;초콜릿&#x27;,&#x27;오렌지주스&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[df[&#x27;상품&#x27;].str.contains(&#x27;주스&#x27;)]</code></td><td>특정 문자열 또는 정규표현식 포함 여부를 확인합니다.</td></tr><tr><td>5</td><td><code>print(result[&#x27;상품&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a8" rows="2"></textarea>
+<button onclick="toggle('s8')">상세풀이 보기</button>
+<div class="solution" id="s8">
+<b>정답:</b> <code>[&#x27;사과주스&#x27;, &#x27;오렌지주스&#x27;]</code>
+<p><b>문자열 포함 여부 contains()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q9">
+<h2>09. 시작 문자열 startswith()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;파일&#x27;:[&#x27;data01.csv&#x27;,&#x27;image.png&#x27;,&#x27;data02.csv&#x27;]})
+result=df[df[&#x27;파일&#x27;].str.startswith(&#x27;data&#x27;)]
+print(result[&#x27;파일&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;파일&#x27;:[&#x27;data01.csv&#x27;,&#x27;image.png&#x27;,&#x27;data02.csv&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[df[&#x27;파일&#x27;].str.startswith(&#x27;data&#x27;)]</code></td><td>특정 문자열로 시작하는지 확인합니다.</td></tr><tr><td>5</td><td><code>print(result[&#x27;파일&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a9" rows="2"></textarea>
+<button onclick="toggle('s9')">상세풀이 보기</button>
+<div class="solution" id="s9">
+<b>정답:</b> <code>[&#x27;data01.csv&#x27;, &#x27;data02.csv&#x27;]</code>
+<p><b>시작 문자열 startswith()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q10">
+<h2>10. 끝 문자열 endswith()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;파일&#x27;:[&#x27;a.csv&#x27;,&#x27;b.xlsx&#x27;,&#x27;c.csv&#x27;]})
+result=df[df[&#x27;파일&#x27;].str.endswith(&#x27;.csv&#x27;)]
+print(result[&#x27;파일&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;파일&#x27;:[&#x27;a.csv&#x27;,&#x27;b.xlsx&#x27;,&#x27;c.csv&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[df[&#x27;파일&#x27;].str.endswith(&#x27;.csv&#x27;)]</code></td><td>특정 문자열로 끝나는지 확인합니다.</td></tr><tr><td>5</td><td><code>print(result[&#x27;파일&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a10" rows="2"></textarea>
+<button onclick="toggle('s10')">상세풀이 보기</button>
+<div class="solution" id="s10">
+<b>정답:</b> <code>[&#x27;a.csv&#x27;, &#x27;c.csv&#x27;]</code>
+<p><b>끝 문자열 endswith()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q11">
+<h2>11. 문자열 길이 len()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;민수&#x27;,&#x27;김지아&#x27;,&#x27;하준&#x27;]})
+df[&#x27;글자수&#x27;]=df[&#x27;이름&#x27;].str.len()
+print(df[&#x27;글자수&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;민수&#x27;,&#x27;김지아&#x27;,&#x27;하준&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;글자수&#x27;]=df[&#x27;이름&#x27;].str.len()</code></td><td>문자열 길이를 계산합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;글자수&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a11" rows="2"></textarea>
+<button onclick="toggle('s11')">상세풀이 보기</button>
+<div class="solution" id="s11">
+<b>정답:</b> <code>[2, 3, 2]</code>
+<p><b>문자열 길이 len()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q12">
+<h2>12. 문자열 치환 replace()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;전화&#x27;:[&#x27;010-1111-2222&#x27;,&#x27;010-3333-4444&#x27;]})
+df[&#x27;전화&#x27;]=df[&#x27;전화&#x27;].str.replace(&#x27;-&#x27;, &#x27;&#x27;, regex=False)
+print(df[&#x27;전화&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;전화&#x27;:[&#x27;010-1111-2222&#x27;,&#x27;010-3333-4444&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;전화&#x27;]=df[&#x27;전화&#x27;].str.replace(&#x27;-&#x27;, &#x27;&#x27;, regex=False)</code></td><td>문자열 일부를 다른 문자열로 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;전화&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a12" rows="2"></textarea>
+<button onclick="toggle('s12')">상세풀이 보기</button>
+<div class="solution" id="s12">
+<b>정답:</b> <code>[&#x27;01011112222&#x27;, &#x27;01033334444&#x27;]</code>
+<p><b>문자열 치환 replace()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q13">
+<h2>13. 쉼표 제거 후 숫자 변환</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;가격&#x27;:[&#x27;1,000&#x27;,&#x27;2,500&#x27;,&#x27;700&#x27;]})
+df[&#x27;가격&#x27;]=df[&#x27;가격&#x27;].str.replace(&#x27;,&#x27;, &#x27;&#x27;, regex=False).astype(int)
+print(df[&#x27;가격&#x27;].sum())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;가격&#x27;:[&#x27;1,000&#x27;,&#x27;2,500&#x27;,&#x27;700&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;가격&#x27;]=df[&#x27;가격&#x27;].str.replace(&#x27;,&#x27;, &#x27;&#x27;, regex=False).astype(int)</code></td><td>문자열 일부를 다른 문자열로 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;가격&#x27;].sum())</code></td><td>결과를 화면에 출력합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a13" rows="2"></textarea>
+<button onclick="toggle('s13')">상세풀이 보기</button>
+<div class="solution" id="s13">
+<b>정답:</b> <code>4200</code>
+<p><b>쉼표 제거 후 숫자 변환</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q14">
+<h2>14. 원 단위 제거 후 숫자 변환</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;가격&#x27;:[&#x27;1000원&#x27;,&#x27;2500원&#x27;,&#x27;700원&#x27;]})
+df[&#x27;가격&#x27;]=df[&#x27;가격&#x27;].str.replace(&#x27;원&#x27;, &#x27;&#x27;, regex=False).astype(int)
+print(df[&#x27;가격&#x27;].mean())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;가격&#x27;:[&#x27;1000원&#x27;,&#x27;2500원&#x27;,&#x27;700원&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;가격&#x27;]=df[&#x27;가격&#x27;].str.replace(&#x27;원&#x27;, &#x27;&#x27;, regex=False).astype(int)</code></td><td>문자열 일부를 다른 문자열로 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;가격&#x27;].mean())</code></td><td>결과를 화면에 출력합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a14" rows="2"></textarea>
+<button onclick="toggle('s14')">상세풀이 보기</button>
+<div class="solution" id="s14">
+<b>정답:</b> <code>1400.0</code>
+<p><b>원 단위 제거 후 숫자 변환</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q15">
+<h2>15. 문자열 분리 split()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;주소&#x27;:[&#x27;전북 전주&#x27;,&#x27;서울 강남&#x27;,&#x27;부산 해운대&#x27;]})
+df[&#x27;시도&#x27;]=df[&#x27;주소&#x27;].str.split().str[0]
+print(df[&#x27;시도&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;주소&#x27;:[&#x27;전북 전주&#x27;,&#x27;서울 강남&#x27;,&#x27;부산 해운대&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;시도&#x27;]=df[&#x27;주소&#x27;].str.split().str[0]</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;시도&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a15" rows="2"></textarea>
+<button onclick="toggle('s15')">상세풀이 보기</button>
+<div class="solution" id="s15">
+<b>정답:</b> <code>[&#x27;전북&#x27;, &#x27;서울&#x27;, &#x27;부산&#x27;]</code>
+<p><b>문자열 분리 split()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q16">
+<h2>16. 하이픈 기준 분리</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A-001&#x27;,&#x27;B-002&#x27;,&#x27;C-003&#x27;]})
+df[&#x27;분류&#x27;]=df[&#x27;코드&#x27;].str.split(&#x27;-&#x27;).str[0]
+print(df[&#x27;분류&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A-001&#x27;,&#x27;B-002&#x27;,&#x27;C-003&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;분류&#x27;]=df[&#x27;코드&#x27;].str.split(&#x27;-&#x27;).str[0]</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;분류&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a16" rows="2"></textarea>
+<button onclick="toggle('s16')">상세풀이 보기</button>
+<div class="solution" id="s16">
+<b>정답:</b> <code>[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]</code>
+<p><b>하이픈 기준 분리</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q17">
+<h2>17. 문자열 결합 cat()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;성&#x27;:[&#x27;김&#x27;,&#x27;이&#x27;,&#x27;박&#x27;],&#x27;이름&#x27;:[&#x27;민수&#x27;,&#x27;지아&#x27;,&#x27;하준&#x27;]})
+df[&#x27;전체이름&#x27;]=df[&#x27;성&#x27;].str.cat(df[&#x27;이름&#x27;])
+print(df[&#x27;전체이름&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;성&#x27;:[&#x27;김&#x27;,&#x27;이&#x27;,&#x27;박&#x27;],&#x27;이름&#x27;:[&#x27;민수&#x27;,&#x27;지아&#x27;,&#x27;하준&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;전체이름&#x27;]=df[&#x27;성&#x27;].str.cat(df[&#x27;이름&#x27;])</code></td><td>두 문자열 열을 이어 붙입니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;전체이름&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a17" rows="2"></textarea>
+<button onclick="toggle('s17')">상세풀이 보기</button>
+<div class="solution" id="s17">
+<b>정답:</b> <code>[&#x27;김민수&#x27;, &#x27;이지아&#x27;, &#x27;박하준&#x27;]</code>
+<p><b>문자열 결합 cat()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q18">
+<h2>18. 문자열 패딩 zfill()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;번호&#x27;:[&#x27;1&#x27;,&#x27;12&#x27;,&#x27;123&#x27;]})
+df[&#x27;번호&#x27;]=df[&#x27;번호&#x27;].str.zfill(4)
+print(df[&#x27;번호&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;번호&#x27;:[&#x27;1&#x27;,&#x27;12&#x27;,&#x27;123&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;번호&#x27;]=df[&#x27;번호&#x27;].str.zfill(4)</code></td><td>왼쪽을 0으로 채워 길이를 맞춥니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;번호&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a18" rows="2"></textarea>
+<button onclick="toggle('s18')">상세풀이 보기</button>
+<div class="solution" id="s18">
+<b>정답:</b> <code>[&#x27;0001&#x27;, &#x27;0012&#x27;, &#x27;0123&#x27;]</code>
+<p><b>문자열 패딩 zfill()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q19">
+<h2>19. 왼쪽 채우기 pad()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A&#x27;,&#x27;BC&#x27;,&#x27;DEF&#x27;]})
+df[&#x27;코드&#x27;]=df[&#x27;코드&#x27;].str.pad(width=5,side=&#x27;left&#x27;,fillchar=&#x27;0&#x27;)
+print(df[&#x27;코드&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A&#x27;,&#x27;BC&#x27;,&#x27;DEF&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;코드&#x27;]=df[&#x27;코드&#x27;].str.pad(width=5,side=&#x27;left&#x27;,fillchar=&#x27;0&#x27;)</code></td><td>지정한 문자로 문자열 길이를 맞춥니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;코드&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a19" rows="2"></textarea>
+<button onclick="toggle('s19')">상세풀이 보기</button>
+<div class="solution" id="s19">
+<b>정답:</b> <code>[&#x27;0000A&#x27;, &#x27;000BC&#x27;, &#x27;00DEF&#x27;]</code>
+<p><b>왼쪽 채우기 pad()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q20">
+<h2>20. 오른쪽 채우기 ljust()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A&#x27;,&#x27;BC&#x27;]})
+df[&#x27;코드&#x27;]=df[&#x27;코드&#x27;].str.ljust(4,fillchar=&#x27;_&#x27;)
+print(df[&#x27;코드&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A&#x27;,&#x27;BC&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;코드&#x27;]=df[&#x27;코드&#x27;].str.ljust(4,fillchar=&#x27;_&#x27;)</code></td><td>오른쪽을 지정 문자로 채워 길이를 맞춥니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;코드&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a20" rows="2"></textarea>
+<button onclick="toggle('s20')">상세풀이 보기</button>
+<div class="solution" id="s20">
+<b>정답:</b> <code>[&#x27;A___&#x27;, &#x27;BC__&#x27;]</code>
+<p><b>오른쪽 채우기 ljust()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q21">
+<h2>21. 가운데 정렬 center()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;단어&#x27;:[&#x27;AI&#x27;,&#x27;DATA&#x27;]})
+df[&#x27;단어&#x27;]=df[&#x27;단어&#x27;].str.center(6,fillchar=&#x27;*&#x27;)
+print(df[&#x27;단어&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;단어&#x27;:[&#x27;AI&#x27;,&#x27;DATA&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;단어&#x27;]=df[&#x27;단어&#x27;].str.center(6,fillchar=&#x27;*&#x27;)</code></td><td>문자열을 가운데 정렬하며 길이를 맞춥니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;단어&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a21" rows="2"></textarea>
+<button onclick="toggle('s21')">상세풀이 보기</button>
+<div class="solution" id="s21">
+<b>정답:</b> <code>[&#x27;**AI**&#x27;, &#x27;*DATA*&#x27;]</code>
+<p><b>가운데 정렬 center()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q22">
+<h2>22. 문자열 슬라이싱</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;주민앞&#x27;:[&#x27;060101&#x27;,&#x27;070202&#x27;]})
+df[&#x27;연도&#x27;]=df[&#x27;주민앞&#x27;].str[:2]
+print(df[&#x27;연도&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;주민앞&#x27;:[&#x27;060101&#x27;,&#x27;070202&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;연도&#x27;]=df[&#x27;주민앞&#x27;].str[:2]</code></td><td>문자열 처리 결과를 변수 또는 새 열에 저장합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;연도&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a22" rows="2"></textarea>
+<button onclick="toggle('s22')">상세풀이 보기</button>
+<div class="solution" id="s22">
+<b>정답:</b> <code>[&#x27;06&#x27;, &#x27;07&#x27;]</code>
+<p><b>문자열 슬라이싱</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q23">
+<h2>23. 특정 위치 문자 추출</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A001&#x27;,&#x27;B002&#x27;,&#x27;C003&#x27;]})
+df[&#x27;첫글자&#x27;]=df[&#x27;코드&#x27;].str[0]
+print(df[&#x27;첫글자&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A001&#x27;,&#x27;B002&#x27;,&#x27;C003&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;첫글자&#x27;]=df[&#x27;코드&#x27;].str[0]</code></td><td>문자열 처리 결과를 변수 또는 새 열에 저장합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;첫글자&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a23" rows="2"></textarea>
+<button onclick="toggle('s23')">상세풀이 보기</button>
+<div class="solution" id="s23">
+<b>정답:</b> <code>[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]</code>
+<p><b>특정 위치 문자 추출</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q24">
+<h2>24. 정규표현식 숫자 추출 extract()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;키 170cm&#x27;,&#x27;키 165cm&#x27;,&#x27;키 180cm&#x27;]})
+df[&#x27;키&#x27;]=df[&#x27;문장&#x27;].str.extract(r&#x27;(\d+)&#x27;).astype(int)
+print(df[&#x27;키&#x27;].mean()[0])</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;키 170cm&#x27;,&#x27;키 165cm&#x27;,&#x27;키 180cm&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;키&#x27;]=df[&#x27;문장&#x27;].str.extract(r&#x27;(\d+)&#x27;).astype(int)</code></td><td>정규표현식으로 원하는 부분을 추출합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;키&#x27;].mean()[0])</code></td><td>결과를 화면에 출력합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a24" rows="2"></textarea>
+<button onclick="toggle('s24')">상세풀이 보기</button>
+<div class="solution" id="s24">
+<b>정답:</b> <code>171.66666666666666</code>
+<p><b>정규표현식 숫자 추출 extract()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q25">
+<h2>25. 정규표현식 문자 추출</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A-100&#x27;,&#x27;B-200&#x27;,&#x27;C-300&#x27;]})
+df[&#x27;문자&#x27;]=df[&#x27;코드&#x27;].str.extract(r&#x27;([A-Z])&#x27;)
+print(df[&#x27;문자&#x27;][0].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;코드&#x27;:[&#x27;A-100&#x27;,&#x27;B-200&#x27;,&#x27;C-300&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;문자&#x27;]=df[&#x27;코드&#x27;].str.extract(r&#x27;([A-Z])&#x27;)</code></td><td>정규표현식으로 원하는 부분을 추출합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;문자&#x27;][0].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a25" rows="2"></textarea>
+<button onclick="toggle('s25')">상세풀이 보기</button>
+<div class="solution" id="s25">
+<b>정답:</b> <code>[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]</code>
+<p><b>정규표현식 문자 추출</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q26">
+<h2>26. 모든 숫자 찾기 findall()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;국어90 수학80&#x27;,&#x27;국어70 수학85&#x27;]})
+df[&#x27;숫자&#x27;]=df[&#x27;문장&#x27;].str.findall(r&#x27;\d+&#x27;)
+print(df[&#x27;숫자&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;국어90 수학80&#x27;,&#x27;국어70 수학85&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;숫자&#x27;]=df[&#x27;문장&#x27;].str.findall(r&#x27;\d+&#x27;)</code></td><td>정규표현식에 맞는 모든 값을 리스트로 찾습니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;숫자&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a26" rows="2"></textarea>
+<button onclick="toggle('s26')">상세풀이 보기</button>
+<div class="solution" id="s26">
+<b>정답:</b> <code>[[&#x27;90&#x27;, &#x27;80&#x27;], [&#x27;70&#x27;, &#x27;85&#x27;]]</code>
+<p><b>모든 숫자 찾기 findall()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q27">
+<h2>27. 문자열 개수 count()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;banana&#x27;,&#x27;apple&#x27;,&#x27;band&#x27;]})
+df[&#x27;a개수&#x27;]=df[&#x27;문장&#x27;].str.count(&#x27;a&#x27;)
+print(df[&#x27;a개수&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;banana&#x27;,&#x27;apple&#x27;,&#x27;band&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;a개수&#x27;]=df[&#x27;문장&#x27;].str.count(&#x27;a&#x27;)</code></td><td>특정 문자열의 등장 횟수를 셉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;a개수&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a27" rows="2"></textarea>
+<button onclick="toggle('s27')">상세풀이 보기</button>
+<div class="solution" id="s27">
+<b>정답:</b> <code>[3, 1, 1]</code>
+<p><b>문자열 개수 count()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q28">
+<h2>28. 문자열 위치 find()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;hello pandas&#x27;,&#x27;data science&#x27;]})
+df[&#x27;위치&#x27;]=df[&#x27;문장&#x27;].str.find(&#x27;a&#x27;)
+print(df[&#x27;위치&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;hello pandas&#x27;,&#x27;data science&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;위치&#x27;]=df[&#x27;문장&#x27;].str.find(&#x27;a&#x27;)</code></td><td>특정 문자열이 처음 등장하는 위치를 찾습니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;위치&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a28" rows="2"></textarea>
+<button onclick="toggle('s28')">상세풀이 보기</button>
+<div class="solution" id="s28">
+<b>정답:</b> <code>[7, 1]</code>
+<p><b>문자열 위치 find()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q29">
+<h2>29. 여러 조건 포함 regex</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;지역&#x27;:[&#x27;전주&#x27;,&#x27;군산&#x27;,&#x27;익산&#x27;,&#x27;서울&#x27;]})
+result=df[df[&#x27;지역&#x27;].str.contains(&#x27;전|군&#x27;,regex=True)]
+print(result[&#x27;지역&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;지역&#x27;:[&#x27;전주&#x27;,&#x27;군산&#x27;,&#x27;익산&#x27;,&#x27;서울&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[df[&#x27;지역&#x27;].str.contains(&#x27;전|군&#x27;,regex=True)]</code></td><td>특정 문자열 또는 정규표현식 포함 여부를 확인합니다.</td></tr><tr><td>5</td><td><code>print(result[&#x27;지역&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a29" rows="2"></textarea>
+<button onclick="toggle('s29')">상세풀이 보기</button>
+<div class="solution" id="s29">
+<b>정답:</b> <code>[&#x27;전주&#x27;, &#x27;군산&#x27;]</code>
+<p><b>여러 조건 포함 regex</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q30">
+<h2>30. 한글 포함 여부</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;값&#x27;:[&#x27;abc&#x27;,&#x27;한글&#x27;,&#x27;123&#x27;]})
+df[&#x27;한글여부&#x27;]=df[&#x27;값&#x27;].str.contains(r&#x27;[가-힣]&#x27;,regex=True)
+print(df[&#x27;한글여부&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;값&#x27;:[&#x27;abc&#x27;,&#x27;한글&#x27;,&#x27;123&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;한글여부&#x27;]=df[&#x27;값&#x27;].str.contains(r&#x27;[가-힣]&#x27;,regex=True)</code></td><td>특정 문자열 또는 정규표현식 포함 여부를 확인합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;한글여부&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a30" rows="2"></textarea>
+<button onclick="toggle('s30')">상세풀이 보기</button>
+<div class="solution" id="s30">
+<b>정답:</b> <code>[False, True, False]</code>
+<p><b>한글 포함 여부</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q31">
+<h2>31. 영문자 여부 isalpha()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;값&#x27;:[&#x27;abc&#x27;,&#x27;abc123&#x27;,&#x27;한글&#x27;]})
+df[&#x27;문자만&#x27;]=df[&#x27;값&#x27;].str.isalpha()
+print(df[&#x27;문자만&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;값&#x27;:[&#x27;abc&#x27;,&#x27;abc123&#x27;,&#x27;한글&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;문자만&#x27;]=df[&#x27;값&#x27;].str.isalpha()</code></td><td>문자열이 문자로만 이루어졌는지 확인합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;문자만&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a31" rows="2"></textarea>
+<button onclick="toggle('s31')">상세풀이 보기</button>
+<div class="solution" id="s31">
+<b>정답:</b> <code>[True, False, True]</code>
+<p><b>영문자 여부 isalpha()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q32">
+<h2>32. 숫자 여부 isnumeric()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;값&#x27;:[&#x27;123&#x27;,&#x27;12a&#x27;,&#x27;456&#x27;]})
+df[&#x27;숫자만&#x27;]=df[&#x27;값&#x27;].str.isnumeric()
+print(df[&#x27;숫자만&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;값&#x27;:[&#x27;123&#x27;,&#x27;12a&#x27;,&#x27;456&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;숫자만&#x27;]=df[&#x27;값&#x27;].str.isnumeric()</code></td><td>문자열이 숫자로만 이루어졌는지 확인합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;숫자만&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a32" rows="2"></textarea>
+<button onclick="toggle('s32')">상세풀이 보기</button>
+<div class="solution" id="s32">
+<b>정답:</b> <code>[True, False, True]</code>
+<p><b>숫자 여부 isnumeric()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q33">
+<h2>33. 알파벳+숫자 여부 isalnum()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;값&#x27;:[&#x27;abc123&#x27;,&#x27;abc!&#x27;,&#x27;123&#x27;]})
+df[&#x27;가능&#x27;]=df[&#x27;값&#x27;].str.isalnum()
+print(df[&#x27;가능&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;값&#x27;:[&#x27;abc123&#x27;,&#x27;abc!&#x27;,&#x27;123&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;가능&#x27;]=df[&#x27;값&#x27;].str.isalnum()</code></td><td>문자열이 문자와 숫자로만 이루어졌는지 확인합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;가능&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a33" rows="2"></textarea>
+<button onclick="toggle('s33')">상세풀이 보기</button>
+<div class="solution" id="s33">
+<b>정답:</b> <code>[True, False, True]</code>
+<p><b>알파벳+숫자 여부 isalnum()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q34">
+<h2>34. 결측 문자열 처리 na=False</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;상품&#x27;:[&#x27;사과&#x27;,None,&#x27;바나나&#x27;]})
+result=df[df[&#x27;상품&#x27;].str.contains(&#x27;나&#x27;,na=False)]
+print(result[&#x27;상품&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;상품&#x27;:[&#x27;사과&#x27;,None,&#x27;바나나&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[df[&#x27;상품&#x27;].str.contains(&#x27;나&#x27;,na=False)]</code></td><td>특정 문자열 또는 정규표현식 포함 여부를 확인합니다.</td></tr><tr><td>5</td><td><code>print(result[&#x27;상품&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a34" rows="2"></textarea>
+<button onclick="toggle('s34')">상세풀이 보기</button>
+<div class="solution" id="s34">
+<b>정답:</b> <code>[&#x27;바나나&#x27;]</code>
+<p><b>결측 문자열 처리 na=False</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q35">
+<h2>35. 문자열 결측치 채우기</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;민수&#x27;,None,&#x27;하준&#x27;]})
+df[&#x27;이름&#x27;]=df[&#x27;이름&#x27;].fillna(&#x27;미입력&#x27;)
+print(df[&#x27;이름&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;민수&#x27;,None,&#x27;하준&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;이름&#x27;]=df[&#x27;이름&#x27;].fillna(&#x27;미입력&#x27;)</code></td><td>결측값을 지정한 문자열로 채웁니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;이름&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a35" rows="2"></textarea>
+<button onclick="toggle('s35')">상세풀이 보기</button>
+<div class="solution" id="s35">
+<b>정답:</b> <code>[&#x27;민수&#x27;, &#x27;미입력&#x27;, &#x27;하준&#x27;]</code>
+<p><b>문자열 결측치 채우기</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q36">
+<h2>36. 이메일 아이디 추출</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;이메일&#x27;:[&#x27;kim@test.com&#x27;,&#x27;lee@school.kr&#x27;]})
+df[&#x27;아이디&#x27;]=df[&#x27;이메일&#x27;].str.split(&#x27;@&#x27;).str[0]
+print(df[&#x27;아이디&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;이메일&#x27;:[&#x27;kim@test.com&#x27;,&#x27;lee@school.kr&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;아이디&#x27;]=df[&#x27;이메일&#x27;].str.split(&#x27;@&#x27;).str[0]</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;아이디&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a36" rows="2"></textarea>
+<button onclick="toggle('s36')">상세풀이 보기</button>
+<div class="solution" id="s36">
+<b>정답:</b> <code>[&#x27;kim&#x27;, &#x27;lee&#x27;]</code>
+<p><b>이메일 아이디 추출</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q37">
+<h2>37. 이메일 도메인 추출</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;이메일&#x27;:[&#x27;kim@test.com&#x27;,&#x27;lee@school.kr&#x27;]})
+df[&#x27;도메인&#x27;]=df[&#x27;이메일&#x27;].str.split(&#x27;@&#x27;).str[1]
+print(df[&#x27;도메인&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;이메일&#x27;:[&#x27;kim@test.com&#x27;,&#x27;lee@school.kr&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;도메인&#x27;]=df[&#x27;이메일&#x27;].str.split(&#x27;@&#x27;).str[1]</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;도메인&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a37" rows="2"></textarea>
+<button onclick="toggle('s37')">상세풀이 보기</button>
+<div class="solution" id="s37">
+<b>정답:</b> <code>[&#x27;test.com&#x27;, &#x27;school.kr&#x27;]</code>
+<p><b>이메일 도메인 추출</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q38">
+<h2>38. 전화번호 일부 마스킹</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;전화&#x27;:[&#x27;01012345678&#x27;,&#x27;01098765432&#x27;]})
+df[&#x27;마스킹&#x27;]=df[&#x27;전화&#x27;].str[:3]+&#x27;****&#x27;+df[&#x27;전화&#x27;].str[-4:]
+print(df[&#x27;마스킹&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;전화&#x27;:[&#x27;01012345678&#x27;,&#x27;01098765432&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;마스킹&#x27;]=df[&#x27;전화&#x27;].str[:3]+&#x27;****&#x27;+df[&#x27;전화&#x27;].str[-4:]</code></td><td>문자열 처리 결과를 변수 또는 새 열에 저장합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;마스킹&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a38" rows="2"></textarea>
+<button onclick="toggle('s38')">상세풀이 보기</button>
+<div class="solution" id="s38">
+<b>정답:</b> <code>[&#x27;010****5678&#x27;, &#x27;010****5432&#x27;]</code>
+<p><b>전화번호 일부 마스킹</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q39">
+<h2>39. 문자열 replace 정규식</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;A1B2&#x27;,&#x27;C3D4&#x27;]})
+df[&#x27;문자만&#x27;]=df[&#x27;문장&#x27;].str.replace(r&#x27;\d&#x27;,&#x27;&#x27;,regex=True)
+print(df[&#x27;문자만&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;A1B2&#x27;,&#x27;C3D4&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;문자만&#x27;]=df[&#x27;문장&#x27;].str.replace(r&#x27;\d&#x27;,&#x27;&#x27;,regex=True)</code></td><td>문자열 일부를 다른 문자열로 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;문자만&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a39" rows="2"></textarea>
+<button onclick="toggle('s39')">상세풀이 보기</button>
+<div class="solution" id="s39">
+<b>정답:</b> <code>[&#x27;AB&#x27;, &#x27;CD&#x27;]</code>
+<p><b>문자열 replace 정규식</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q40">
+<h2>40. 숫자만 남기기</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;값&#x27;:[&#x27;A-100원&#x27;,&#x27;B-250원&#x27;]})
+df[&#x27;숫자&#x27;]=df[&#x27;값&#x27;].str.replace(r&#x27;\D&#x27;,&#x27;&#x27;,regex=True).astype(int)
+print(df[&#x27;숫자&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;값&#x27;:[&#x27;A-100원&#x27;,&#x27;B-250원&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;숫자&#x27;]=df[&#x27;값&#x27;].str.replace(r&#x27;\D&#x27;,&#x27;&#x27;,regex=True).astype(int)</code></td><td>문자열 일부를 다른 문자열로 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;숫자&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a40" rows="2"></textarea>
+<button onclick="toggle('s40')">상세풀이 보기</button>
+<div class="solution" id="s40">
+<b>정답:</b> <code>[100, 250]</code>
+<p><b>숫자만 남기기</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q41">
+<h2>41. 여러 공백 하나로 정리</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;안녕   파이썬&#x27;,&#x27;데이터    분석&#x27;]})
+df[&#x27;문장&#x27;]=df[&#x27;문장&#x27;].str.replace(r&#x27;\s+&#x27;,&#x27; &#x27;,regex=True)
+print(df[&#x27;문장&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;문장&#x27;:[&#x27;안녕   파이썬&#x27;,&#x27;데이터    분석&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;문장&#x27;]=df[&#x27;문장&#x27;].str.replace(r&#x27;\s+&#x27;,&#x27; &#x27;,regex=True)</code></td><td>문자열 일부를 다른 문자열로 바꿉니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;문장&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a41" rows="2"></textarea>
+<button onclick="toggle('s41')">상세풀이 보기</button>
+<div class="solution" id="s41">
+<b>정답:</b> <code>[&#x27;안녕 파이썬&#x27;, &#x27;데이터 분석&#x27;]</code>
+<p><b>여러 공백 하나로 정리</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q42">
+<h2>42. 문자열 목록 explode()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;민수&#x27;,&#x27;지아&#x27;],&#x27;취미&#x27;:[&#x27;독서,코딩&#x27;,&#x27;음악,운동&#x27;]})
+df[&#x27;취미&#x27;]=df[&#x27;취미&#x27;].str.split(&#x27;,&#x27;)
+result=df.explode(&#x27;취미&#x27;)
+print(result[&#x27;취미&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;민수&#x27;,&#x27;지아&#x27;],&#x27;취미&#x27;:[&#x27;독서,코딩&#x27;,&#x27;음악,운동&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;취미&#x27;]=df[&#x27;취미&#x27;].str.split(&#x27;,&#x27;)</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>result=df.explode(&#x27;취미&#x27;)</code></td><td>리스트 형태 값을 여러 행으로 펼칩니다.</td></tr><tr><td>6</td><td><code>print(result[&#x27;취미&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a42" rows="2"></textarea>
+<button onclick="toggle('s42')">상세풀이 보기</button>
+<div class="solution" id="s42">
+<b>정답:</b> <code>[&#x27;독서&#x27;, &#x27;코딩&#x27;, &#x27;음악&#x27;, &#x27;운동&#x27;]</code>
+<p><b>문자열 목록 explode()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q43">
+<h2>43. 문자열 더미 변수 get_dummies()</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;과목&#x27;:[&#x27;국어&#x27;,&#x27;수학&#x27;,&#x27;국어&#x27;]})
+dummy=df[&#x27;과목&#x27;].str.get_dummies()
+print(list(dummy.columns))</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;과목&#x27;:[&#x27;국어&#x27;,&#x27;수학&#x27;,&#x27;국어&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>dummy=df[&#x27;과목&#x27;].str.get_dummies()</code></td><td>문자열 범주를 더미 변수 표로 변환합니다.</td></tr><tr><td>5</td><td><code>print(list(dummy.columns))</code></td><td>결과를 화면에 출력합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a43" rows="2"></textarea>
+<button onclick="toggle('s43')">상세풀이 보기</button>
+<div class="solution" id="s43">
+<b>정답:</b> <code>[&#x27;국어&#x27;, &#x27;수학&#x27;]</code>
+<p><b>문자열 더미 변수 get_dummies()</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q44">
+<h2>44. 문자열 그룹별 빈도</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;지역&#x27;:[&#x27;전주&#x27;,&#x27;전주&#x27;,&#x27;군산&#x27;,&#x27;익산&#x27;]})
+result=df[&#x27;지역&#x27;].value_counts().to_dict()
+print(result)</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;지역&#x27;:[&#x27;전주&#x27;,&#x27;전주&#x27;,&#x27;군산&#x27;,&#x27;익산&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[&#x27;지역&#x27;].value_counts().to_dict()</code></td><td>값별 빈도를 계산합니다.</td></tr><tr><td>5</td><td><code>print(result)</code></td><td>결과를 화면에 출력합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a44" rows="2"></textarea>
+<button onclick="toggle('s44')">상세풀이 보기</button>
+<div class="solution" id="s44">
+<b>정답:</b> <code>{&#x27;전주&#x27;: 2, &#x27;군산&#x27;: 1, &#x27;익산&#x27;: 1}</code>
+<p><b>문자열 그룹별 빈도</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q45">
+<h2>45. 문자열 조건 등급 만들기</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;상품&#x27;:[&#x27;프리미엄 노트&#x27;,&#x27;일반 연필&#x27;,&#x27;프리미엄 펜&#x27;]})
+df[&#x27;등급&#x27;]=df[&#x27;상품&#x27;].str.contains(&#x27;프리미엄&#x27;).map({True:&#x27;고급&#x27;,False:&#x27;일반&#x27;})
+print(df[&#x27;등급&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;상품&#x27;:[&#x27;프리미엄 노트&#x27;,&#x27;일반 연필&#x27;,&#x27;프리미엄 펜&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;등급&#x27;]=df[&#x27;상품&#x27;].str.contains(&#x27;프리미엄&#x27;).map({True:&#x27;고급&#x27;,False:&#x27;일반&#x27;})</code></td><td>특정 문자열 또는 정규표현식 포함 여부를 확인합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;등급&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a45" rows="2"></textarea>
+<button onclick="toggle('s45')">상세풀이 보기</button>
+<div class="solution" id="s45">
+<b>정답:</b> <code>[&#x27;고급&#x27;, &#x27;일반&#x27;, &#x27;고급&#x27;]</code>
+<p><b>문자열 조건 등급 만들기</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q46">
+<h2>46. 문자열 길이로 필터링</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;김민수&#x27;,&#x27;이&#x27;,&#x27;박하준&#x27;]})
+result=df[df[&#x27;이름&#x27;].str.len()&gt;=3]
+print(result[&#x27;이름&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;이름&#x27;:[&#x27;김민수&#x27;,&#x27;이&#x27;,&#x27;박하준&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>result=df[df[&#x27;이름&#x27;].str.len()&gt;=3]</code></td><td>문자열 길이를 계산합니다.</td></tr><tr><td>5</td><td><code>print(result[&#x27;이름&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a46" rows="2"></textarea>
+<button onclick="toggle('s46')">상세풀이 보기</button>
+<div class="solution" id="s46">
+<b>정답:</b> <code>[&#x27;김민수&#x27;, &#x27;박하준&#x27;]</code>
+<p><b>문자열 길이로 필터링</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q47">
+<h2>47. 문자열 날짜 일부 추출</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;날짜&#x27;:[&#x27;2026-05-01&#x27;,&#x27;2026-06-15&#x27;]})
+df[&#x27;월&#x27;]=df[&#x27;날짜&#x27;].str[5:7]
+print(df[&#x27;월&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;날짜&#x27;:[&#x27;2026-05-01&#x27;,&#x27;2026-06-15&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;월&#x27;]=df[&#x27;날짜&#x27;].str[5:7]</code></td><td>문자열 처리 결과를 변수 또는 새 열에 저장합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;월&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a47" rows="2"></textarea>
+<button onclick="toggle('s47')">상세풀이 보기</button>
+<div class="solution" id="s47">
+<b>정답:</b> <code>[&#x27;05&#x27;, &#x27;06&#x27;]</code>
+<p><b>문자열 날짜 일부 추출</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q48">
+<h2>48. 파일 확장자 추출</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;파일&#x27;:[&#x27;report.pdf&#x27;,&#x27;data.csv&#x27;,&#x27;image.png&#x27;]})
+df[&#x27;확장자&#x27;]=df[&#x27;파일&#x27;].str.split(&#x27;.&#x27;).str[-1]
+print(df[&#x27;확장자&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;파일&#x27;:[&#x27;report.pdf&#x27;,&#x27;data.csv&#x27;,&#x27;image.png&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;확장자&#x27;]=df[&#x27;파일&#x27;].str.split(&#x27;.&#x27;).str[-1]</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;확장자&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a48" rows="2"></textarea>
+<button onclick="toggle('s48')">상세풀이 보기</button>
+<div class="solution" id="s48">
+<b>정답:</b> <code>[&#x27;pdf&#x27;, &#x27;csv&#x27;, &#x27;png&#x27;]</code>
+<p><b>파일 확장자 추출</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q49">
+<h2>49. 카테고리 코드 생성</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;분류&#x27;:[&#x27;A-과일&#x27;,&#x27;B-문구&#x27;,&#x27;C-전자&#x27;]})
+df[&#x27;코드&#x27;]=df[&#x27;분류&#x27;].str.split(&#x27;-&#x27;).str[0]
+print(df[&#x27;코드&#x27;].tolist())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;분류&#x27;:[&#x27;A-과일&#x27;,&#x27;B-문구&#x27;,&#x27;C-전자&#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;코드&#x27;]=df[&#x27;분류&#x27;].str.split(&#x27;-&#x27;).str[0]</code></td><td>문자열을 기준 문자로 나눕니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;코드&#x27;].tolist())</code></td><td>Series 값을 리스트 형태로 변환합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a49" rows="2"></textarea>
+<button onclick="toggle('s49')">상세풀이 보기</button>
+<div class="solution" id="s49">
+<b>정답:</b> <code>[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]</code>
+<p><b>카테고리 코드 생성</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="q50">
+<h2>50. 문자열 종합 전처리</h2>
+<pre><code>import pandas as pd
+
+df=pd.DataFrame({&#x27;가격&#x27;:[&#x27; 1,000원 &#x27;,&#x27; 2,500원 &#x27;,&#x27; 700원 &#x27;]})
+df[&#x27;가격&#x27;]=df[&#x27;가격&#x27;].str.strip().str.replace(&#x27;,&#x27;, &#x27;&#x27;, regex=False).str.replace(&#x27;원&#x27;,&#x27;&#x27;,regex=False).astype(int)
+print(df[&#x27;가격&#x27;].sum())</code></pre>
+<h3>🔍 한 줄씩 상세 설명</h3>
+<table><tr><th>줄</th><th>코드</th><th>설명</th></tr><tr><td>1</td><td><code>import pandas as pd</code></td><td>Pandas 라이브러리를 pd라는 이름으로 불러옵니다.</td></tr><tr><td>2</td><td><code>&nbsp;</code></td><td>가독성을 위한 빈 줄입니다.</td></tr><tr><td>3</td><td><code>df=pd.DataFrame({&#x27;가격&#x27;:[&#x27; 1,000원 &#x27;,&#x27; 2,500원 &#x27;,&#x27; 700원 &#x27;]})</code></td><td>예제 데이터를 DataFrame으로 만듭니다.</td></tr><tr><td>4</td><td><code>df[&#x27;가격&#x27;]=df[&#x27;가격&#x27;].str.strip().str.replace(&#x27;,&#x27;, &#x27;&#x27;, regex=False).str.replace(&#x27;원&#x27;,&#x27;&#x27;,regex=False).astype(int)</code></td><td>문자열 양쪽 공백을 제거합니다.</td></tr><tr><td>5</td><td><code>print(df[&#x27;가격&#x27;].sum())</code></td><td>결과를 화면에 출력합니다.</td></tr></table>
+<h3>✍️ 출력 결과 서술형</h3>
+<p>위 코드를 실행했을 때 출력되는 값을 정확히 쓰시오.</p>
+<textarea id="a50" rows="2"></textarea>
+<button onclick="toggle('s50')">상세풀이 보기</button>
+<div class="solution" id="s50">
+<b>정답:</b> <code>4200</code>
+<p><b>문자열 종합 전처리</b> 예제는 Pandas의 <code>.str</code> 문자열 처리 기능을 활용하여 텍스트 데이터를 정리·추출·변환합니다.</p>
+</div>
+</section>
+
+<section class="card" id="submit"><h2>📥 채점 및 TXT 산출</h2><label>학번 <input id="studentId"></label><label>이름 <input id="studentName"></label><button onclick="grade()">채점하기</button><button onclick="downloadTxt()">TXT 다운로드</button><div id="result" class="result">아직 채점하지 않았습니다.</div><p>파일명: 학번_이름_문자열_점수_응시시각.txt</p></section>
+</main><script>
+const answers=["['민수', '지아', '하준']", "['서울', '부산', '대구']", "['서울', '부산', '대구']", "['kim01', 'lee02', 'park03']", "['A01', 'B02', 'C03']", "['Apple', 'Banana', 'Cat']", "['Data Science', 'Machine Learning']", "['사과주스', '오렌지주스']", "['data01.csv', 'data02.csv']", "['a.csv', 'c.csv']", "[2, 3, 2]", "['01011112222', '01033334444']", "4200", "1400.0", "['전북', '서울', '부산']", "['A', 'B', 'C']", "['김민수', '이지아', '박하준']", "['0001', '0012', '0123']", "['0000A', '000BC', '00DEF']", "['A___', 'BC__']", "['**AI**', '*DATA*']", "['06', '07']", "['A', 'B', 'C']", "171.66666666666666", "['A', 'B', 'C']", "[['90', '80'], ['70', '85']]", "[3, 1, 1]", "[7, 1]", "['전주', '군산']", "[False, True, False]", "[True, False, True]", "[True, False, True]", "[True, False, True]", "['바나나']", "['민수', '미입력', '하준']", "['kim', 'lee']", "['test.com', 'school.kr']", "['010****5678', '010****5432']", "['AB', 'CD']", "[100, 250]", "['안녕 파이썬', '데이터 분석']", "['독서', '코딩', '음악', '운동']", "['국어', '수학']", "{'전주': 2, '군산': 1, '익산': 1}", "['고급', '일반', '고급']", "['김민수', '박하준']", "['05', '06']", "['pdf', 'csv', 'png']", "['A', 'B', 'C']", "4200"]; let report='';
+function toggle(id){let e=document.getElementById(id);e.style.display=e.style.display==='block'?'none':'block';}
+function norm(s){return (s||'').trim().replace(/\s+/g,' ');}
+function grade(){let score=0,lines=['Pandas 문자열 처리 예제 50문항 평가 결과','================================']; for(let i=1;i<=50;i++){let v=norm(document.getElementById('a'+i).value); let ok=v===answers[i-1]; if(ok)score++; lines.push(i+'번: '+(ok?'정답':'오답')+' / 입력: '+(v||'미응답')+' / 정답: '+answers[i-1]);} let percent=Math.round(score/50*100); lines.push('================================'); lines.push('총점: '+score+'/50 ('+percent+'점)'); lines.push('응시시각: '+new Date().toLocaleString('ko-KR')); report=lines.join('\n'); document.getElementById('result').textContent=report;}
+function safe(s){return (s||'미입력').trim().replace(/[\\/:*?"<>| ]/g,'_');}
+function downloadTxt(){if(!report)grade();let sid=safe(document.getElementById('studentId').value),name=safe(document.getElementById('studentName').value),m=(report.match(/\((\d+)점\)/)||[])[1]||'0',d=new Date(),stamp=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+'-'+String(d.getMinutes()).padStart(2,'0'),fn=sid+'_'+name+'_문자열_'+m+'점_'+stamp+'.txt';let blob=new Blob(['학번: '+sid+'\n이름: '+name+'\n\n'+report],{type:'text/plain;charset=utf-8'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;a.click();URL.revokeObjectURL(a.href);}
+</script></body></html>
